@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Medway Invicta FC</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+</head>
+<body class="bg-gradient-to-br from-red-900 to-black text-white font-sans">
+
+  <!-- Header -->
+  <header class="flex justify-between items-center p-6 border-b border-red-600 relative">
+    <h1 class="flex items-center space-x-3 text-3xl font-bold tracking-wide">
+      <img src="./Img/MI logo.jpg" alt="Medway Invicta FC Logo" class="h-10 w-10 object-contain" />
+      <span>Medway Invicta FC</span>
+    </h1>
+
+    <!-- Desktop Nav -->
+    <nav class="hidden md:flex space-x-6">
+      <a href="index.html" class="hover:text-red-400 transition">Home</a>
+      <a href="Team.html" class="hover:text-red-400 transition">Team</a>
+      <a href="Fixtures.html" class="hover:text-red-400 transition">Fixtures</a>
+      <a href="Standings.html" class="hover:text-red-400 transition">Standings</a>
+      <a href="Contact.html" class="hover:text-red-400 transition">Contact</a>
+    </nav>
+
+    <!-- Burger Icon -->
+    <button id="burger" class="md:hidden">
+      <i data-lucide="menu" class="w-8 h-8 text-white"></i>
+    </button>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="absolute top-full right-6 mt-2 bg-red-950 border border-red-600 rounded-lg shadow-lg w-40 flex-col items-start p-4 space-y-2 hidden z-50">
+      <a href="index.html" class="block hover:text-red-400 transition">Home</a>
+      <a href="Team.html" class="block hover:text-red-400 transition">Team</a>
+      <a href="Fixtures.html" class="block hover:text-red-400 transition">Fixtures</a>
+      <a href="Standings.html" class="block hover:text-red-400 transition">Standings</a>
+      <a href="Contact.html" class="block hover:text-red-400 transition">Contact</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="home" class="text-center py-16 px-4">
+    <h2 class="text-5xl font-extrabold mb-4">Welcome to Medway Invicta FC</h2>
+    <p class="text-lg max-w-2xl mx-auto">
+      Home of champions. Follow the passion, pride, and performance of Medway Invicta FC.
+    </p>
+    <a href="https://www.instagram.com/medwayinvictafc/?hl=en">
+      <button class="mt-8 bg-red-600 hover:bg-red-500 px-6 py-2 rounded-full text-lg font-medium transition">
+        Our Instagram
+      </button>
+    </a>
+  </section>
+
+  <!-- Info Cards -->
+  <section class="grid grid-cols-1 md:grid-cols-3 gap-6 px-6 py-12">
+    <!-- Squad -->
+    <a href="Team.html" class="bg-red-950 rounded-2xl p-6 shadow-lg text-center hover:bg-red-900 transition">
+      <div class="flex justify-center mb-4">
+        <i data-lucide="users" class="text-red-400 w-10 h-10"></i>
+      </div>
+      <h3 class="text-xl font-semibold">Our Squad</h3>
+      <p class="text-sm mt-2 text-gray-300">Meet the players driving our success.</p>
+      
+    </a>
+
+    <!-- Fixtures -->
+    <a href="Fixtures.html" class="bg-red-950 rounded-2xl p-6 shadow-lg text-center hover:bg-red-900 transition">
+      <div class="flex justify-center mb-4">
+        <i data-lucide="calendar" class="text-red-400 w-10 h-10"></i>
+      </div>
+      <h3 class="text-xl font-semibold">Fixtures</h3>
+      <p class="text-sm mt-2 text-gray-300">Never miss an upcoming match.</p>
+
+    </a>
+
+    <!-- Standings -->
+    <a href="Standings.html" class="bg-red-950 rounded-2xl p-6 shadow-lg text-center hover:bg-red-900 transition">
+      <div class="flex justify-center mb-4">
+        <i data-lucide="trophy" class="text-red-400 w-10 h-10"></i>
+      </div>
+      <h3 class="text-xl font-semibold">Standings</h3>
+      <p class="text-sm mt-2 text-gray-300">Track our position in the league.</p>
+      
+    </a>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-center border-t border-red-600 py-6 text-sm">
+    &copy; 2025 Medway Invicta FC. All rights reserved.
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    // Burger menu toggle
+    const burger = document.getElementById('burger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    burger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  </script>
+</body>
+</html>

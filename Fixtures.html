@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fixtures - Medway Invicta FC</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+</head>
+<body class="bg-gradient-to-br from-red-900 to-black text-white font-sans">
+
+  <!-- Header -->
+  <header class="flex justify-between items-center p-6 border-b border-red-600 relative">
+    <h1 class="flex items-center space-x-3 text-3xl font-bold tracking-wide">
+      <img src="./Img/MI logo.jpg" alt="Medway Invicta FC Logo" class="h-10 w-10 object-contain" />
+      <span>Medway Invicta FC</span>
+    </h1>
+
+    <!-- Desktop Nav -->
+    <nav class="hidden md:flex space-x-6">
+      <a href="index.html" class="hover:text-red-400 transition">Home</a>
+      <a href="Team.html" class="hover:text-red-400 transition">Team</a>
+      <a href="Fixtures.html" class="text-red-400 font-semibold">Fixtures</a>
+      <a href="Standings.html" class="hover:text-red-400 transition">Standings</a>
+      <a href="Contact.html" class="hover:text-red-400 transition">Contact</a>
+    </nav>
+
+    <!-- Burger Icon -->
+    <button id="burger" class="md:hidden">
+      <i data-lucide="menu" class="w-8 h-8 text-white"></i>
+    </button>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="absolute top-full right-6 mt-2 bg-red-950 border border-red-600 rounded-lg shadow-lg w-40 flex-col items-start p-4 space-y-2 hidden z-50">
+      <a href="index.html" class="block hover:text-red-400 transition">Home</a>
+      <a href="Team.html" class="block hover:text-red-400 transition">Team</a>
+      <a href="Fixtures.html" class="text-red-400 font-semibold">Fixtures</a>
+      <a href="Standings.html" class="block hover:text-red-400 transition">Standings</a>
+      <a href="Contact.html" class="block hover:text-red-400 transition">Contact</a>
+    </div>
+  </header>
+
+  <!-- Fixtures Section -->
+  <section class="text-center py-16 px-4">
+    <h2 class="text-5xl font-extrabold mb-6">Match Fixtures</h2>
+    <p class="text-lg max-w-xl mx-auto text-gray-300 mb-12">
+      Stay up to date with all upcoming and past matches for Medway Invicta FC.
+    </p>
+
+    <!-- Fixtures Table -->
+    <div class="overflow-x-auto max-w-4xl mx-auto">
+      <table class="w-full text-left border-collapse">
+        <thead class="bg-red-800">
+          <tr>
+            <th class="px-4 py-3 border-b border-red-600">Type</th>
+            <th class="px-4 py-3 border-b border-red-600">Date</th>
+            <th class="px-4 py-3 border-b border-red-600">Opponent</th>
+            <th class="px-4 py-3 border-b border-red-600">Location</th>
+            <th class="px-4 py-3 border-b border-red-600">Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="hover:bg-red-950 transition">
+            <th class="px-4 py-3 border-b border-red-600">CUP</th>
+            <td class="px-4 py-3 border-b border-red-800">July 27, 2025</td>
+            <td class="px-4 py-3 border-b border-red-800">Chatham Town SRFC First</td>
+            <td class="px-4 py-3 border-b border-red-800">HOME - Beechings Cross</td>
+            <td class="px-4 py-3 border-b border-red-800">-</td>
+          </tr>
+          <tr class="hover:bg-red-950 transition">
+            <th class="px-4 py-3 border-b border-red-600">CUP</th>
+            <td class="px-4 py-3 border-b border-red-800">August 03, 2025</td>
+            <td class="px-4 py-3 border-b border-red-800">Strood FC Firsts</td>
+            <td class="px-4 py-3 border-b border-red-800">AWAY - Beechings Cross #3</td>
+            <td class="px-4 py-3 border-b border-red-800">-</td>
+          </tr>
+          <tr class="hover:bg-red-950 transition">
+            <th class="px-4 py-3 border-b border-red-600">CUP</th>
+            <td class="px-4 py-3 border-b border-red-800">TBC</td>
+            <td class="px-4 py-3 border-b border-red-800">The Walnut Tree</td>
+            <td class="px-4 py-3 border-b border-red-800">AWAY - Watling Street #1</td>
+            <td class="px-4 py-3 border-b border-red-800">-</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-center border-t border-red-600 py-6 text-sm">
+    &copy; 2025 Medway Invicta FC. All rights reserved.
+  </footer>
+
+  <script>
+    lucide.createIcons();
+    const burger = document.getElementById('burger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    burger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  </script>
+</body>
+</html>

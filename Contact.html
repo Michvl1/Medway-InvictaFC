@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact - Medway Invicta FC</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    function toggleMenu() {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    }
+  </script>
+</head>
+<body class="bg-gradient-to-br from-red-900 to-black text-white font-sans">
+
+  <!-- Header -->
+  <header class="flex justify-between items-center p-6 border-b border-red-600">
+    <h1 class="flex items-center space-x-3 text-2xl sm:text-3xl font-bold tracking-wide">
+      <img src="C:\Users\M.Shobande\Documents\Medway invicta\Img\MI logo.jpg" alt="Medway Invicta FC Logo" class="h-10 w-10 object-contain" />
+      <span>Medway Invicta FC</span>
+    </h1>
+
+    <!-- Desktop Nav -->
+    <nav class="hidden md:flex space-x-6">
+      <a href="index.html" class="hover:text-red-400 transition">Home</a>
+      <a href="Team.html" class="hover:text-red-400 transition">Team</a>
+      <a href="Fixtures.html" class="hover:text-red-400 transition">Fixtures</a>
+      <a href="Standings.html" class="hover:text-red-400 transition">Standings</a>
+      <a href="Contact.html" class="text-red-400 font-semibold">Contact</a>
+    </nav>
+
+    <!-- Mobile Hamburger -->
+    <button class="md:hidden focus:outline-none" onclick="toggleMenu()" aria-label="Toggle Menu">
+      <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+  </header>
+
+  <!-- Mobile Nav -->
+  <div id="mobile-menu" class="md:hidden hidden px-6 pb-4 space-y-2 bg-black border-b border-red-600">
+    <a href="index.html" class="block hover:text-red-400">Home</a>
+    <a href="Team.html" class="block hover:text-red-400">Team</a>
+    <a href="Fixtures.html" class="block hover:text-red-400">Fixtures</a>
+    <a href="Standings.html" class="block hover:text-red-400">Standings</a>
+    <a href="Contact.html" class="block text-red-400 font-semibold">Contact</a>
+  </div>
+
+  <!-- Contact Section -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 py-16">
+    <h2 class="text-3xl sm:text-5xl font-extrabold mb-8 text-center">Get in Touch</h2>
+    <p class="text-center text-gray-300 mb-12 max-w-xl mx-auto">
+      Have questions or want to support Medway Invicta FC? Drop us a message and we’ll get back to you!
+    </p>
+
+    <div class="flex flex-col md:flex-row gap-12">
+      <!-- Contact Info -->
+      <div class="md:w-1/2 space-y-8">
+        <div>
+          <h3 class="text-2xl font-semibold mb-2">Address</h3>
+          <p>450 Grange Rd, Gillingham ME7 2UB</p>
+        </div>
+
+        <div>
+          <h3 class="text-2xl font-semibold mb-2">Social</h3>
+          <p>
+            <a href="https://x.com/medwayinvictafc" class="text-red-400 hover:underline">Twitter</a> | 
+            <a href="https://www.instagram.com/medwayinvictafc/?hl=en" class="text-red-400 hover:underline">Instagram</a>
+          </p>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <form class="md:w-1/2 bg-red-950 rounded-lg p-6 sm:p-8 shadow-lg" action="#" method="POST">
+        <label for="name" class="block mb-2 font-semibold">Name</label>
+        <input type="text" id="name" name="name" required
+          class="w-full mb-6 px-4 py-3 rounded-md bg-red-900 border border-red-700 focus:outline-none focus:ring-2 focus:ring-red-600" />
+
+        <label for="email" class="block mb-2 font-semibold">Email</label>
+        <input type="email" id="email" name="email" required
+          class="w-full mb-6 px-4 py-3 rounded-md bg-red-900 border border-red-700 focus:outline-none focus:ring-2 focus:ring-red-600" />
+
+        <label for="message" class="block mb-2 font-semibold">Message</label>
+        <textarea id="message" name="message" rows="5" required
+          class="w-full mb-6 px-4 py-3 rounded-md bg-red-900 border border-red-700 resize-none focus:outline-none focus:ring-2 focus:ring-red-600"></textarea>
+
+        <button type="submit" class="w-full bg-red-700 hover:bg-red-600 text-white font-bold py-3 rounded-md transition">
+          Send Message
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-center border-t border-red-600 py-6 text-sm">
+    &copy; 2025 Medway Invicta FC. All rights reserved.
+  </footer>
+
+</body>
+</html>
