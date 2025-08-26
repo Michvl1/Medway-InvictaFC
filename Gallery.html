@@ -12,7 +12,7 @@
   <!-- Header -->
   <header class="flex justify-between items-center p-6 border-b border-red-600 relative">
     <h1 class="flex items-center space-x-3 text-3xl font-bold tracking-wide">
-      <img src="MI-logo.jpg" alt="Medway Invicta FC Logo" class="h-10 w-10 object-contain" />
+      <img src="MI logo.jpg" alt="Medway Invicta FC Logo" class="h-10 w-10 object-contain" />
       <span>Medway Invicta FC</span>
     </h1>
 
@@ -47,11 +47,17 @@
   <!-- Page Title -->
   <section class="text-center py-12">
     <h2 class="text-5xl font-extrabold mb-4">Gallery</h2>
-    <p class="text-lg text-gray-300">Explore moments from our matches, training, and events.</p>
+    <p class="text-lg text-gray-300">Click on images to expand or play videos directly.</p>
   </section>
 
   <!-- Gallery Grid -->
   <section id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-6 pb-16"></section>
+
+  <!-- Modal -->
+  <div id="modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-50">
+    <span id="closeModal" class="absolute top-6 right-6 text-white text-3xl cursor-pointer">&times;</span>
+    <img id="modalImage" class="max-h-full max-w-full rounded-lg" />
+  </div>
 
   <!-- Footer -->
   <footer class="text-center border-t border-red-600 py-6 text-sm">
@@ -68,18 +74,22 @@
     });
 
     const galleryItems = [
-      { type: "image", src: "IMG_3421.jpeg", title: "Super Sub", description: "Celebrating our Kent Cup Semi-Final goal." },
-      { type: "video", src: "./videos/goal-highlight.mp4", title: "Goal Highlight", description: "Samuel Shobande scores a stunning goal!" },
-      { type: "image", src: "IMG_3422.jpeg", title: "Team", description: "Team Celebrations." },
-      { type: "video", src: "Raheem-goal-GLU-FC.mp4", title: "Cool finish", description: "Raheem slots it home against Greatlines United FC." },
-      { type: "video", src: "Matthew-Thomas-Goal-GLU-FC.mp4", title: "Top Bins", description: "An excellent strike from Winger, Matthew Thomas." },
-      { type: "video", src: "Owen-goal-GLU-FC.mp4", title: "Longman's leftfooted longshot", description: "A unique type of finish from Longman." }
+      { type: "image", src: "IMG_3418.jpg", title: "Team", description: "Click to expand." },
+      { type: "video", src: "Matthew Thomas Goal GLU FC.mp4", title: "Top Bins", description: "Matthew Thomas aka Nash, Crashes it top bins from close range" },
+      { type: "image", src: "placeholder2.jpg", title: "Placeholder Image 2", description: "Click to expand." },
+      { type: "video", src: "Owen goal GLU FC.mp4", title: "Longman's Longshot", description: "Owen Long with a unique finish after a great overlapping run." },
+      { type: "image", src: "IMG_3421.jpg", title: "Team", description: "Click to expand." },
+      { type: "image", src: "3422.jpg", title: "Team", description: "Click to expand." }
     ];
 
     const galleryGrid = document.getElementById('galleryGrid');
+    const modal = document.getElementById('modal');
+    const modalImage = document.getElementById('modalImage');
+    const closeModal = document.getElementById('closeModal');
+
     galleryItems.forEach(item => {
       const tile = document.createElement('div');
-      tile.className = "rounded-xl overflow-hidden shadow-lg bg-red-950 hover:bg-red-900 transition flex flex-col";
+      tile.className = "rounded-xl overflow-hidden shadow-lg bg-red-950 hover:bg-red-900 transition flex flex-col cursor-pointer";
 
       if (item.type === "image") {
         tile.innerHTML = `
@@ -89,6 +99,10 @@
             <p class="text-gray-300 text-sm">${item.description}</p>
           </div>
         `;
+        tile.addEventListener('click', () => {
+          modal.classList.remove('hidden');
+          modalImage.src = item.src;
+        });
       } else {
         tile.innerHTML = `
           <video controls class="w-full h-64 object-cover">
@@ -103,6 +117,11 @@
       }
 
       galleryGrid.appendChild(tile);
+    });
+
+    closeModal.addEventListener('click', () => {
+      modal.classList.add('hidden');
+      modalImage.src = '';
     });
   </script>
 </body>
