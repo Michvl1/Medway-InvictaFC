@@ -21,13 +21,14 @@
     </h1>
 
     <!-- Desktop Menu -->
-    <nav class="hidden md:flex space-x-6">
+  <nav class="hidden md:flex space-x-6">
       <a href="index.html" class="hover:text-red-400 transition">Home</a>
       <a href="Team.html" class="hover:text-red-400 transition">Team</a>
       <a href="Fixtures.html" class="hover:text-red-400 transition">Fixtures</a>
-      <a href="Standings.html" class="text-red-400 font-semibold">Standings</a>
+      <a href="Standings.html" class="hover:text-red-400 transition">Standings</a>
       <a href="Contact.html" class="hover:text-red-400 transition">Contact</a>
       <a href="Gallery.html" class="hover:text-red-400 transition">Gallery</a>
+      <a href="GA.html" class="hover:text-red-400 transition">Stats</a>
     </nav>
 
     <!-- Mobile Menu Button -->
@@ -40,13 +41,15 @@
   </header>
 
   <!-- Mobile Menu Dropdown -->
-  <div id="mobile-menu" class="md:hidden hidden px-6 pb-4 space-y-2 bg-black border-b border-red-600">
-    <a href="index.html" class="block hover:text-red-400">Home</a>
-    <a href="Team.html" class="block hover:text-red-400">Team</a>
-    <a href="Fixtures.html" class="block hover:text-red-400">Fixtures</a>
-    <a href="Standings.html" class="block text-red-400 font-semibold">Standings</a>
-    <a href="Contact.html" class="block hover:text-red-400">Contact</a>
-  </div>
+   <div id="mobileMenu" class="absolute top-full right-6 mt-2 bg-red-950 border border-red-600 rounded-lg shadow-lg w-40 flex-col items-start p-4 space-y-2 hidden z-50">
+      <a href="index.html" class="block hover:text-red-400 transition">Home</a>
+      <a href="Team.html" class="block hover:text-red-400 transition">Team</a>
+      <a href="Fixtures.html" class="text-red-400 font-semibold">Fixtures</a>
+      <a href="Standings.html" class="block hover:text-red-400 transition">Standings</a>
+      <a href="Contact.html" class="block hover:text-red-400 transition">Contact</a>
+      <a href="Gallery.html" class="block hover:text-red-400 transition">Gallery</a>
+      <a href="GA.html" class="block hover:text-red-400 transition">Stats</a>
+    </div>
 
   <!-- Standings Section -->
   <section class="text-center py-16 px-4">
@@ -222,5 +225,6 @@
 
 </body>
 </html>
+
 
 
