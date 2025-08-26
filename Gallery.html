@@ -51,36 +51,7 @@
   </section>
 
   <!-- Gallery Grid -->
-  <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-6 pb-16">
-
-    <!-- Example Image -->
-    <div class="rounded-xl overflow-hidden shadow-lg bg-red-950 hover:bg-red-900 transition">
-      <img src="images/match1.jpg" alt="Match photo 1" class="w-full h-64 object-cover">
-    </div>
-
-    <!-- Example Video -->
-    <div class="rounded-xl overflow-hidden shadow-lg bg-red-950 hover:bg-red-900 transition">
-      <video controls class="w-full h-64 object-cover">
-        <source src="973ee95f-2d01-4bf5-aa7c-7c35b6cef15b (1).mp4" alt="Samuel Shobande Goal vs Strood FC" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-    </div>
-
-    <!-- More examples -->
-    <div class="rounded-xl overflow-hidden shadow-lg bg-red-950 hover:bg-red-900 transition">
-      <img src="images/training1.jpg" alt="Training session" class="w-full h-64 object-cover">
-    </div>
-
-    <div class="rounded-xl overflow-hidden shadow-lg bg-red-950 hover:bg-red-900 transition">
-      <video controls class="w-full h-64 object-cover">
-        <source src="videos/postmatch-interview.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-    </div>
-
-    <!-- Add more <img> or <video> elements as needed -->
-
-  </section>
+  <section id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-6 pb-16"></section>
 
   <!-- Footer -->
   <footer class="text-center border-t border-red-600 py-6 text-sm">
@@ -95,6 +66,64 @@
     const mobileMenu = document.getElementById('mobileMenu');
     burger.addEventListener('click', () => {
       mobileMenu.classList.toggle('hidden');
+    });
+
+    // ---- GALLERY DATA ----
+    const galleryItems = [
+      {
+        type: "image",
+        src: "images/match1.jpg",
+        title: "Match Day Victory",
+        description: "Celebrating our 3-1 win over Strood FC."
+      },
+      {
+        type: "video",
+        src: "videos/goal-highlight.mp4",
+        title: "Goal Highlight",
+        description: "Samuel Shobande scores a stunning goal!"
+      },
+      {
+        type: "image",
+        src: "images/training1.jpg",
+        title: "Training Grind",
+        description: "Midweek training to stay sharp."
+      },
+      {
+        type: "video",
+        src: "videos/postmatch-interview.mp4",
+        title: "Post-Match Interview",
+        description: "Coach shares thoughts on the last match."
+      }
+    ];
+
+    // ---- RENDER GALLERY ----
+    const galleryGrid = document.getElementById('galleryGrid');
+    galleryItems.forEach(item => {
+      const tile = document.createElement('div');
+      tile.className = "rounded-xl overflow-hidden shadow-lg bg-red-950 hover:bg-red-900 transition flex flex-col";
+
+      if (item.type === "image") {
+        tile.innerHTML = `
+          <img src="${item.src}" alt="${item.title}" class="w-full h-64 object-cover">
+          <div class="p-4">
+            <h3 class="text-xl font-semibold mb-1">${item.title}</h3>
+            <p class="text-gray-300 text-sm">${item.description}</p>
+          </div>
+        `;
+      } else if (item.type === "video") {
+        tile.innerHTML = `
+          <video controls class="w-full h-64 object-cover">
+            <source src="${item.src}" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <div class="p-4">
+            <h3 class="text-xl font-semibold mb-1">${item.title}</h3>
+            <p class="text-gray-300 text-sm">${item.description}</p>
+          </div>
+        `;
+      }
+
+      galleryGrid.appendChild(tile);
     });
   </script>
 </body>
