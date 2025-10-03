@@ -40,14 +40,12 @@
       <a href="Standings.html" class="block hover:text-red-400 transition">Standings</a>
       <a href="Contact.html" class="block hover:text-red-400 transition">Contact</a>
       <a href="Gallery.html" class="block hover:text-red-400 transition">Gallery</a>
-            <a href="GA.html" class="block hover:text-red-400 transition">Goals</a>
+      <a href="GA.html" class="block hover:text-red-400 transition">Goals</a>
     </div>
   </header>
 
   <!-- Hero -->
-
-
-   <section class="relative h-[90vh] flex items-center justify-center text-center">
+  <section class="relative h-[90vh] flex items-center justify-center text-center">
     <img src="IMG_3421.jpeg" alt="Team Background" class="absolute inset-0 w-full h-full object-cover opacity-20" />
     <div class="relative z-10 max-w-2xl mx-auto px-4">
       <h2 class="text-5xl md:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-[#FFFFFF] to-white drop-shadow-lg">
@@ -57,13 +55,12 @@
        Home of champions. Follow the passion, pride, and performance of Medway Invicta FC.
       </p>
       <a href="https://www.instagram.com/medwayinvictafc/?hl=en">
-      <button class="mt-8 bg-red-600 hover:bg-red-500 px-6 py-2 rounded-full text-lg font-medium transition">
-        Our Instagram
-      </button>
-    </a>
+        <button class="mt-8 bg-red-600 hover:bg-red-500 px-6 py-2 rounded-full text-lg font-medium transition">
+          Our Instagram
+        </button>
+      </a>
     </div>
   </section>
-  
 
   <!-- Info Cards -->
   <section class="grid grid-cols-1 md:grid-cols-3 gap-6 px-6 py-12">
@@ -74,7 +71,6 @@
       </div>
       <h3 class="text-xl font-semibold">Our Squad</h3>
       <p class="text-sm mt-2 text-gray-300">Meet the players driving our success.</p>
-      
     </a>
 
     <!-- Fixtures -->
@@ -84,7 +80,6 @@
       </div>
       <h3 class="text-xl font-semibold">Fixtures</h3>
       <p class="text-sm mt-2 text-gray-300">Never miss an upcoming match.</p>
-
     </a>
 
     <!-- Standings -->
@@ -94,30 +89,33 @@
       </div>
       <h3 class="text-xl font-semibold">Standings</h3>
       <p class="text-sm mt-2 text-gray-300">Track our position in the league.</p>
-      
     </a>
-      <!-- STATS -->
+
+    <!-- STATS -->
     <a href="GA.html" class="bg-red-950 rounded-2xl p-6 shadow-lg text-center hover:bg-red-900 transition">
       <div class="flex justify-center mb-4">
         <i data-lucide="chart-no-axes-combined" class="text-red-400 w-10 h-10"></i>
       </div>
       <h3 class="text-xl font-semibold">Goals</h3>
       <p class="text-sm mt-2 text-gray-300">Keep up with the Stats.</p>
-      
     </a>
+  </section>
 
-    
-   
-  </section
+  <!-- News Section -->
+  <section class="px-6 py-12 bg-gradient-to-b from-black to-red-950 border-t border-red-600">
+    <h2 class="text-3xl font-bold text-center mb-8">Latest News</h2>
+    <div id="newsGrid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Articles inserted by JS -->
+    </div>
+    <div class="flex justify-center mt-8">
+      <button id="loadMore" class="bg-red-600 hover:bg-red-500 px-6 py-2 rounded-full text-lg font-medium transition">Load More</button>
+    </div>
+  </section>
 
   <!-- Sponsors Section -->
   <section class="py-12 bg-black border-t border-red-600">
     <h2 class="text-center text-3xl font-bold mb-8">Our Sponsors</h2>
     <div class="flex flex-col sm:flex-row justify-center items-center gap-8 px-4">
-      
-     
-
-      
     </div>
   </section>
 
@@ -135,28 +133,44 @@
     burger.addEventListener('click', () => {
       mobileMenu.classList.toggle('hidden');
     });
+
+    // Sample News Data
+    const ARTICLES = [
+      {id:1,title:'Club completes signing of Lucas Moretti',date:'2025-07-18',excerpt:'Striker Lucas Moretti signs a three-year deal after an impressive season.',image:'https://via.placeholder.com/800x450?text=Lucas+Moretti'},
+      {id:2,title:'Stadium redevelopment approved',date:'2025-06-03',excerpt:'The council approved the first phase of the stadium redevelopment.',image:'https://via.placeholder.com/800x450?text=Stadium'},
+      {id:3,title:'Academy midfielder awarded player of the month',date:'2025-09-01',excerpt:'A 17-year-old midfielder recognised for his outstanding performances.',image:'https://via.placeholder.com/800x450?text=Academy'},
+      {id:4,title:'2-2 draw keeps us undefeated',date:'2025-08-30',excerpt:'A late equaliser secured a point in a dramatic home match.',image:'https://via.placeholder.com/800x450?text=Match'}
+    ];
+
+    const grid = document.getElementById('newsGrid');
+    const loadMoreBtn = document.getElementById('loadMore');
+    let visibleCount = 3;
+
+    function renderNews(){
+      grid.innerHTML = '';
+      const items = ARTICLES.slice(0, visibleCount);
+      items.forEach(a => {
+        const el = document.createElement('article');
+        el.className = 'bg-red-950 rounded-2xl shadow-lg overflow-hidden flex flex-col';
+        el.innerHTML = `
+          <img src="${a.image}" alt="${a.title}" class="w-full h-40 object-cover">
+          <div class="p-4 flex flex-col flex-1">
+            <h3 class="text-lg font-semibold mb-2">${a.title}</h3>
+            <p class="text-sm text-gray-300 flex-1">${a.excerpt}</p>
+            <span class="text-xs text-gray-400 mt-2">${new Date(a.date).toLocaleDateString()}</span>
+          </div>
+        `;
+        grid.appendChild(el);
+      });
+      loadMoreBtn.style.display = ARTICLES.length > visibleCount ? 'block' : 'none';
+    }
+
+    loadMoreBtn.addEventListener('click', () => {
+      visibleCount += 3;
+      renderNews();
+    });
+
+    renderNews();
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
