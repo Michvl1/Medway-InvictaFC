@@ -100,8 +100,59 @@
     const closeModal = document.getElementById('closeModal');
 
     galleryItems.forEach(item => {
+  const filterButtons = document.querySelectorAll('.filter-btn');
+
+function renderGallery(filter = "all") {
+  galleryGrid.innerHTML = ""; // Clear grid
+
+  galleryItems
+    .filter(item => filter === "all" || item.type === filter)
+    .forEach(item => {
       const tile = document.createElement('div');
       tile.className = "rounded-xl overflow-hidden shadow-lg bg-red-950 hover:bg-red-900 transition flex flex-col cursor-pointer";
+
+      if (item.type === "image") {
+        tile.innerHTML = `
+          <img src="${item.src}" alt="${item.title}" class="w-full h-64 object-cover">
+          <div class="p-4">
+            <h3 class="text-xl font-semibold mb-1">${item.title}</h3>
+            <p class="text-gray-300 text-sm">${item.description}</p>
+          </div>
+        `;
+        tile.addEventListener('click', () => {
+          modal.classList.remove('hidden');
+          modalImage.src = item.src;
+        });
+      } else {
+        tile.innerHTML = `
+          <video controls class="w-full object-contain bg-black">
+            <source src="${item.src}" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <div class="p-4">
+            <h3 class="text-xl font-semibold mb-1">${item.title}</h3>
+            <p class="text-gray-300 text-sm">${item.description}</p>
+          </div>
+        `;
+      }
+
+      galleryGrid.appendChild(tile);
+    });
+}
+
+// Initial render (all)
+renderGallery();
+
+// Handle filter button clicks
+filterButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    // Highlight selected button
+    filterButtons.forEach(b => b.classList.remove('bg-red-700'));
+    btn.classList.add('bg-red-700');
+    renderGallery(btn.dataset.filter);
+  });
+});
+
 
       if (item.type === "image") {
         tile.innerHTML = `
