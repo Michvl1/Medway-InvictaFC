@@ -50,9 +50,14 @@
     <div class="relative z-10 max-w-2xl mx-auto px-4">
       <h2 class="text-5xl md:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-[#FFFFFF] to-white drop-shadow-lg">
         Welcome to Medway Invicta FC
+        
+  <!-- Cup Final Hero -->
+  <section id="cupFinalHero" class="relative bg-gradient-to-r from-red-800 via-red-900 to-black text-white text-center py-12 px-4 overflow-hidden transition-all duration-500">
+    <!-- Close Button -->
+    <button id="closeHero" class="absolute top-4 right-4 text-white hover:text-red-400 transition">
+      <i data-lucide="x" class="w-7 h-7"></i>
+    </button>
 
-          <!-- Cup Final Hero -->
-  <section class="relative bg-gradient-to-r from-red-800 via-red-900 to-black text-white text-center py-12 px-4">
     <div class="relative z-10 max-w-3xl mx-auto">
       <h2 class="text-4xl md:text-5xl font-extrabold mb-4 uppercase tracking-wide">
         🏆 Cup Final Announcement 🏆
@@ -72,6 +77,12 @@
         </button>
       </a>
     </div>
+
+    <!-- Optional Background Image -->
+    <img src="IMG_3421.jpeg" alt="Cup Final Background"
+         class="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none" />
+  </section>
+
 
     <!-- Optional background image overlay -->
     <img src="IMG_3421.jpeg" alt="Cup Final Background"
@@ -148,6 +159,24 @@
   </footer>
 
   <script>
+// Cup Final Hero Dismiss
+document.addEventListener('DOMContentLoaded', () => {
+  const cupFinalHero = document.getElementById('cupFinalHero');
+  const closeHero = document.getElementById('closeHero');
+
+  if (closeHero && cupFinalHero) {
+    closeHero.addEventListener('click', () => {
+      // Fade out animation
+      cupFinalHero.classList.add('opacity-0', 'translate-y-[-20px]');
+      cupFinalHero.classList.remove('py-12');
+      setTimeout(() => {
+        cupFinalHero.style.display = 'none';
+      }, 400);
+    });
+  }
+});
+
+    
     lucide.createIcons();
 
     // Burger menu toggle
@@ -199,6 +228,7 @@
   </script>
 </body>
 </html>
+
 
 
 
