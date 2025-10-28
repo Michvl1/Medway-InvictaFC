@@ -51,39 +51,7 @@
       <h2 class="text-5xl md:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-[#FFFFFF] to-white drop-shadow-lg">
         Welcome to Medway Invicta FC
         
-  <!-- Cup Final Hero -->
-  <section id="cupFinalHero" class="relative bg-gradient-to-r from-red-800 via-red-900 to-black text-white text-center py-12 px-4 overflow-hidden transition-all duration-500">
-    <!-- Close Button -->
-    <button id="closeHero" class="absolute top-4 right-4 text-white hover:text-red-400 transition">
-      <i data-lucide="x" class="w-7 h-7"></i>
-    </button>
 
-    <div class="relative z-10 max-w-3xl mx-auto">
-      <h2 class="text-4xl md:text-5xl font-extrabold mb-4 uppercase tracking-wide">
-        🏆 Cup Final Announcement 🏆
-      </h2>
-      <p class="text-lg md:text-xl mb-6 text-gray-200">
-        Medway Invicta FC will face <span class="text-red-400 font-semibold">Quested First</span> in the
-        <span class="text-red-400 font-semibold">Pre-Season Cup Final</span>!
-      </p>
-      <p class="text-md md:text-lg mb-8 text-gray-300">
-        <strong>Date:</strong> 27th October 2025 — <strong>Kick-off:</strong> 8:00 PM  
-        <br />
-        <strong>Venue:</strong> Star Meadow Sports Ground
-      </p>
-      <a href="Fixtures.html">
-        <button class="bg-red-600 hover:bg-red-500 px-8 py-3 rounded-full text-lg font-medium transition shadow-lg">
-          View Full Fixtures
-        </button>
-      </a>
-    </div>
-
-    <!-- Optional Background Image -->
-    <img src="IMG_3421.jpeg" alt="Cup Final Background"
-         class="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none" />
-  </section>
-
-  </section>
 
       </h2>
       <p class="text-lg text-gray-200 max-w-xl mx-auto mb-8">
@@ -155,22 +123,6 @@
   </footer>
 
   <script>
-// Cup Final Hero Dismiss
-document.addEventListener('DOMContentLoaded', () => {
-  const cupFinalHero = document.getElementById('cupFinalHero');
-  const closeHero = document.getElementById('closeHero');
-
-  if (closeHero && cupFinalHero) {
-    closeHero.addEventListener('click', () => {
-      // Fade out animation
-      cupFinalHero.classList.add('opacity-0', 'translate-y-[-20px]');
-      cupFinalHero.classList.remove('py-12');
-      setTimeout(() => {
-        cupFinalHero.style.display = 'none';
-      }, 400);
-    });
-  }
-});
 
     
     lucide.createIcons();
@@ -224,6 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
   </script>
 </body>
 </html>
+
 
 
 
