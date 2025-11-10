@@ -109,9 +109,9 @@
     tbody.innerHTML = '';
     rows.forEach((row, index) => {
       row.children[0].innerText = index + 1; // re-rank
-      // Highlight top scorers (7 goals)
+      // Highlight top scorers (8 goals)
       const goals = parseInt(row.children[3].innerText.trim());
-      if (goals >= 7) {
+      if (goals >= 8) {
         row.classList.add('bg-yellow-400', 'text-black', 'font-bold', 'hover:bg-yellow-300');
       } else {
         row.classList.add('hover:bg-red-900', 'transition');
