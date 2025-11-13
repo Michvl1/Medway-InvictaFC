@@ -67,6 +67,14 @@
 
   <!-- Info Cards -->
   <section class="grid grid-cols-1 md:grid-cols-3 gap-6 px-6 py-12">
+    
+   <!-- Matchday Countdown -->
+  <section class="py-12 text-center bg-gradient-to-b from-red-950 to-black border-t border-red-600">
+    <h2 class="text-3xl font-bold mb-4">Next Matchday Countdown</h2>
+    <p class="text-gray-300 mb-6">We play every Sunday at 10:30 AM</p>
+    <div id="countdown" class="text-5xl font-extrabold text-red-400 tracking-widest animate-pulse"></div>
+  </section>
+
     <!-- Squad -->
     <a href="Team.html" class="bg-red-950 rounded-2xl p-6 shadow-lg text-center hover:bg-red-900 transition">
       <div class="flex justify-center mb-4">
@@ -173,9 +181,48 @@
     });
 
     renderNews();
+
+        // --- MATCHDAY COUNTDOWN ---
+    function getNextSundayAt8AM() {
+      const now = new Date();
+      const nextSunday = new Date(now);
+      nextSunday.setDate(now.getDate() + ((7 - now.getDay()) % 7)); // next Sunday (or today if Sunday)
+      nextSunday.setHours(10, 0, 0, 0); // 10:00 AM
+
+      // If it's already past 10 AM on Sunday, move to next week
+      if (now > nextSunday) {
+        nextSunday.setDate(nextSunday.getDate() + 7);
+      }
+      return nextSunday;
+    }
+
+    function updateCountdown() {
+      const countdownEl = document.getElementById('countdown');
+      const now = new Date();
+      const nextMatch = getNextSundayAt8AM();
+      const diff = nextMatch - now;
+
+      if (diff <= 0) {
+        countdownEl.textContent = "It's Matchday!";
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    // Run every second
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
   </script>
 </body>
 </html>
+
 
 
 
