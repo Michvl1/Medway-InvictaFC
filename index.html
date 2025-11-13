@@ -5,30 +5,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Medway Invicta FC</title>
   <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-    .dark-theme {
-      --tw-gradient-from: #000000;
-      --tw-gradient-to: #1a1a1a;
-      background-image: linear-gradient(to bottom right, var(--tw-gradient-from), var(--tw-gradient-to));
-      color: #e5e5e5;
-    }
+   <style>
+  /* --- Default (Home Kit) Theme: Red & Black --- */
+  body {
+    background-image: linear-gradient(to bottom right, #7f1d1d, #000000);
+    color: #ffffff;
+  }
 
-    .dark-theme header,
-    .dark-theme footer,
-    .dark-theme section {
-      background: rgba(0, 0, 0, 0.8);
-      border-color: #444;
-    }
+  /* --- Away Kit Theme: Blue & Yellow --- */
+  .away-theme {
+    --tw-gradient-from: #002366; /* deep royal blue */
+    --tw-gradient-to: #ffcc00;   /* bright yellow */
+    background-image: linear-gradient(to bottom right, var(--tw-gradient-from), var(--tw-gradient-to));
+    color: #001a33; /* dark navy text for good contrast */
+  }
 
-    .dark-theme a {
-      color: #f87171; /* slightly muted red */
-    }
+  .away-theme header,
+  .away-theme footer,
+  .away-theme section {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #ffcc00;
+  }
 
-    .dark-theme #themeToggle {
-      background-color: #333;
-      color: #f87171;
-    }
-  </style>
+  .away-theme a {
+    color: #002366;
+  }
+
+  .away-theme #themeToggle {
+    background-color: #002366;
+    color: #ffcc00;
+  }
+
+  .away-theme button,
+  .away-theme .bg-red-950,
+  .away-theme .bg-red-900,
+  .away-theme .bg-red-600 {
+    background-color: #002366 !important;
+  }
+
+  .away-theme .hover\:bg-red-500:hover,
+  .away-theme .hover\:bg-red-900:hover {
+    background-color: #003399 !important;
+  }
+
+  .away-theme .text-red-400,
+  .away-theme .border-red-600 {
+    color: #ffcc00 !important;
+    border-color: #ffcc00 !important;
+  }
+</style>
+
 
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
@@ -248,27 +274,30 @@
     // Run every second
     updateCountdown();
     setInterval(updateCountdown, 1000);
-    // --- DARK THEME TOGGLE ---
-    const themeToggle = document.getElementById('themeToggle');
-    const body = document.body;
+    
+   // --- AWAY THEME TOGGLE ---
+const themeToggle = document.getElementById('themeToggle');
+const body = document.body;
 
-    // Load saved theme preference
-    if (localStorage.getItem('theme') === 'dark') {
-      body.classList.add('dark-theme');
-      themeToggle.textContent = '☀️ Light Mode';
-    }
+// Load saved preference
+if (localStorage.getItem('theme') === 'away') {
+  body.classList.add('away-theme');
+  themeToggle.textContent = '🏠 Home Theme';
+}
 
-    themeToggle.addEventListener('click', () => {
-      body.classList.toggle('dark-theme');
-      const darkModeEnabled = body.classList.contains('dark-theme');
+themeToggle.addEventListener('click', () => {
+  body.classList.toggle('away-theme');
+  const awayThemeEnabled = body.classList.contains('away-theme');
 
-      themeToggle.textContent = darkModeEnabled ? '☀️ Light Mode' : '🌙 Dark Mode';
-      localStorage.setItem('theme', darkModeEnabled ? 'dark' : 'light');
-    });
+  themeToggle.textContent = awayThemeEnabled ? '🏠 Home Theme' : '💛 Away Theme';
+  localStorage.setItem('theme', awayThemeEnabled ? 'away' : 'home');
+});
+
 
   </script>
 </body>
 </html>
+
 
 
 
