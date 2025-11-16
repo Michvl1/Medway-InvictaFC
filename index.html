@@ -289,7 +289,7 @@ themeToggle.addEventListener('click', () => {
   body.classList.toggle('away-theme');
   const awayThemeEnabled = body.classList.contains('away-theme');
 
-  themeToggle.textContent = awayThemeEnabled ? '🏠 Home Theme' : '💛 Away Theme';
+  themeToggle.textContent = awayThemeEnabled ? '🏠 Home Theme' : ' Away Theme';
   localStorage.setItem('theme', awayThemeEnabled ? 'away' : 'home');
 });
 
@@ -297,6 +297,7 @@ themeToggle.addEventListener('click', () => {
   </script>
 </body>
 </html>
+
 
 
 
