@@ -17,11 +17,11 @@
     </h1>
 
     <nav class="hidden md:flex space-x-6 text-sm font-medium">
-      <a href="index.html" class="hover:text-red-400">Home</a>
-      <a href="Team.html" class="text-red-400">Team</a>
-      <a href="Fixtures.html" class="hover:text-red-400">Fixtures</a>
-      <a href="Standings.html" class="hover:text-red-400">Standings</a>
-      <a href="Contact.html" class="hover:text-red-400">Contact</a>
+      <a href="#" class="hover:text-red-400">Home</a>
+      <a href="#" class="text-red-400">Team</a>
+      <a href="#" class="hover:text-red-400">Fixtures</a>
+      <a href="#" class="hover:text-red-400">Standings</a>
+      <a href="#" class="hover:text-red-400">Contact</a>
     </nav>
 
     <button id="burger" class="md:hidden">
@@ -40,7 +40,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
       
       <!-- Card -->
-      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 hover:shadow-red-900/50 transition duration-300">
+      <div onclick="openCard(this)" data-name="Evan Longman" data-pos="Goalkeeper" data-img="EVAN.jpg" data-pace="50" data-sho="20" data-pas="60" data-dri="55" data-def="70" data-phy="65" data-type="gold" class="group cursor-pointer bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 hover:shadow-red-900/50 transition duration-300">
         <div class="relative inline-block">
           <img src="EVAN.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600 group-hover:border-red-400 transition">
         </div>
@@ -48,7 +48,7 @@
         <p class="text-red-400 text-sm">Goalkeeper</p>
       </div>
 
-      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 hover:shadow-red-900/50 transition duration-300">
+      <div onclick="openCard(this)" data-name="Ben Van-de-Peer" data-pos="Defender" data-img="BEN.jpeg" data-pace="65" data-sho="40" data-pas="70" data-dri="60" data-def="75" data-phy="72" data-type="silver" class="group cursor-pointer bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 hover:shadow-red-900/50 transition duration-300">
         <img src="BEN.jpeg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600 group-hover:border-red-400 transition">
         <h3 class="text-lg font-semibold">Ben Van-de-Peer</h3>
         <p class="text-red-400 text-sm">Defender</p>
@@ -216,13 +216,100 @@
     </div>
   </section>
 
+  <!-- Player Card Modal -->
+  <div id="playerModal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50">
+    <div id="card" class="w-80 rounded-2xl p-6 text-center shadow-xl relative">
+      <button onclick="closeCard()" class="absolute top-2 right-3 text-white text-xl">×</button>
+      <img id="cardImg" class="mx-auto mb-3 rounded-full h-24 w-24 object-cover border-4">
+      <h3 id="cardName" class="text-xl font-bold"></h3>
+      <p id="cardPos" class="mb-3"></p>
+
+      <div class="grid grid-cols-3 gap-2 text-sm">
+        <div>PACE<br><span id="pace"></span></div>
+        <div>SHO<br><span id="sho"></span></div>
+        <div>PAS<br><span id="pas"></span></div>
+        <div>DRI<br><span id="dri"></span></div>
+        <div>DEF<br><span id="def"></span></div>
+        <div>PHY<br><span id="phy"></span></div>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="text-center border-t border-red-600 py-6 text-sm text-gray-400">
     &copy; 2026 Medway Invicta FC. Built with pride.
   </footer>
 
   <script>
+    // Auto-apply stats to all players
+    const stats = {
+      "Samuel Shobande": {sho:11,type:"rare"},
+      "Michael Shobande": {sho:11,type:"gold"},
+      "Thomas Ngegba": {sho:8,type:"gold"},
+      "Ayo Jimoh": {sho:8,type:"gold"},
+      "Owen Longman": {sho:8,type:"silver"},
+      "Temi Ayetigbo": {sho:7,type:"gold"},
+      "Jamie Blackham": {sho:5,type:"silver"},
+      "Matthew Thomas": {sho:5,type:"silver"},
+      "Yeni Yusuph": {sho:3,type:"bronze"},
+      "Adriano Anglin": {sho:2,type:"bronze"},
+      "James Rocha": {sho:2,type:"bronze"},
+      "Michael Hurcomb": {sho:1,type:"bronze"},
+      "Abdul-Raheem Sunmonu": {sho:1,type:"bronze"},
+      "Connor Mudima": {sho:1,type:"bronze"},
+      "Toby Ogundemuren": {sho:0,type:"silver"},
+      "Jordan Buckfield-Waller": {sho:0,type:"silver"}
+    };
+
+    document.querySelectorAll('.group').forEach(card => {
+      const name = card.querySelector('h3')?.innerText;
+      if(stats[name]){
+        card.setAttribute('onclick','openCard(this)');
+        card.dataset.name = name;
+        card.dataset.pos = card.querySelector('p')?.innerText;
+        card.dataset.img = card.querySelector('img')?.getAttribute('src');
+        card.dataset.pace = 70;
+        card.dataset.pas = 70;
+        card.dataset.dri = 70;
+        card.dataset.def = 70;
+        card.dataset.phy = 70;
+        card.dataset.sho = stats[name].sho;
+        card.dataset.type = stats[name].type;
+      }
+    });
+
     lucide.createIcons();
+    lucide.createIcons();
+
+    function openCard(el){
+      const modal = document.getElementById('playerModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+
+      document.getElementById('cardName').innerText = el.dataset.name;
+      document.getElementById('cardPos').innerText = el.dataset.pos;
+      document.getElementById('cardImg').src = el.dataset.img;
+
+      document.getElementById('pace').innerText = el.dataset.pace;
+      document.getElementById('sho').innerText = el.dataset.sho;
+      document.getElementById('pas').innerText = el.dataset.pas;
+      document.getElementById('dri').innerText = el.dataset.dri;
+      document.getElementById('def').innerText = el.dataset.def;
+      document.getElementById('phy').innerText = el.dataset.phy;
+
+      const card = document.getElementById('card');
+      const type = el.dataset.type;
+
+      if(type === 'gold') card.className = 'w-80 rounded-2xl p-6 text-center bg-gradient-to-br from-yellow-400 to-yellow-700 text-black';
+      else if(type === 'silver') card.className = 'w-80 rounded-2xl p-6 text-center bg-gradient-to-br from-gray-300 to-gray-500 text-black';
+      else if(type === 'bronze') card.className = 'w-80 rounded-2xl p-6 text-center bg-gradient-to-br from-amber-600 to-amber-800 text-white';
+      else if(type === 'rare') card.className = 'w-80 rounded-2xl p-6 text-center bg-gradient-to-br from-purple-500 via-pink-500 to-red-500 text-white animate-pulse';
+    }
+
+    function closeCard(){
+      document.getElementById('playerModal').classList.add('hidden');
+    }
+
     const burger = document.getElementById('burger');
     burger.addEventListener('click', () => alert('Add mobile menu here'));
   </script>
