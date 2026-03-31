@@ -7,251 +7,224 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
-<body class="bg-gradient-to-br from-red-900 to-black text-white font-sans">
+<body class="bg-gradient-to-br from-black via-red-950 to-black text-white font-sans">
 
   <!-- Header -->
-  <header class="flex justify-between items-center p-6 border-b border-red-600 relative">
+  <header class="flex justify-between items-center p-6 border-b border-red-600 backdrop-blur-md bg-black/40 sticky top-0 z-50">
     <h1 class="flex items-center space-x-3 text-3xl font-bold tracking-wide">
-      <img src="MI logo.jpg" alt="Medway Invicta FC Logo" class="h-10 w-10 object-contain" />
-      <span>Medway Invicta FC</span>
+      <img src="MI logo.jpg" alt="Logo" class="h-10 w-10 object-contain" />
+      <span class="bg-gradient-to-r from-red-500 to-red-300 bg-clip-text text-transparent">Medway Invicta FC</span>
     </h1>
 
-    <!-- Desktop Nav -->
-    <nav class="hidden md:flex space-x-6">
-      <a href="index.html" class="hover:text-red-400 transition">Home</a>
-      <a href="Team.html" class="hover:text-red-400 transition">Team</a>
-      <a href="Fixtures.html" class="hover:text-red-400 transition">Fixtures</a>
-      <a href="Standings.html" class="hover:text-red-400 transition">Standings</a>
-      <a href="Contact.html" class="hover:text-red-400 transition">Contact</a>
-      <a href="Gallery.html" class="hover:text-red-400 transition">Gallery</a>
-      <a href="GA.html" class="hover:text-red-400 transition">Stats</a>
+    <nav class="hidden md:flex space-x-6 text-sm font-medium">
+      <a href="#" class="hover:text-red-400">Home</a>
+      <a href="#" class="text-red-400">Team</a>
+      <a href="#" class="hover:text-red-400">Fixtures</a>
+      <a href="#" class="hover:text-red-400">Standings</a>
+      <a href="#" class="hover:text-red-400">Contact</a>
     </nav>
 
-    <!-- Burger Icon -->
     <button id="burger" class="md:hidden">
-      <i data-lucide="menu" class="w-8 h-8 text-white"></i>
+      <i data-lucide="menu" class="w-8 h-8"></i>
     </button>
-
-    <!-- Mobile Menu -->
-    <div id="mobileMenu" class="absolute top-full right-6 mt-2 bg-red-950 border border-red-600 rounded-lg shadow-lg w-40 flex-col items-start p-4 space-y-2 hidden z-50">
-      <a href="index.html" class="block hover:text-red-400 transition">Home</a>
-      <a href="Team.html" class="block hover:text-red-400 transition">Team</a>
-      <a href="Fixtures.html" class="text-red-400 font-semibold">Fixtures</a>
-      <a href="Standings.html" class="block hover:text-red-400 transition">Standings</a>
-      <a href="Contact.html" class="block hover:text-red-400 transition">Contact</a>
-      <a href="Gallery.html" class="block hover:text-red-400 transition">Gallery</a>
-      <a href="GA.html" class="block hover:text-red-400 transition">Stats</a>
-    </div>
   </header>
 
-  <!-- Squad Section -->
+  <!-- Hero -->
   <section class="text-center py-16 px-4">
-    <h2 class="text-5xl font-extrabold mb-6">Meet Our Squad</h2>
-    <p class="text-lg max-w-xl mx-auto text-gray-300 mb-12">
-      These are the athletes who wear the badge with pride and give their all every game.
-    </p>
+    <h2 class="text-5xl md:text-6xl font-extrabold mb-4 bg-gradient-to-r from-red-500 to-red-300 bg-clip-text text-transparent">Our Squad</h2>
+    <p class="text-gray-400 max-w-2xl mx-auto">Meet the players representing Medway Invicta FC. Strength, passion, and unity on and off the pitch.</p>
+  </section>
 
-   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 px-4 max-w-6xl mx-auto">
-      <!-- Player Card -->
-      <div class="bg-red-950 rounded-xl p-6 text-center shadow hover:bg-red-900 transition">
-        <img src="EVAN.jpg" alt="Player 1" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-xl font-semibold">Evan Longman</h3>
-        <p class="text-red-400">Goalkeeper</p>
-      </div>
-
-      <div class="bg-red-950 rounded-xl p-6 text-center shadow hover:bg-red-900 transition">
-        <img src="BEN.jpeg" alt="Player 2" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-xl font-semibold">Ben Van-de-Peer</h3>
-        <p class="text-red-400">Defender</p>
-      </div>
-
-      <div class="bg-red-950 rounded-xl p-6 text-center shadow hover:bg-red-900 transition">
-        <img src="JAMIE.jpeg" alt="Player 3" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-xl font-semibold">Jamie Blackham</h3>
-        <p class="text-red-400">Midfielder</p>
-      </div>
-
-      <div class="bg-red-950 rounded-xl p-6 text-center shadow hover:bg-red-900 transition">
-        <img src="CONNOR.jpeg" alt="Player 3" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-xl font-semibold">Connor Mudima</h3>
-        <p class="text-red-400">Midfielder</p>
-      </div>
-
-      <div class="bg-red-950 rounded-xl p-6 text-center shadow hover:bg-red-900 transition">
-        <img src="placeholder.jpg" alt="Player 3" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-xl font-semibold">William Sims</h3>
-        <p class="text-red-400">Midfielder</p>
-      </div>
-
-      <div class="bg-red-950 rounded-xl p-6 text-center shadow hover:bg-red-900 transition">
-        <img src="placeholder.jpg" alt="Player 3" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-xl font-semibold">Abdul-Raheem Sunmonu</h3>
-        <p class="text-red-400">Midfielder</p>
-      </div>
-
-      <div class="bg-red-950 rounded-xl p-6 text-center shadow hover:bg-red-900 transition">
-        <img src="IMG_5046.jpeg" alt="Player 3" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-xl font-semibold">Michael Shobande</h3>
-        <p class="text-red-400">Winger</p>
-      </div>
-
-      <div class="bg-red-950 rounded-xl p-6 text-center shadow hover:bg-red-900 transition">
-        <img src="placeholder.jpg" alt="Player 3" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-xl font-semibold">Toby Ogundemuren</h3>
-        <p class="text-red-400">Midfielder</p>
-      </div>
-
-      <div class="bg-red-950 rounded-xl p-6 text-center shadow hover:bg-red-900 transition">
-        <img src="IMG_5044.jpeg" alt="Player 3" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-xl font-semibold">Samuel Shobande</h3>
-        <p class="text-red-400">Striker</p>
-      </div>
-
-      <div class="bg-red-950 rounded-xl p-6 text-center shadow hover:bg-red-900 transition">
-        <img src="AJ.jpeg" alt="Player 3" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-xl font-semibold">Ayo Jimoh</h3>
-        <p class="text-red-400">Striker</p>
-      </div>
-
-      <div class="bg-red-950 rounded-xl p-6 text-center shadow hover:bg-red-900 transition">
-        <img src="OWEN.jpeg" alt="Player 3" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-xl font-semibold">Owen Longman</h3>
-        <p class="text-red-400">Defender</p>
-      </div>
-
-      <div class="bg-red-950 rounded-xl p-6 text-center shadow hover:bg-red-900 transition">
-        <img src="NASH.jpeg" alt="Player 3" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-xl font-semibold">Matthew Thomas</h3>
-        <p class="text-red-400">Winger</p>
-      </div>
-
-      <div class="bg-red-950 rounded-xl p-6 text-center shadow hover:bg-red-900 transition">
-        <img src="James.jpg" alt="Player 3" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-xl font-semibold">James Rocha</h3>
-        <p class="text-red-400">Defender</p>
-      </div>
+  <!-- Squad Grid -->
+  <section class="px-6 pb-16">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
       
-      <div class="bg-red-950 rounded-xl p-6 text-center shadow hover:bg-red-900 transition">
-        <img src="placeholder.jpg" alt="Player 3" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-xl font-semibold">Shaun Keen</h3>
-        <p class="text-red-400">Defender</p>
+      <!-- Card -->
+      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 hover:shadow-red-900/50 transition duration-300">
+        <div class="relative inline-block">
+          <img src="EVAN.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600 group-hover:border-red-400 transition">
+        </div>
+        <h3 class="text-lg font-semibold">Evan Longman</h3>
+        <p class="text-red-400 text-sm">Goalkeeper</p>
       </div>
 
-      <div class="bg-red-950 rounded-xl p-6 text-center shadow hover:bg-red-900 transition">
-        <img src="placeholder.jpg" alt="Player 3" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-xl font-semibold">Victor Okunowo</h3>
-        <p class="text-red-400">Midfielder</p>
+      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 hover:shadow-red-900/50 transition duration-300">
+        <img src="BEN.jpeg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600 group-hover:border-red-400 transition">
+        <h3 class="text-lg font-semibold">Ben Van-de-Peer</h3>
+        <p class="text-red-400 text-sm">Defender</p>
       </div>
 
-      <div class="bg-red-950 rounded-xl p-6 text-center shadow hover:bg-red-900 transition">
-        <img src="placeholder.jpg" alt="Player 3" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-xl font-semibold">Bolu Buraimoh</h3>
-        <p class="text-red-400">Midfielder</p>
+      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 hover:shadow-red-900/50 transition duration-300">
+        <img src="JAMIE.jpeg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600 group-hover:border-red-400 transition">
+        <h3 class="text-lg font-semibold">Jamie Blackham</h3>
+        <p class="text-red-400 text-sm">Midfielder</p>
       </div>
 
-      <div class="bg-red-950 rounded-xl p-6 text-center shadow hover:bg-red-900 transition">
-        <img src="MERCER.jpeg" alt="Player 3" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-xl font-semibold">Tom Mercer</h3>
-        <p class="text-red-400">Midfielder</p>
+            
+      <!-- Players -->
+      
+      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 hover:shadow-red-900/50 transition duration-300">
+        <img src="CONNOR.jpeg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600 group-hover:border-red-400 transition">
+        <h3 class="text-lg font-semibold">Connor Mudima</h3>
+        <p class="text-red-400 text-sm">Midfielder</p>
       </div>
 
-       <div class="bg-red-950 rounded-xl p-6 text-center shadow hover:bg-red-900 transition">
-        <img src="placeholder.jpg" alt="Player 3" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-xl font-semibold">Jordan Buckfield-Waller</h3>
-        <p class="text-red-400">Defender</p>
+      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
+        <img src="placeholder.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
+        <h3 class="text-lg font-semibold">William Sims</h3>
+        <p class="text-red-400 text-sm">Midfielder</p>
       </div>
 
-      <div class="bg-red-950 rounded-xl p-6 text-center shadow hover:bg-red-900 transition">
-        <img src="placeholder.jpg" alt="Player 3" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-xl font-semibold">Michael Hurcomb</h3>
-        <p class="text-red-400">Striker</p>
+      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
+        <img src="placeholder.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
+        <h3 class="text-lg font-semibold">Abdul-Raheem Sunmonu</h3>
+        <p class="text-red-400 text-sm">Midfielder</p>
       </div>
 
-      <div class="bg-red-950 rounded-xl p-6 text-center shadow hover:bg-red-900 transition">
-        <img src="IMG_5047.jpeg" alt="Player 3" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-xl font-semibold">Adriano Anglin</h3>
-        <p class="text-red-400">Winger</p>
+      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
+        <img src="IMG_5046.jpeg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
+        <h3 class="text-lg font-semibold">Michael Shobande</h3>
+        <p class="text-red-400 text-sm">Winger</p>
       </div>
 
-      <div class="bg-red-950 rounded-xl p-6 text-center shadow hover:bg-red-900 transition">
-        <img src="Temi.jpg" alt="Player 3" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-xl font-semibold">Temi Ayetigbo</h3>
-        <p class="text-red-400">Winger</p>
+      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
+        <img src="placeholder.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
+        <h3 class="text-lg font-semibold">Toby Ogundemuren</h3>
+        <p class="text-red-400 text-sm">Midfielder</p>
       </div>
 
-     <div class="bg-red-950 rounded-xl p-6 text-center shadow hover:bg-red-900 transition">
-        <img src="Caleb Luckhurst.jpg" alt="Player 3" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-xl font-semibold">Caleb Luckhurst</h3>
-        <p class="text-red-400">Midfielder</p>
+      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
+        <img src="IMG_5044.jpeg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
+        <h3 class="text-lg font-semibold">Samuel Shobande</h3>
+        <p class="text-red-400 text-sm">Striker</p>
       </div>
 
-      <div class="bg-red-950 rounded-xl p-6 text-center shadow hover:bg-red-900 transition">
-        <img src="placeholder.jpg" alt="Player 3" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-xl font-semibold">Oge Agwu</h3>
-        <p class="text-red-400">Midfielder</p>
+      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
+        <img src="AJ.jpeg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
+        <h3 class="text-lg font-semibold">Ayo Jimoh</h3>
+        <p class="text-red-400 text-sm">Striker</p>
       </div>
 
-     <div class="bg-red-950 rounded-xl p-6 text-center shadow hover:bg-red-900 transition">
-        <img src="placeholder.jpg" alt="Player 3" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-xl font-semibold">Yeni Yusuph</h3>
-        <p class="text-red-400">Striker</p>
+      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
+        <img src="OWEN.jpeg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
+        <h3 class="text-lg font-semibold">Owen Longman</h3>
+        <p class="text-red-400 text-sm">Defender</p>
       </div>
 
-     <div class="bg-red-950 rounded-xl p-6 text-center shadow hover:bg-red-900 transition">
-        <img src="placeholder.jpg" alt="Player 3" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-xl font-semibold">Yomi Yusuph</h3>
-        <p class="text-red-400">Defender</p>
+      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
+        <img src="NASH.jpeg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
+        <h3 class="text-lg font-semibold">Matthew Thomas</h3>
+        <p class="text-red-400 text-sm">Winger</p>
       </div>
 
-     <div class="bg-red-950 rounded-xl p-6 text-center shadow hover:bg-red-900 transition">
-        <img src="placeholder.jpg" alt="Player 3" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-xl font-semibold">Thomas Ngegba</h3>
-        <p class="text-red-400">Striker</p>
+      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
+        <img src="James.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
+        <h3 class="text-lg font-semibold">James Rocha</h3>
+        <p class="text-red-400 text-sm">Defender</p>
       </div>
 
-     
-     <div class="bg-red-950 rounded-xl p-6 text-center shadow hover:bg-red-900 transition">
-        <img src="placeholder.jpg" alt="Player 3" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-xl font-semibold">Liam Riley</h3>
-        <p class="text-red-400">Goalkeeper</p>
+      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
+        <img src="placeholder.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
+        <h3 class="text-lg font-semibold">Shaun Keen</h3>
+        <p class="text-red-400 text-sm">Defender</p>
       </div>
 
-     <div class="bg-red-950 rounded-xl p-6 text-center shadow hover:bg-red-900 transition">
-        <img src="Boye signed.png" alt="Player 3" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-xl font-semibold">Boye Oloyede</h3>
-        <p class="text-red-400">Defender</p>
+      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
+        <img src="placeholder.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
+        <h3 class="text-lg font-semibold">Victor Okunowo</h3>
+        <p class="text-red-400 text-sm">Midfielder</p>
+      </div>
+
+      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
+        <img src="placeholder.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
+        <h3 class="text-lg font-semibold">Bolu Buraimoh</h3>
+        <p class="text-red-400 text-sm">Midfielder</p>
+      </div>
+
+      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
+        <img src="MERCER.jpeg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
+        <h3 class="text-lg font-semibold">Tom Mercer</h3>
+        <p class="text-red-400 text-sm">Midfielder</p>
+      </div>
+
+      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
+        <img src="placeholder.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
+        <h3 class="text-lg font-semibold">Jordan Buckfield-Waller</h3>
+        <p class="text-red-400 text-sm">Defender</p>
+      </div>
+
+      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
+        <img src="placeholder.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
+        <h3 class="text-lg font-semibold">Michael Hurcomb</h3>
+        <p class="text-red-400 text-sm">Striker</p>
+      </div>
+
+      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
+        <img src="IMG_5047.jpeg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
+        <h3 class="text-lg font-semibold">Adriano Anglin</h3>
+        <p class="text-red-400 text-sm">Winger</p>
+      </div>
+
+      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
+        <img src="Temi.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
+        <h3 class="text-lg font-semibold">Temi Ayetigbo</h3>
+        <p class="text-red-400 text-sm">Winger</p>
+      </div>
+
+      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
+        <img src="Caleb Luckhurst.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
+        <h3 class="text-lg font-semibold">Caleb Luckhurst</h3>
+        <p class="text-red-400 text-sm">Midfielder</p>
+      </div>
+
+      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
+        <img src="placeholder.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
+        <h3 class="text-lg font-semibold">Oge Agwu</h3>
+        <p class="text-red-400 text-sm">Midfielder</p>
+      </div>
+
+      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
+        <img src="placeholder.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
+        <h3 class="text-lg font-semibold">Yeni Yusuph</h3>
+        <p class="text-red-400 text-sm">Striker</p>
+      </div>
+
+      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
+        <img src="placeholder.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
+        <h3 class="text-lg font-semibold">Yomi Yusuph</h3>
+        <p class="text-red-400 text-sm">Defender</p>
+      </div>
+
+      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
+        <img src="placeholder.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
+        <h3 class="text-lg font-semibold">Thomas Ngegba</h3>
+        <p class="text-red-400 text-sm">Striker</p>
+      </div>
+
+      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
+        <img src="placeholder.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
+        <h3 class="text-lg font-semibold">Liam Riley</h3>
+        <p class="text-red-400 text-sm">Goalkeeper</p>
+      </div>
+
+      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
+        <img src="Boye signed.png" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
+        <h3 class="text-lg font-semibold">Boye Oloyede</h3>
+        <p class="text-red-400 text-sm">Defender</p>
       </div>
 
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="text-center border-t border-red-600 py-6 text-sm">
-    &copy; 2025 Medway Invicta FC. All rights reserved.
+  <footer class="text-center border-t border-red-600 py-6 text-sm text-gray-400">
+    &copy; 2026 Medway Invicta FC. Built with pride.
   </footer>
 
   <script>
     lucide.createIcons();
     const burger = document.getElementById('burger');
-    const mobileMenu = document.getElementById('mobileMenu');
-    burger.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
-    });
+    burger.addEventListener('click', () => alert('Add mobile menu here'));
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
