@@ -5,313 +5,129 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Our Squad - Medway Invicta FC</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
+
 <body class="bg-gradient-to-br from-black via-red-950 to-black text-white font-sans">
 
-  <!-- Header -->
-  <header class="flex justify-between items-center p-6 border-b border-red-600 backdrop-blur-md bg-black/40 sticky top-0 z-50">
-    <h1 class="flex items-center space-x-3 text-3xl font-bold tracking-wide">
-      <img src="MI logo.jpg" alt="Logo" class="h-10 w-10 object-contain" />
-      <span class="bg-gradient-to-r from-red-500 to-red-300 bg-clip-text text-transparent">Medway Invicta FC</span>
-    </h1>
+<header class="p-6 border-b border-red-600 text-center text-2xl font-bold">
+  Medway Invicta FC
+</header>
 
-    <nav class="hidden md:flex space-x-6 text-sm font-medium">
-      <a href="#" class="hover:text-red-400">Home</a>
-      <a href="#" class="text-red-400">Team</a>
-      <a href="#" class="hover:text-red-400">Fixtures</a>
-      <a href="#" class="hover:text-red-400">Standings</a>
-      <a href="#" class="hover:text-red-400">Contact</a>
-    </nav>
+<section class="p-6 grid grid-cols-2 md:grid-cols-4 gap-6">
 
-    <button id="burger" class="md:hidden">
-      <i data-lucide="menu" class="w-8 h-8"></i>
-    </button>
-  </header>
+<script>
+const players = [
+"Evan Longman","Ben Van-de-Peer","Jamie Blackham","Connor Mudima","William Sims","Abdul-Raheem Sunmonu",
+"Michael Shobande","Toby Ogundemuren","Samuel Shobande","Ayo Jimoh","Owen Longman","Matthew Thomas",
+"James Rocha","Shaun Keen","Victor Okunowo","Bolu Buraimoh","Tom Mercer","Jordan Buckfield-Waller",
+"Michael Hurcomb","Adriano Anglin","Temi Ayetigbo","Caleb Luckhurst","Oge Agwu","Yeni Yusuph",
+"Yomi Yusuph","Thomas Ngegba","Liam Riley","Boye Oloyede"
+];
 
-  <!-- Hero -->
-  <section class="text-center py-16 px-4">
-    <h2 class="text-5xl md:text-6xl font-extrabold mb-4 bg-gradient-to-r from-red-500 to-red-300 bg-clip-text text-transparent">Our Squad</h2>
-    <p class="text-gray-400 max-w-2xl mx-auto">Meet the players representing Medway Invicta FC. Strength, passion, and unity on and off the pitch.</p>
-  </section>
+const positions = {
+"Evan Longman":"Goalkeeper","Ben Van-de-Peer":"Defender","Jamie Blackham":"Midfielder","Connor Mudima":"Midfielder",
+"William Sims":"Midfielder","Abdul-Raheem Sunmonu":"Defender","Michael Shobande":"Winger","Toby Ogundemuren":"Midfielder",
+"Samuel Shobande":"Striker","Ayo Jimoh":"Striker","Owen Longman":"Defender","Matthew Thomas":"Winger",
+"James Rocha":"Defender","Shaun Keen":"Defender","Victor Okunowo":"Midfielder","Bolu Buraimoh":"Midfielder",
+"Tom Mercer":"Midfielder","Jordan Buckfield-Waller":"Defender","Michael Hurcomb":"Striker","Adriano Anglin":"Winger",
+"Temi Ayetigbo":"Winger","Caleb Luckhurst":"Midfielder","Oge Agwu":"Midfielder","Yeni Yusuph":"Striker",
+"Yomi Yusuph":"Defender","Thomas Ngegba":"Striker","Liam Riley":"Goalkeeper","Boye Oloyede":"Defender"
+};
 
-  <!-- Squad Grid -->
-  <section class="px-6 pb-16">
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-      
-      <!-- Card -->
-      <div onclick="openCard(this)" data-name="Evan Longman" data-pos="Goalkeeper" data-img="EVAN.jpg" data-pace="50" data-sho="20" data-pas="60" data-dri="55" data-def="70" data-phy="65" data-type="gold" class="group cursor-pointer bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 hover:shadow-red-900/50 transition duration-300">
-        <div class="relative inline-block">
-          <img src="EVAN.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600 group-hover:border-red-400 transition">
-        </div>
-        <h3 class="text-lg font-semibold">Evan Longman</h3>
-        <p class="text-red-400 text-sm">Goalkeeper</p>
-      </div>
+const stats = {
+"Samuel Shobande":{sho:11,type:"rare"},"Michael Shobande":{sho:11,type:"gold"},
+"Thomas Ngegba":{sho:8,type:"gold"},"Ayo Jimoh":{sho:8,type:"gold"},"Owen Longman":{sho:8,type:"silver"},
+"Temi Ayetigbo":{sho:7,type:"gold"},"Jamie Blackham":{sho:5,type:"silver"},"Matthew Thomas":{sho:5,type:"silver"},
+"Yeni Yusuph":{sho:3,type:"bronze"},"Adriano Anglin":{sho:2,type:"bronze"},"James Rocha":{sho:2,type:"bronze"},
+"Michael Hurcomb":{sho:1,type:"bronze"},"Abdul-Raheem Sunmonu":{sho:1,type:"bronze"},"Connor Mudima":{sho:1,type:"bronze"},
+"Toby Ogundemuren":{sho:0,type:"silver"},"Jordan Buckfield-Waller":{sho:0,type:"silver"}
+};
 
-      <div onclick="openCard(this)" data-name="Ben Van-de-Peer" data-pos="Defender" data-img="BEN.jpeg" data-pace="65" data-sho="40" data-pas="70" data-dri="60" data-def="75" data-phy="72" data-type="silver" class="group cursor-pointer bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 hover:shadow-red-900/50 transition duration-300">
-        <img src="BEN.jpeg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600 group-hover:border-red-400 transition">
-        <h3 class="text-lg font-semibold">Ben Van-de-Peer</h3>
-        <p class="text-red-400 text-sm">Defender</p>
-      </div>
+const container = document.currentScript.parentElement;
 
-      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 hover:shadow-red-900/50 transition duration-300">
-        <img src="JAMIE.jpeg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600 group-hover:border-red-400 transition">
-        <h3 class="text-lg font-semibold">Jamie Blackham</h3>
-        <p class="text-red-400 text-sm">Midfielder</p>
-      </div>
+players.forEach(name=>{
+  container.innerHTML += `
+  <div onclick="openCard('${name}')" class="bg-red-950 p-4 rounded-xl text-center cursor-pointer hover:scale-105 transition shadow-lg">
+    <img src="placeholder.jpg" class="h-20 w-20 mx-auto rounded-full mb-2">
+    <h3 class="font-semibold">${name}</h3>
+    <p class="text-red-400">${positions[name]}</p>
+  </div>`;
+});
+</script>
 
-            
-      <!-- Players -->
-      
-      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 hover:shadow-red-900/50 transition duration-300">
-        <img src="CONNOR.jpeg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600 group-hover:border-red-400 transition">
-        <h3 class="text-lg font-semibold">Connor Mudima</h3>
-        <p class="text-red-400 text-sm">Midfielder</p>
-      </div>
+</section>
 
-      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
-        <img src="placeholder.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-lg font-semibold">William Sims</h3>
-        <p class="text-red-400 text-sm">Midfielder</p>
-      </div>
+<!-- Modal -->
+<div id="playerModal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50">
 
-      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
-        <img src="placeholder.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-lg font-semibold">Abdul-Raheem Sunmonu</h3>
-        <p class="text-red-400 text-sm">Midfielder</p>
-      </div>
+  <div id="card" class="w-80 p-6 text-center relative text-white rounded-3xl overflow-hidden border border-white/20 shadow-2xl">
 
-      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
-        <img src="IMG_5046.jpeg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-lg font-semibold">Michael Shobande</h3>
-        <p class="text-red-400 text-sm">Winger</p>
-      </div>
+    <!-- subtle shine overlay -->
+    <div class="absolute inset-0 opacity-10 pointer-events-none bg-gradient-to-r from-transparent via-white to-transparent animate-pulse"></div>
 
-      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
-        <img src="placeholder.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-lg font-semibold">Toby Ogundemuren</h3>
-        <p class="text-red-400 text-sm">Midfielder</p>
-      </div>
+    <!-- Top badges -->
+    <div id="overall" class="absolute top-2 left-3 text-2xl font-bold"></div>
+    <div id="posBadge" class="absolute top-2 right-3 text-xs bg-black/40 px-2 py-1 rounded"></div>
 
-      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
-        <img src="IMG_5044.jpeg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-lg font-semibold">Samuel Shobande</h3>
-        <p class="text-red-400 text-sm">Striker</p>
-      </div>
+    <button onclick="closeCard()" class="absolute top-1 right-2 text-xl">×</button>
 
-      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
-        <img src="AJ.jpeg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-lg font-semibold">Ayo Jimoh</h3>
-        <p class="text-red-400 text-sm">Striker</p>
-      </div>
+    <h3 id="cardName" class="mt-6 text-lg font-bold"></h3>
+    <p id="cardPos" class="text-sm text-gray-200"></p>
 
-      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
-        <img src="OWEN.jpeg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-lg font-semibold">Owen Longman</h3>
-        <p class="text-red-400 text-sm">Defender</p>
-      </div>
-
-      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
-        <img src="NASH.jpeg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-lg font-semibold">Matthew Thomas</h3>
-        <p class="text-red-400 text-sm">Winger</p>
-      </div>
-
-      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
-        <img src="James.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-lg font-semibold">James Rocha</h3>
-        <p class="text-red-400 text-sm">Defender</p>
-      </div>
-
-      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
-        <img src="placeholder.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-lg font-semibold">Shaun Keen</h3>
-        <p class="text-red-400 text-sm">Defender</p>
-      </div>
-
-      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
-        <img src="placeholder.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-lg font-semibold">Victor Okunowo</h3>
-        <p class="text-red-400 text-sm">Midfielder</p>
-      </div>
-
-      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
-        <img src="placeholder.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-lg font-semibold">Bolu Buraimoh</h3>
-        <p class="text-red-400 text-sm">Midfielder</p>
-      </div>
-
-      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
-        <img src="MERCER.jpeg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-lg font-semibold">Tom Mercer</h3>
-        <p class="text-red-400 text-sm">Midfielder</p>
-      </div>
-
-      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
-        <img src="placeholder.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-lg font-semibold">Jordan Buckfield-Waller</h3>
-        <p class="text-red-400 text-sm">Defender</p>
-      </div>
-
-      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
-        <img src="placeholder.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-lg font-semibold">Michael Hurcomb</h3>
-        <p class="text-red-400 text-sm">Striker</p>
-      </div>
-
-      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
-        <img src="IMG_5047.jpeg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-lg font-semibold">Adriano Anglin</h3>
-        <p class="text-red-400 text-sm">Winger</p>
-      </div>
-
-      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
-        <img src="Temi.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-lg font-semibold">Temi Ayetigbo</h3>
-        <p class="text-red-400 text-sm">Winger</p>
-      </div>
-
-      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
-        <img src="Caleb Luckhurst.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-lg font-semibold">Caleb Luckhurst</h3>
-        <p class="text-red-400 text-sm">Midfielder</p>
-      </div>
-
-      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
-        <img src="placeholder.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-lg font-semibold">Oge Agwu</h3>
-        <p class="text-red-400 text-sm">Midfielder</p>
-      </div>
-
-      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
-        <img src="placeholder.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-lg font-semibold">Yeni Yusuph</h3>
-        <p class="text-red-400 text-sm">Striker</p>
-      </div>
-
-      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
-        <img src="placeholder.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-lg font-semibold">Yomi Yusuph</h3>
-        <p class="text-red-400 text-sm">Defender</p>
-      </div>
-
-      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
-        <img src="placeholder.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-lg font-semibold">Thomas Ngegba</h3>
-        <p class="text-red-400 text-sm">Striker</p>
-      </div>
-
-      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
-        <img src="placeholder.jpg" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-lg font-semibold">Liam Riley</h3>
-        <p class="text-red-400 text-sm">Goalkeeper</p>
-      </div>
-
-      <div class="group bg-gradient-to-br from-red-950 to-black rounded-2xl p-6 text-center shadow-lg hover:scale-105 transition duration-300">
-        <img src="Boye signed.png" class="mx-auto mb-4 rounded-full h-32 w-32 object-cover border-4 border-red-600">
-        <h3 class="text-lg font-semibold">Boye Oloyede</h3>
-        <p class="text-red-400 text-sm">Defender</p>
-      </div>
-
+    <!-- Stats -->
+    <div class="space-y-2 mt-4 text-sm">
+      <div>PACE<div class="bg-black/30 h-2 rounded"><div id="paceBar" class="h-2 bg-white rounded"></div></div></div>
+      <div>SHO<div class="bg-black/30 h-2 rounded"><div id="shoBar" class="h-2 bg-white rounded"></div></div></div>
+      <div>PAS<div class="bg-black/30 h-2 rounded"><div id="pasBar" class="h-2 bg-white rounded"></div></div></div>
+      <div>DRI<div class="bg-black/30 h-2 rounded"><div id="driBar" class="h-2 bg-white rounded"></div></div></div>
+      <div>DEF<div class="bg-black/30 h-2 rounded"><div id="defBar" class="h-2 bg-white rounded"></div></div></div>
+      <div>PHY<div class="bg-black/30 h-2 rounded"><div id="phyBar" class="h-2 bg-white rounded"></div></div></div>
     </div>
-  </section>
 
-  <!-- Player Card Modal -->
-  <div id="playerModal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50">
-    <div id="card" class="w-80 rounded-2xl p-6 text-center shadow-xl relative">
-      <button onclick="closeCard()" class="absolute top-2 right-3 text-white text-xl">×</button>
-      <img id="cardImg" class="mx-auto mb-3 rounded-full h-24 w-24 object-cover border-4">
-      <h3 id="cardName" class="text-xl font-bold"></h3>
-      <p id="cardPos" class="mb-3"></p>
-
-      <div class="grid grid-cols-3 gap-2 text-sm">
-        <div>PACE<br><span id="pace"></span></div>
-        <div>SHO<br><span id="sho"></span></div>
-        <div>PAS<br><span id="pas"></span></div>
-        <div>DRI<br><span id="dri"></span></div>
-        <div>DEF<br><span id="def"></span></div>
-        <div>PHY<br><span id="phy"></span></div>
-      </div>
-    </div>
   </div>
+</div>
 
-  <!-- Footer -->
-  <footer class="text-center border-t border-red-600 py-6 text-sm text-gray-400">
-    &copy; 2026 Medway Invicta FC. Built with pride.
-  </footer>
+<script>
+function openCard(name){
+  const pos = positions[name];
+  const s = stats[name] || {sho:5,type:"silver"};
 
-  <script>
-    // Auto-apply stats to all players
-    const stats = {
-      "Samuel Shobande": {sho:11,type:"rare"},
-      "Michael Shobande": {sho:11,type:"gold"},
-      "Thomas Ngegba": {sho:8,type:"gold"},
-      "Ayo Jimoh": {sho:8,type:"gold"},
-      "Owen Longman": {sho:8,type:"silver"},
-      "Temi Ayetigbo": {sho:7,type:"gold"},
-      "Jamie Blackham": {sho:5,type:"silver"},
-      "Matthew Thomas": {sho:5,type:"silver"},
-      "Yeni Yusuph": {sho:3,type:"bronze"},
-      "Adriano Anglin": {sho:2,type:"bronze"},
-      "James Rocha": {sho:2,type:"bronze"},
-      "Michael Hurcomb": {sho:1,type:"bronze"},
-      "Abdul-Raheem Sunmonu": {sho:1,type:"bronze"},
-      "Connor Mudima": {sho:1,type:"bronze"},
-      "Toby Ogundemuren": {sho:0,type:"silver"},
-      "Jordan Buckfield-Waller": {sho:0,type:"silver"}
-    };
+  const pace=70, pas=70, dri=70, def=70, phy=70;
 
-    document.querySelectorAll('.group').forEach(card => {
-      const name = card.querySelector('h3')?.innerText;
-      if(stats[name]){
-        card.setAttribute('onclick','openCard(this)');
-        card.dataset.name = name;
-        card.dataset.pos = card.querySelector('p')?.innerText;
-        card.dataset.img = card.querySelector('img')?.getAttribute('src');
-        card.dataset.pace = 70;
-        card.dataset.pas = 70;
-        card.dataset.dri = 70;
-        card.dataset.def = 70;
-        card.dataset.phy = 70;
-        card.dataset.sho = stats[name].sho;
-        card.dataset.type = stats[name].type;
-      }
-    });
+  document.getElementById('playerModal').classList.remove('hidden');
+  document.getElementById('playerModal').classList.add('flex');
 
-    lucide.createIcons();
-    lucide.createIcons();
+  document.getElementById('cardName').innerText=name;
+  document.getElementById('cardPos').innerText=pos;
+  document.getElementById('posBadge').innerText=pos;
 
-    function openCard(el){
-      const modal = document.getElementById('playerModal');
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
+  const overall=Math.round((pace+s.sho+pas+dri+def+phy)/6);
+  document.getElementById('overall').innerText=overall;
 
-      document.getElementById('cardName').innerText = el.dataset.name;
-      document.getElementById('cardPos').innerText = el.dataset.pos;
-      document.getElementById('cardImg').src = el.dataset.img;
+  const setBar=(id,val)=>{
+    const el=document.getElementById(id);
+    if(el) el.style.width=(val*10)+'%';
+  }
 
-      document.getElementById('pace').innerText = el.dataset.pace;
-      document.getElementById('sho').innerText = el.dataset.sho;
-      document.getElementById('pas').innerText = el.dataset.pas;
-      document.getElementById('dri').innerText = el.dataset.dri;
-      document.getElementById('def').innerText = el.dataset.def;
-      document.getElementById('phy').innerText = el.dataset.phy;
+  setBar('paceBar',pace);
+  setBar('shoBar',s.sho);
+  setBar('pasBar',pas);
+  setBar('driBar',dri);
+  setBar('defBar',def);
+  setBar('phyBar',phy);
 
-      const card = document.getElementById('card');
-      const type = el.dataset.type;
+  const card=document.getElementById('card');
 
-      if(type === 'gold') card.className = 'w-80 rounded-2xl p-6 text-center bg-gradient-to-br from-yellow-400 to-yellow-700 text-black';
-      else if(type === 'silver') card.className = 'w-80 rounded-2xl p-6 text-center bg-gradient-to-br from-gray-300 to-gray-500 text-black';
-      else if(type === 'bronze') card.className = 'w-80 rounded-2xl p-6 text-center bg-gradient-to-br from-amber-600 to-amber-800 text-white';
-      else if(type === 'rare') card.className = 'w-80 rounded-2xl p-6 text-center bg-gradient-to-br from-purple-500 via-pink-500 to-red-500 text-white animate-pulse';
-    }
+  if(s.type==='gold') card.style.background='linear-gradient(gold,orange)';
+  else if(s.type==='silver') card.style.background='linear-gradient(lightgray,gray)';
+  else if(s.type==='bronze') card.style.background='linear-gradient(#cd7f32,#8c4a1f)';
+  else if(s.type==='rare') card.style.background='linear-gradient(purple,pink,red)';
+}
 
-    function closeCard(){
-      document.getElementById('playerModal').classList.add('hidden');
-    }
+function closeCard(){
+  document.getElementById('playerModal').classList.add('hidden');
+}
+</script>
 
-    const burger = document.getElementById('burger');
-    burger.addEventListener('click', () => alert('Add mobile menu here'));
-  </script>
 </body>
 </html>
