@@ -9,43 +9,25 @@
 
 <body class="bg-gradient-to-br from-black via-red-950 to-black text-white font-sans">
 
-    <!-- Header -->
-  <header class="flex justify-between items-center p-6 border-b border-red-600 relative">
-    <h1 class="flex items-center space-x-3 text-3xl font-bold tracking-wide">
-      <img src="MI logo.jpg" alt="Medway Invicta FC Logo" class="h-12 w-12 object-contain"/>
-      <span>Medway Invicta FC</span>
-    </h1>
+<!-- Header -->
+<header class="flex justify-between items-center p-6 border-b border-red-600 relative">
+  <h1 class="flex items-center space-x-3 text-3xl font-bold tracking-wide">
+    <img src="MI logo.jpg" class="h-12 w-12 object-contain"/>
+    <span>Medway Invicta FC</span>
+  </h1>
 
-    <!-- Desktop Nav -->
-    <nav class="hidden md:flex space-x-6">
-      <a href="index.html" class="hover:text-red-400 transition">Home</a>
-      <a href="Team.html" class="hover:text-red-400 transition">Team</a>
-      <a href="Fixtures.html" class="hover:text-red-400 transition">Fixtures</a>
-      <a href="Standings.html" class="hover:text-red-400 transition">Standings</a>
-      <a href="Contact.html" class="hover:text-red-400 transition">Contact</a>
-      <a href="Gallery.html" class="hover:text-red-400 transition">Gallery</a>
-      <a href="GA.html" class="hover:text-red-400 transition">Goals</a>
-    </nav>
-
-    <!-- Burger Icon -->
-    <button id="burger" class="md:hidden">
-      <i data-lucide="menu" class="w-8 h-8 text-white"></i>
-    </button>
-
-    <!-- Mobile Menu -->
-    <div id="mobileMenu" class="absolute top-full right-6 mt-2 bg-red-950 border border-red-600 rounded-lg shadow-lg w-40 flex-col items-start p-4 space-y-2 hidden z-50">
-      <a href="index.html" class="block hover:text-red-400 transition">Home</a>
-      <a href="Team.html" class="block hover:text-red-400 transition">Team</a>
-      <a href="Fixtures.html" class="block hover:text-red-400 transition">Fixtures</a>
-      <a href="Standings.html" class="block hover:text-red-400 transition">Standings</a>
-      <a href="Contact.html" class="block hover:text-red-400 transition">Contact</a>
-      <a href="Gallery.html" class="block hover:text-red-400 transition">Gallery</a>
-      <a href="GA.html" class="block hover:text-red-400 transition">Goals</a>
-    </div>
+  <nav class="hidden md:flex space-x-6">
+    <a href="index.html">Home</a>
+    <a href="Team.html">Team</a>
+    <a href="Fixtures.html">Fixtures</a>
+    <a href="Standings.html">Standings</a>
+    <a href="Contact.html">Contact</a>
+    <a href="Gallery.html">Gallery</a>
+    <a href="GA.html">Goals</a>
+  </nav>
 </header>
 
 <section class="p-6 grid grid-cols-2 md:grid-cols-4 gap-6">
-
 <script>
 const players = [
 "Evan Longman","Ben Van-de-Peer","Jamie Blackham","Connor Mudima","William Sims","Abdul-Raheem Sunmonu",
@@ -65,15 +47,6 @@ const positions = {
 "Yomi Yusuph":"Defender","Thomas Ngegba":"Striker","Liam Riley":"Goalkeeper","Boye Oloyede":"Defender"
 };
 
-const stats = {
-"Samuel Shobande":{sho:96,type:"rare"},"Michael Shobande":{sho:96,type:"rare"},
-"Thomas Ngegba":{sho:92,type:"gold"},"Ayo Jimoh":{sho:82,type:"gold"},"Owen Longman":{sho:78,type:"gold"},
-"Temi Ayetigbo":{sho:92,type:"gold"},"Jamie Blackham":{sho:78,type:"gold"},"Matthew Thomas":{sho:72,type:"silver"},
-"Yeni Yusuph":{sho:84,type:"bronze"},"Adriano Anglin":{sho:80,type:"silver"},"James Rocha":{sho:76,type:"gold"},
-"Michael Hurcomb":{sho:87,type:"bronze"},"Abdul-Raheem Sunmonu":{sho:82,type:"bronze"},"Connor Mudima":{sho:74,type:"gold"},
-"Toby Ogundemuren":{sho:70,type:"silver"},"Jordan Buckfield-Waller":{sho:74,type:"silver"},"Evan Longman":{sho:80,type:"rare"}
-};
-
 const container = document.currentScript.parentElement;
 
 players.forEach(name=>{
@@ -85,45 +58,69 @@ players.forEach(name=>{
   </div>`;
 });
 </script>
-
 </section>
 
 <!-- Modal -->
 <div id="playerModal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50">
 
-  <div id="card" class="w-80 p-6 text-center relative text-white rounded-3xl overflow-hidden border border-white/20 shadow-2xl">
+<div id="card" class="w-80 p-6 text-center relative text-white rounded-3xl overflow-hidden border border-white/20 shadow-2xl bg-gradient-to-b from-gray-300 to-gray-500">
 
-    <!-- subtle shine overlay -->
-    <div class="absolute inset-0 opacity-10 pointer-events-none bg-gradient-to-r from-transparent via-white to-transparent animate-pulse"></div>
+<!-- Player Image -->
+<div class="flex justify-center -mt-16 mb-2">
+  <img id="playerImg" src="placeholder.jpg" class="w-24 h-24 rounded-full border-4 border-white object-cover shadow-lg">
+</div>
 
-    <!-- Top badges -->
-    <div id="overall" class="absolute top-2 left-3 text-2xl font-bold"></div>
-    <div id="posBadge" class="absolute top-2 right-3 text-xs bg-black/40 px-2 py-1 rounded"></div>
+<div id="overall" class="absolute top-2 left-3 text-2xl font-bold"></div>
+<div id="posBadge" class="absolute top-2 right-3 text-xs bg-black/40 px-2 py-1 rounded"></div>
 
-    <button onclick="closeCard()" class="absolute top-1 right-2 text-xl">×</button>
+<button onclick="closeCard()" class="absolute top-1 right-2 text-xl">×</button>
 
-    <h3 id="cardName" class="mt-6 text-lg font-bold"></h3>
-    <p id="cardPos" class="text-sm text-gray-200"></p>
+<h3 id="cardName" class="text-sm font-bold mt-2"></h3>
+<p id="cardPos" class="text-xs text-gray-200"></p>
 
-    <!-- Stats -->
-    <div class="space-y-2 mt-4 text-sm">
-      <div>PACE<div class="bg-black/30 h-2 rounded"><div id="paceBar" class="h-2 bg-white rounded"></div></div></div>
-      <div>SHO<div class="bg-black/30 h-2 rounded"><div id="shoBar" class="h-2 bg-white rounded"></div></div></div>
-      <div>PAS<div class="bg-black/30 h-2 rounded"><div id="pasBar" class="h-2 bg-white rounded"></div></div></div>
-      <div>DRI<div class="bg-black/30 h-2 rounded"><div id="driBar" class="h-2 bg-white rounded"></div></div></div>
-      <div>DEF<div class="bg-black/30 h-2 rounded"><div id="defBar" class="h-2 bg-white rounded"></div></div></div>
-      <div>PHY<div class="bg-black/30 h-2 rounded"><div id="phyBar" class="h-2 bg-white rounded"></div></div></div>
-    </div>
+<div class="space-y-3 mt-3 text-xs">
 
-  </div>
+<div onclick="editStat('pace')" class="cursor-pointer">PACE
+<div class="bg-black/30 h-2 rounded"><div id="paceBar" class="h-2 bg-white rounded"></div></div>
+</div>
+
+<div onclick="editStat('sho')" class="cursor-pointer">SHO
+<div class="bg-black/30 h-2 rounded"><div id="shoBar" class="h-2 bg-white rounded"></div></div>
+</div>
+
+<div onclick="editStat('pas')" class="cursor-pointer">PAS
+<div class="bg-black/30 h-2 rounded"><div id="pasBar" class="h-2 bg-white rounded"></div></div>
+</div>
+
+<div onclick="editStat('dri')" class="cursor-pointer">DRI
+<div class="bg-black/30 h-2 rounded"><div id="driBar" class="h-2 bg-white rounded"></div></div>
+</div>
+
+<div onclick="editStat('def')" class="cursor-pointer">DEF
+<div class="bg-black/30 h-2 rounded"><div id="defBar" class="h-2 bg-white rounded"></div></div>
+</div>
+
+<div onclick="editStat('phy')" class="cursor-pointer">PHY
+<div class="bg-black/30 h-2 rounded"><div id="phyBar" class="h-2 bg-white rounded"></div></div>
+</div>
+
+</div>
+</div>
 </div>
 
 <script>
-function openCard(name){
-  const pos = positions[name];
-  const s = stats[name] || {sho:5,type:"silver"};
+let currentPlayer = "";
+let playerStats = {};
 
-  const pace=50, pas=50, dri=50, def=50, phy=50;
+function openCard(name){
+  currentPlayer = name;
+
+  if(!playerStats[name]){
+    playerStats[name] = {pace:50, sho:50, pas:50, dri:50, def:50, phy:50};
+  }
+
+  const s = playerStats[name];
+  const pos = positions[name];
 
   document.getElementById('playerModal').classList.remove('hidden');
   document.getElementById('playerModal').classList.add('flex');
@@ -132,27 +129,41 @@ function openCard(name){
   document.getElementById('cardPos').innerText=pos;
   document.getElementById('posBadge').innerText=pos;
 
-  const overall=Math.round((pace+s.sho+pas+dri+def+phy)/6);
+  const overall=Math.round((s.pace+s.sho+s.pas+s.dri+s.def+s.phy)/6);
   document.getElementById('overall').innerText=overall;
 
-  const setBar=(id,val)=>{
-    const el=document.getElementById(id);
-    if(el) el.style.width=(val*10)+'%';
+  setBar('paceBar',s.pace);
+  setBar('shoBar',s.sho);
+  setBar('pasBar',s.pas);
+  setBar('driBar',s.dri);
+  setBar('defBar',s.def);
+  setBar('phyBar',s.phy);
+}
+
+function setBar(id,val){
+  const el=document.getElementById(id);
+  if(el) el.style.width = val + '%';
+}
+
+function editStat(stat){
+  const firstName = currentPlayer.split(" ")[0].toLowerCase();
+
+  const input = prompt("Enter password:");
+  if(!input || input.toLowerCase() !== firstName){
+    alert("Incorrect password");
+    return;
   }
 
-  setBar('paceBar',pace);
-  setBar('shoBar',s.sho);
-  setBar('pasBar',pas);
-  setBar('driBar',dri);
-  setBar('defBar',def);
-  setBar('phyBar',phy);
+  const newVal = prompt("Enter new value (0-100):");
+  const val = parseInt(newVal);
 
-  const card=document.getElementById('card');
+  if(isNaN(val) || val < 0 || val > 100){
+    alert("Invalid value");
+    return;
+  }
 
-  if(s.type==='gold') card.style.background='linear-gradient(gold,orange)';
-  else if(s.type==='silver') card.style.background='linear-gradient(lightgray,gray)';
-  else if(s.type==='bronze') card.style.background='linear-gradient(#cd7f32,#8c4a1f)';
-  else if(s.type==='rare') card.style.background='linear-gradient(purple,pink,red)';
+  playerStats[currentPlayer][stat] = val;
+  openCard(currentPlayer);
 }
 
 function closeCard(){
