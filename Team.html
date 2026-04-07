@@ -9,25 +9,15 @@
 
 <body class="bg-gradient-to-br from-black via-red-950 to-black text-white font-sans">
 
-<!-- Header -->
-<header class="flex justify-between items-center p-6 border-b border-red-600 relative">
-  <h1 class="flex items-center space-x-3 text-3xl font-bold tracking-wide">
-    <img src="MI logo.jpg" class="h-12 w-12 object-contain"/>
+<header class="flex justify-between items-center p-6 border-b border-red-600">
+  <h1 class="flex items-center space-x-3 text-3xl font-bold">
+    <img src="MI logo.jpg" class="h-12 w-12"/>
     <span>Medway Invicta FC</span>
   </h1>
-
-  <nav class="hidden md:flex space-x-6">
-    <a href="index.html">Home</a>
-    <a href="Team.html">Team</a>
-    <a href="Fixtures.html">Fixtures</a>
-    <a href="Standings.html">Standings</a>
-    <a href="Contact.html">Contact</a>
-    <a href="Gallery.html">Gallery</a>
-    <a href="GA.html">Goals</a>
-  </nav>
 </header>
 
 <section class="p-6 grid grid-cols-2 md:grid-cols-4 gap-6">
+
 <script>
 const players = [
 "Evan Longman","Ben Van-de-Peer","Jamie Blackham","Connor Mudima","William Sims","Abdul-Raheem Sunmonu",
@@ -47,30 +37,70 @@ const positions = {
 "Yomi Yusuph":"Defender","Thomas Ngegba":"Striker","Liam Riley":"Goalkeeper","Boye Oloyede":"Defender"
 };
 
+const playerImages = {
+  "Evan Longman": "EVAN.jpg",
+  "Ben Van-de-Peer": "BEN.jpg",
+  "Jamie Blackham": "JAMIE.jpg"
+  "Abdul-Raheem Sunmonu":
+  "Owen Longman":"OWEN.jpg"
+  "James Rocha":"james.jpg"
+  "Shaun Keen":
+  "Jordan Buckfield-Waller":
+  "Yomi Yusuph":
+  "Boye Oloyede": "Boye signed.png"
+  "Connor Mudima": "CONNOR.jpeg"
+  "William Sims":
+  "Toby Ogundemuren":
+  "Victor Okunowo":
+  "Bolu Buraimoh":
+  "Tom Mercer":"Mercer.jpeg"
+  "Caleb Luckhurst":"Caleb Luckhurst.jpg"
+  "Oge Agwu":
+  "Michael Shobande":"Michh MOTM.png"
+  "Matthew Thomas": "NASH.jpeg"
+  "Adriano Anglin":
+  "Temi Ayetigbo":"Temi.jpg"
+  "Samuel Shobande":
+  "Ayo Jimoh":"AJ.jpeg"
+  "Michael Hurcomb":
+  "Yeni Yusuph":
+  "Thomas Ngegba":
+  // add more players here
+};
+
+  
+players.forEach(p=>{
+  const file = p.toLowerCase().replace(/ /g,"_").replace(/-/g,"");
+  playerImages[p] = "images/" + file + ".jpg";
+});
+
+let playerStats = {};
+let currentPlayer = "";
+
 const container = document.currentScript.parentElement;
 
 players.forEach(name=>{
   container.innerHTML += `
   <div onclick="openCard('${name}')" class="bg-red-950 p-4 rounded-xl text-center cursor-pointer hover:scale-105 transition shadow-lg">
-    <img src="placeholder.jpg" class="h-20 w-20 mx-auto rounded-full mb-2">
+    <img src="${playerImages[name]}" onerror="this.src='placeholder.jpg'" class="h-20 w-20 mx-auto rounded-full mb-2">
     <h3 class="font-semibold">${name}</h3>
     <p class="text-red-400">${positions[name]}</p>
   </div>`;
 });
 </script>
+
 </section>
 
 <!-- Modal -->
 <div id="playerModal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50">
 
-<div id="card" class="w-80 p-6 text-center relative text-white rounded-3xl overflow-hidden border border-white/20 shadow-2xl bg-gradient-to-b from-gray-300 to-gray-500">
+<div id="card" class="w-80 p-6 text-center relative text-white rounded-3xl shadow-2xl">
 
-<!-- Player Image -->
 <div class="flex justify-center -mt-16 mb-2">
-  <img id="playerImg" src="placeholder.jpg" class="w-24 h-24 rounded-full border-4 border-white object-cover shadow-lg">
+  <img id="playerImg" class="w-24 h-24 rounded-full border-4 border-white object-cover">
 </div>
 
-<div id="overall" class="absolute top-2 left-3 text-2xl font-bold"></div>
+<div onclick="editOverall()" id="overall" class="absolute top-2 left-3 text-2xl font-bold cursor-pointer"></div>
 <div id="posBadge" class="absolute top-2 right-3 text-xs bg-black/40 px-2 py-1 rounded"></div>
 
 <button onclick="closeCard()" class="absolute top-1 right-2 text-xl">×</button>
@@ -78,58 +108,59 @@ players.forEach(name=>{
 <h3 id="cardName" class="text-sm font-bold mt-2"></h3>
 <p id="cardPos" class="text-xs text-gray-200"></p>
 
+<select onchange="changeCardType(this.value)" class="mt-2 text-black text-xs rounded px-2 py-1">
+<option value="bronze">Bronze</option>
+<option value="silver">Silver</option>
+<option value="gold">Gold</option>
+<option value="rare">Rare</option>
+</select>
+
 <div class="space-y-3 mt-3 text-xs">
 
 <div onclick="editStat('pace')" class="cursor-pointer">PACE
-<div class="bg-black/30 h-2 rounded"><div id="paceBar" class="h-2 bg-white rounded"></div></div>
-</div>
+<div class="bg-black/30 h-2 rounded"><div id="paceBar" class="h-2 bg-white rounded"></div></div></div>
 
 <div onclick="editStat('sho')" class="cursor-pointer">SHO
-<div class="bg-black/30 h-2 rounded"><div id="shoBar" class="h-2 bg-white rounded"></div></div>
-</div>
+<div class="bg-black/30 h-2 rounded"><div id="shoBar" class="h-2 bg-white rounded"></div></div></div>
 
 <div onclick="editStat('pas')" class="cursor-pointer">PAS
-<div class="bg-black/30 h-2 rounded"><div id="pasBar" class="h-2 bg-white rounded"></div></div>
-</div>
+<div class="bg-black/30 h-2 rounded"><div id="pasBar" class="h-2 bg-white rounded"></div></div></div>
 
 <div onclick="editStat('dri')" class="cursor-pointer">DRI
-<div class="bg-black/30 h-2 rounded"><div id="driBar" class="h-2 bg-white rounded"></div></div>
-</div>
+<div class="bg-black/30 h-2 rounded"><div id="driBar" class="h-2 bg-white rounded"></div></div></div>
 
 <div onclick="editStat('def')" class="cursor-pointer">DEF
-<div class="bg-black/30 h-2 rounded"><div id="defBar" class="h-2 bg-white rounded"></div></div>
-</div>
+<div class="bg-black/30 h-2 rounded"><div id="defBar" class="h-2 bg-white rounded"></div></div></div>
 
 <div onclick="editStat('phy')" class="cursor-pointer">PHY
-<div class="bg-black/30 h-2 rounded"><div id="phyBar" class="h-2 bg-white rounded"></div></div>
-</div>
+<div class="bg-black/30 h-2 rounded"><div id="phyBar" class="h-2 bg-white rounded"></div></div></div>
 
 </div>
 </div>
 </div>
 
 <script>
-let currentPlayer = "";
-let playerStats = {};
-
 function openCard(name){
   currentPlayer = name;
 
   if(!playerStats[name]){
-    playerStats[name] = {pace:50, sho:50, pas:50, dri:50, def:50, phy:50};
+    playerStats[name] = {pace:50, sho:50, pas:50, dri:50, def:50, phy:50, overall:null, type:"silver"};
   }
 
   const s = playerStats[name];
-  const pos = positions[name];
 
   document.getElementById('playerModal').classList.remove('hidden');
   document.getElementById('playerModal').classList.add('flex');
 
   document.getElementById('cardName').innerText=name;
-  document.getElementById('cardPos').innerText=pos;
-  document.getElementById('posBadge').innerText=pos;
+  document.getElementById('cardPos').innerText=positions[name];
+  document.getElementById('posBadge').innerText=positions[name];
 
-  const overall=Math.round((s.pace+s.sho+s.pas+s.dri+s.def+s.phy)/6);
+  document.getElementById('playerImg').src = playerImages[name];
+
+  const overall = s.overall !== null ? s.overall :
+    Math.round((s.pace+s.sho+s.pas+s.dri+s.def+s.phy)/6);
+
   document.getElementById('overall').innerText=overall;
 
   setBar('paceBar',s.pace);
@@ -138,6 +169,8 @@ function openCard(name){
   setBar('driBar',s.dri);
   setBar('defBar',s.def);
   setBar('phyBar',s.phy);
+
+  applyCardStyle(s.type);
 }
 
 function setBar(id,val){
@@ -145,25 +178,46 @@ function setBar(id,val){
   if(el) el.style.width = val + '%';
 }
 
-function editStat(stat){
+function passwordCheck(){
   const firstName = currentPlayer.split(" ")[0].toLowerCase();
-
   const input = prompt("Enter password:");
-  if(!input || input.toLowerCase() !== firstName){
-    alert("Incorrect password");
-    return;
-  }
+  return input && input.toLowerCase() === firstName;
+}
 
-  const newVal = prompt("Enter new value (0-100):");
-  const val = parseInt(newVal);
+function editStat(stat){
+  if(!passwordCheck()){ alert("Incorrect password"); return; }
 
-  if(isNaN(val) || val < 0 || val > 100){
-    alert("Invalid value");
-    return;
-  }
+  const val = parseInt(prompt("Enter value (0-100):"));
+  if(isNaN(val)||val<0||val>100){ alert("Invalid"); return; }
 
   playerStats[currentPlayer][stat] = val;
   openCard(currentPlayer);
+}
+
+function editOverall(){
+  if(!passwordCheck()){ alert("Incorrect password"); return; }
+
+  const val = parseInt(prompt("Enter overall (0-100):"));
+  if(isNaN(val)||val<0||val>100){ alert("Invalid"); return; }
+
+  playerStats[currentPlayer].overall = val;
+  openCard(currentPlayer);
+}
+
+function changeCardType(type){
+  if(!passwordCheck()){ alert("Incorrect password"); return; }
+
+  playerStats[currentPlayer].type = type;
+  applyCardStyle(type);
+}
+
+function applyCardStyle(type){
+  const card = document.getElementById('card');
+
+  if(type==='gold') card.style.background='linear-gradient(gold,orange)';
+  else if(type==='silver') card.style.background='linear-gradient lightgray,gray)';
+  else if(type==='bronze') card.style.background='linear-gradient(#cd7f32,#8c4a1f)';
+  else if(type==='rare') card.style.background='linear-gradient(purple,pink,red)';
 }
 
 function closeCard(){
