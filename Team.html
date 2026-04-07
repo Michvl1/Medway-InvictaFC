@@ -37,42 +37,22 @@ const positions = {
 "Yomi Yusuph":"Defender","Thomas Ngegba":"Striker","Liam Riley":"Goalkeeper","Boye Oloyede":"Defender"
 };
 
+/* ✅ CLEAN IMAGE MAP */
 const playerImages = {
   "Evan Longman": "EVAN.jpg",
   "Ben Van-de-Peer": "BEN.jpg",
-  "Jamie Blackham": "JAMIE.jpg"
-  "Abdul-Raheem Sunmonu":
-  "Owen Longman":"OWEN.jpg"
-  "James Rocha":"james.jpg"
-  "Shaun Keen":
-  "Jordan Buckfield-Waller":
-  "Yomi Yusuph":
+  "Jamie Blackham": "JAMIE.jpg",
+  "Connor Mudima": "CONNOR.jpeg",
+  "Owen Longman": "OWEN.jpg",
+  "James Rocha": "james.jpg",
+  "Tom Mercer": "Mercer.jpeg",
+  "Caleb Luckhurst": "Caleb Luckhurst.jpg",
+  "Michael Shobande": "Michh MOTM.png",
+  "Matthew Thomas": "NASH.jpeg",
+  "Temi Ayetigbo": "Temi.jpg",
+  "Ayo Jimoh": "AJ.jpeg",
   "Boye Oloyede": "Boye signed.png"
-  "Connor Mudima": "CONNOR.jpeg"
-  "William Sims":
-  "Toby Ogundemuren":
-  "Victor Okunowo":
-  "Bolu Buraimoh":
-  "Tom Mercer":"Mercer.jpeg"
-  "Caleb Luckhurst":"Caleb Luckhurst.jpg"
-  "Oge Agwu":
-  "Michael Shobande":"Michh MOTM.png"
-  "Matthew Thomas": "NASH.jpeg"
-  "Adriano Anglin":
-  "Temi Ayetigbo":"Temi.jpg"
-  "Samuel Shobande":
-  "Ayo Jimoh":"AJ.jpeg"
-  "Michael Hurcomb":
-  "Yeni Yusuph":
-  "Thomas Ngegba":
-  // add more players here
 };
-
-  
-players.forEach(p=>{
-  const file = p.toLowerCase().replace(/ /g,"_").replace(/-/g,"");
-  playerImages[p] = "images/" + file + ".jpg";
-});
 
 let playerStats = {};
 let currentPlayer = "";
@@ -80,9 +60,11 @@ let currentPlayer = "";
 const container = document.currentScript.parentElement;
 
 players.forEach(name=>{
+  const img = playerImages[name] || "placeholder.jpg";
+
   container.innerHTML += `
   <div onclick="openCard('${name}')" class="bg-red-950 p-4 rounded-xl text-center cursor-pointer hover:scale-105 transition shadow-lg">
-    <img src="${playerImages[name]}" onerror="this.src='placeholder.jpg'" class="h-20 w-20 mx-auto rounded-full mb-2">
+    <img src="${img}" onerror="this.src='placeholder.jpg'" class="h-20 w-20 mx-auto rounded-full mb-2">
     <h3 class="font-semibold">${name}</h3>
     <p class="text-red-400">${positions[name]}</p>
   </div>`;
@@ -156,7 +138,7 @@ function openCard(name){
   document.getElementById('cardPos').innerText=positions[name];
   document.getElementById('posBadge').innerText=positions[name];
 
-  document.getElementById('playerImg').src = playerImages[name];
+  document.getElementById('playerImg').src = playerImages[name] || "placeholder.jpg";
 
   const overall = s.overall !== null ? s.overall :
     Math.round((s.pace+s.sho+s.pas+s.dri+s.def+s.phy)/6);
@@ -215,7 +197,7 @@ function applyCardStyle(type){
   const card = document.getElementById('card');
 
   if(type==='gold') card.style.background='linear-gradient(gold,orange)';
-  else if(type==='silver') card.style.background='linear-gradient lightgray,gray)';
+  else if(type==='silver') card.style.background='linear-gradient(lightgray,gray)';
   else if(type==='bronze') card.style.background='linear-gradient(#cd7f32,#8c4a1f)';
   else if(type==='rare') card.style.background='linear-gradient(purple,pink,red)';
 }
