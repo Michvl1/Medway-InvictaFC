@@ -15,37 +15,20 @@
     <span>Medway Invicta FC</span>
   </h1>
 
-  <!-- Desktop Nav -->
   <nav class="hidden md:flex space-x-6">
-    <a href="index.html" class="hover:text-red-400 transition">Home</a>
-    <a href="Team.html" class="hover:text-red-400 transition">Team</a>
-    <a href="Fixtures.html" class="hover:text-red-400 transition">Fixtures</a>
-    <a href="Standings.html" class="hover:text-red-400 transition">Standings</a>
-    <a href="Contact.html" class="hover:text-red-400 transition">Contact</a>
-    <a href="Gallery.html" class="hover:text-red-400 transition">Gallery</a>
-    <a href="GA.html" class="hover:text-red-400 transition">Goals</a>
+    <a href="index.html">Home</a>
+    <a href="Team.html">Team</a>
+    <a href="Fixtures.html">Fixtures</a>
+    <a href="Standings.html">Standings</a>
+    <a href="Contact.html">Contact</a>
+    <a href="Gallery.html">Gallery</a>
+    <a href="GA.html">Goals</a>
   </nav>
-
-  <!-- Burger Icon -->
-  <button id="burger" class="md:hidden z-50">
-    <i data-lucide="menu" class="w-8 h-8 text-white"></i>
-  </button>
-
-  <!-- Mobile Menu -->
-  <div id="mobileMenu" class="absolute top-full right-6 mt-2 bg-red-950 border border-red-600 rounded-lg shadow-lg w-40 flex-col items-start p-4 space-y-2 hidden z-50">
-    <a href="index.html" class="block hover:text-red-400 transition">Home</a>
-    <a href="Team.html" class="block hover:text-red-400 transition">Team</a>
-    <a href="Fixtures.html" class="block hover:text-red-400 transition">Fixtures</a>
-    <a href="Standings.html" class="block hover:text-red-400 transition">Standings</a>
-    <a href="Contact.html" class="block hover:text-red-400 transition">Contact</a>
-    <a href="Gallery.html" class="block hover:text-red-400 transition">Gallery</a>
-    <a href="GA.html" class="block hover:text-red-400 transition">Goals</a>
-  </div>
 </header>
 
 <section class="p-6 grid grid-cols-2 md:grid-cols-4 gap-6">
-
 <script>
+
 const players = [
 "Evan Longman","Ben Van-de-Peer","Jamie Blackham","Connor Mudima","William Sims","Abdul-Raheem Sunmonu",
 "Michael Shobande","Toby Ogundemuren","Samuel Shobande","Ayo Jimoh","Owen Longman","Matthew Thomas",
@@ -82,8 +65,53 @@ const playerImages = {
   "Adriano Anglin": "IMG_5047.jpeg"
 };
 
+/* 🔥 DEFAULT RATINGS */
+const defaultData = {
+"Evan Longman": {overall:72,type:"silver"},
+"Ben Van-de-Peer": {overall:78,type:"gold"},
+"Jamie Blackham": {overall:85,type:"gold"},
+"Connor Mudima": {overall:76,type:"gold"},
+"William Sims": {overall:65,type:"silver"},
+"Abdul-Raheem Sunmonu": {overall:70,type:"silver"},
+"Michael Shobande": {overall:92,type:"rare"},
+"Toby Ogundemuren": {overall:68,type:"silver"},
+"Samuel Shobande": {overall:94,type:"rare"},
+"Ayo Jimoh": {overall:90,type:"rare"},
+"Owen Longman": {overall:92,type:"rare"},
+"Matthew Thomas": {overall:84,type:"gold"},
+"James Rocha": {overall:75,type:"gold"},
+"Shaun Keen": {overall:66,type:"silver"},
+"Victor Okunowo": {overall:65,type:"silver"},
+"Bolu Buraimoh": {overall:64,type:"bronze"},
+"Tom Mercer": {overall:66,type:"silver"},
+"Jordan Buckfield-Waller": {overall:73,type:"silver"},
+"Michael Hurcomb": {overall:72,type:"silver"},
+"Adriano Anglin": {overall:82,type:"gold"},
+"Temi Ayetigbo": {overall:91,type:"rare"},
+"Caleb Luckhurst": {overall:67,type:"silver"},
+"Oge Agwu": {overall:63,type:"bronze"},
+"Yeni Yusuph": {overall:86,type:"gold"},
+"Yomi Yusuph": {overall:62,type:"bronze"},
+"Thomas Ngegba": {overall:93,type:"rare"},
+"Liam Riley": {overall:60,type:"bronze"},
+"Boye Oloyede": {overall:69,type:"silver"}
+};
+
 let playerStats = {};
 let currentPlayer = "";
+
+/* 🧠 AUTO STAT GENERATOR */
+function generateStats(overall, position){
+  let b = overall;
+
+  if(position==="Striker") return {pace:b-5,sho:b+5,pas:b-10,dri:b,def:b-25,phy:b-5};
+  if(position==="Winger") return {pace:b+5,sho:b,pas:b-5,dri:b+5,def:b-20,phy:b-5};
+  if(position==="Midfielder") return {pace:b-5,sho:b-5,pas:b+5,dri:b,def:b-5,phy:b};
+  if(position==="Defender") return {pace:b-10,sho:b-20,pas:b-5,dri:b-10,def:b+10,phy:b+5};
+  if(position==="Goalkeeper") return {pace:b-20,sho:b-30,pas:b-10,dri:b-10,def:b+10,phy:b};
+
+  return {pace:b,sho:b,pas:b,dri:b,def:b,phy:b};
+}
 
 const container = document.currentScript.parentElement;
 
@@ -92,87 +120,24 @@ players.forEach(name=>{
 
   container.innerHTML += `
   <div onclick="openCard('${name}')" class="bg-red-950 p-4 rounded-xl text-center cursor-pointer hover:scale-105 transition shadow-lg">
-    <img src="${img}" onerror="this.src='placeholder.jpg'" class="h-20 w-20 mx-auto rounded-full mb-2">
-    <h3 class="font-semibold">${name}</h3>
+    <img src="${img}" class="h-20 w-20 mx-auto rounded-full mb-2">
+    <h3>${name}</h3>
     <p class="text-red-400">${positions[name]}</p>
   </div>`;
 });
-</script>
 
-</section>
-
-<!-- Modal -->
-<div id="playerModal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50">
-
-<div id="card" class="w-80 p-6 text-center relative text-white rounded-3xl shadow-2xl">
-
-<div class="flex justify-center -mt-16 mb-2">
-  <img id="playerImg" class="w-24 h-24 rounded-full border-4 border-white object-cover">
-</div>
-
-<div onclick="editOverall()" id="overall" class="absolute top-2 left-3 text-2xl font-bold cursor-pointer"></div>
-<div id="posBadge" class="absolute top-2 right-3 text-xs bg-black/40 px-2 py-1 rounded"></div>
-
-<button onclick="closeCard()" class="absolute top-1 right-2 text-xl">×</button>
-
-<h3 id="cardName" class="text-sm font-bold mt-2"></h3>
-<p id="cardPos" class="text-xs text-gray-200"></p>
-
-<select onchange="changeCardType(this.value)" class="mt-2 text-black text-xs rounded px-2 py-1">
-<option value="bronze">Bronze</option>
-<option value="silver">Silver</option>
-<option value="gold">Gold</option>
-<option value="rare">Rare</option>
-</select>
-
-<div class="space-y-3 mt-3 text-xs">
-
-<div onclick="editStat('pace')" class="cursor-pointer">PACE
-<div class="bg-black/30 h-2 rounded"><div id="paceBar" class="h-2 bg-white rounded"></div></div></div>
-
-<div onclick="editStat('sho')" class="cursor-pointer">SHO
-<div class="bg-black/30 h-2 rounded"><div id="shoBar" class="h-2 bg-white rounded"></div></div></div>
-
-<div onclick="editStat('pas')" class="cursor-pointer">PAS
-<div class="bg-black/30 h-2 rounded"><div id="pasBar" class="h-2 bg-white rounded"></div></div></div>
-
-<div onclick="editStat('dri')" class="cursor-pointer">DRI
-<div class="bg-black/30 h-2 rounded"><div id="driBar" class="h-2 bg-white rounded"></div></div></div>
-
-<div onclick="editStat('def')" class="cursor-pointer">DEF
-<div class="bg-black/30 h-2 rounded"><div id="defBar" class="h-2 bg-white rounded"></div></div></div>
-
-<div onclick="editStat('phy')" class="cursor-pointer">PHY
-<div class="bg-black/30 h-2 rounded"><div id="phyBar" class="h-2 bg-white rounded"></div></div></div>
-
-</div>
-</div>
-</div>
-
-<!-- Scripts -->
-
-<!-- Lucide Icons -->
-<script src="https://unpkg.com/lucide@latest"></script>
-<script>
-lucide.createIcons();
-</script>
-
-<!-- Burger Toggle -->
-<script>
-const burger = document.getElementById("burger");
-const menu = document.getElementById("mobileMenu");
-
-burger.addEventListener("click", () => {
-  menu.classList.toggle("hidden");
-});
-</script>
-
-<script>
 function openCard(name){
   currentPlayer = name;
 
   if(!playerStats[name]){
-    playerStats[name] = {pace:50, sho:50, pas:50, dri:50, def:50, phy:50, overall:null, type:"silver"};
+    const def = defaultData[name];
+    const stats = generateStats(def.overall, positions[name]);
+
+    playerStats[name] = {
+      ...stats,
+      overall: def.overall,
+      type: def.type
+    };
   }
 
   const s = playerStats[name];
@@ -185,11 +150,7 @@ function openCard(name){
   document.getElementById('posBadge').innerText=positions[name];
 
   document.getElementById('playerImg').src = playerImages[name] || "placeholder.jpg";
-
-  const overall = s.overall !== null ? s.overall :
-    Math.round((s.pace+s.sho+s.pas+s.dri+s.def+s.phy)/6);
-
-  document.getElementById('overall').innerText=overall;
+  document.getElementById('overall').innerText=s.overall;
 
   setBar('paceBar',s.pace);
   setBar('shoBar',s.sho);
@@ -202,40 +163,33 @@ function openCard(name){
 }
 
 function setBar(id,val){
-  const el=document.getElementById(id);
-  if(el) el.style.width = val + '%';
+  document.getElementById(id).style.width = val + '%';
 }
 
 function passwordCheck(){
   const firstName = currentPlayer.split(" ")[0].toLowerCase();
-  const input = prompt("Enter password:");
-  return input && input.toLowerCase() === firstName;
+  return prompt("Password:")?.toLowerCase() === firstName;
 }
 
 function editStat(stat){
-  if(!passwordCheck()){ alert("Incorrect password"); return; }
-
-  const val = parseInt(prompt("Enter value (0-100):"));
-  if(isNaN(val)||val<0||val>100){ alert("Invalid"); return; }
-
-  playerStats[currentPlayer][stat] = val;
+  if(!passwordCheck()) return alert("Wrong password");
+  const val = parseInt(prompt("0-100"));
+  if(isNaN(val)) return;
+  playerStats[currentPlayer][stat]=val;
   openCard(currentPlayer);
 }
 
 function editOverall(){
-  if(!passwordCheck()){ alert("Incorrect password"); return; }
-
-  const val = parseInt(prompt("Enter overall (0-100):"));
-  if(isNaN(val)||val<0||val>100){ alert("Invalid"); return; }
-
-  playerStats[currentPlayer].overall = val;
+  if(!passwordCheck()) return alert("Wrong password");
+  const val = parseInt(prompt("0-100"));
+  if(isNaN(val)) return;
+  playerStats[currentPlayer].overall=val;
   openCard(currentPlayer);
 }
 
 function changeCardType(type){
-  if(!passwordCheck()){ alert("Incorrect password"); return; }
-
-  playerStats[currentPlayer].type = type;
+  if(!passwordCheck()) return alert("Wrong password");
+  playerStats[currentPlayer].type=type;
   applyCardStyle(type);
 }
 
@@ -252,6 +206,7 @@ function closeCard(){
   document.getElementById('playerModal').classList.add('hidden');
 }
 </script>
+</section>
 
 </body>
 </html>
