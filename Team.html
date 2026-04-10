@@ -5,6 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Our Squad - Medway Invicta FC</title>
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+@keyframes glowMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 10px rgba(255,0,255,0.4); }
+  50% { box-shadow: 0 0 25px rgba(255,0,255,0.9); }
+  100% { box-shadow: 0 0 10px rgba(255,0,255,0.4); }
+}
+
+.special-card {
+  background: linear-gradient(270deg, purple, hotpink, red, purple);
+  background-size: 400% 400%;
+  animation: glowMove 6s ease infinite, pulseGlow 2.5s ease infinite;
+}
+</style>
 </head>
 
 <body class="bg-gradient-to-br from-black via-red-950 to-black text-white font-sans">
@@ -16,6 +37,20 @@
   </h1>
 
   <nav class="hidden md:flex space-x-6">
+    <a href="index.html" class="hover:text-red-400">Home</a>
+    <a href="Team.html" class="hover:text-red-400">Team</a>
+    <a href="Fixtures.html" class="hover:text-red-400">Fixtures</a>
+    <a href="Standings.html" class="hover:text-red-400">Standings</a>
+    <a href="Contact.html" class="hover:text-red-400">Contact</a>
+    <a href="Gallery.html" class="hover:text-red-400">Gallery</a>
+    <a href="GA.html" class="hover:text-red-400">Goals</a>
+  </nav>
+
+  <button id="burger" class="md:hidden z-50">
+    <i data-lucide="menu" class="w-8 h-8 text-white"></i>
+  </button>
+
+  <div id="mobileMenu" class="absolute top-full right-6 mt-2 bg-red-950 border border-red-600 rounded-lg shadow-lg w-40 flex-col items-start p-4 space-y-2 hidden z-50">
     <a href="index.html">Home</a>
     <a href="Team.html">Team</a>
     <a href="Fixtures.html">Fixtures</a>
@@ -23,47 +58,48 @@
     <a href="Contact.html">Contact</a>
     <a href="Gallery.html">Gallery</a>
     <a href="GA.html">Goals</a>
-  </nav>
+  </div>
 </header>
 
 <section id="playersContainer" class="p-6 grid grid-cols-2 md:grid-cols-4 gap-6"></section>
 
-<!-- MODAL -->
 <div id="playerModal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50">
-  <div id="card" class="w-80 p-6 text-center relative text-white rounded-3xl shadow-2xl">
+  <div id="card" class="w-80 p-6 text-center relative rounded-3xl shadow-2xl text-white">
 
-    <div class="flex justify-center mb-3">
-      <img id="playerImg" class="w-28 h-28 rounded-full border-4 border-white object-cover">
+    <div class="flex justify-center -mt-10 mb-2">
+      <img id="playerImg" class="w-24 h-24 rounded-full border-4 border-white object-cover">
     </div>
 
-    <div onclick="editOverall()" id="overall" class="absolute top-3 left-4 text-2xl font-bold cursor-pointer"></div>
-    <div id="posBadge" class="absolute top-3 right-4 text-xs bg-black/40 px-2 py-1 rounded"></div>
+    <div id="overall" class="absolute top-2 left-3 text-2xl font-bold"></div>
+    <div id="posBadge" class="absolute top-2 right-3 text-xs bg-black/40 px-2 py-1 rounded"></div>
 
-    <button onclick="closeCard()" class="absolute top-2 right-3 text-xl">×</button>
+    <button onclick="closeCard()" class="absolute top-1 right-2 text-xl">×</button>
 
-    <h3 id="cardName" class="text-lg font-bold mt-1"></h3>
-    <p id="cardPos" class="text-sm text-gray-200 mb-2"></p>
+    <h3 id="cardName" class="text-sm font-bold mt-2"></h3>
+    <p id="cardPos" class="text-xs text-gray-200"></p>
 
-    <select onchange="changeCardType(this.value)" class="mt-1 text-black text-xs rounded px-2 py-1">
-      <option value="bronze">Bronze</option>
-      <option value="silver">Silver</option>
-      <option value="gold">Gold</option>
-      <option value="rare">Special</option>
-    </select>
-
-    <div class="space-y-2 mt-4 text-xs">
-      <div onclick="editStat('pace')">PACE<div class="bg-black/30 h-2"><div id="paceBar" class="h-2 bg-white"></div></div></div>
-      <div onclick="editStat('sho')">SHO<div class="bg-black/30 h-2"><div id="shoBar" class="h-2 bg-white"></div></div></div>
-      <div onclick="editStat('pas')">PAS<div class="bg-black/30 h-2"><div id="pasBar" class="h-2 bg-white"></div></div></div>
-      <div onclick="editStat('dri')">DRI<div class="bg-black/30 h-2"><div id="driBar" class="h-2 bg-white"></div></div></div>
-      <div onclick="editStat('def')">DEF<div class="bg-black/30 h-2"><div id="defBar" class="h-2 bg-white"></div></div></div>
-      <div onclick="editStat('phy')">PHY<div class="bg-black/30 h-2"><div id="phyBar" class="h-2 bg-white"></div></div></div>
+    <div class="space-y-2 mt-3 text-xs">
+      <div>PACE<div class="bg-black/30 h-2"><div id="paceBar" class="h-2 bg-white"></div></div></div>
+      <div>SHO<div class="bg-black/30 h-2"><div id="shoBar" class="h-2 bg-white"></div></div></div>
+      <div>PAS<div class="bg-black/30 h-2"><div id="pasBar" class="h-2 bg-white"></div></div></div>
+      <div>DRI<div class="bg-black/30 h-2"><div id="driBar" class="h-2 bg-white"></div></div></div>
+      <div>DEF<div class="bg-black/30 h-2"><div id="defBar" class="h-2 bg-white"></div></div></div>
+      <div>PHY<div class="bg-black/30 h-2"><div id="phyBar" class="h-2 bg-white"></div></div></div>
     </div>
 
   </div>
 </div>
 
 <script>
+lucide.createIcons();
+
+const burger = document.getElementById("burger");
+const mobileMenu = document.getElementById("mobileMenu");
+
+burger.addEventListener("click", () => {
+  mobileMenu.classList.toggle("hidden");
+});
+
 const container = document.getElementById("playersContainer");
 
 const players = ["Evan Longman","Ben Van-de-Peer","Jamie Blackham","Connor Mudima","William Sims","Abdul-Raheem Sunmonu","Michael Shobande","Toby Ogundemuren","Samuel Shobande","Ayo Jimoh","Owen Longman","Matthew Thomas","James Rocha","Shaun Keen","Victor Okunowo","Bolu Buraimoh","Tom Mercer","Jordan Buckfield-Waller","Michael Hurcomb","Adriano Anglin","Temi Ayetigbo","Caleb Luckhurst","Oge Agwu","Yeni Yusuph","Yomi Yusuph","Thomas Ngegba","Liam Riley","Boye Oloyede"];
@@ -79,47 +115,45 @@ const positions = {
 };
 
 const playerImages = {
-  "Evan Longman":"EVAN.jpg","Ben Van-de-Peer":"BEN.jpg","Jamie Blackham":"JAMIE.jpg",
-  "Connor Mudima":"CONNOR.jpeg","Owen Longman":"OWEN.jpg","James Rocha":"james.jpg",
-  "Tom Mercer":"Mercer.jpeg","Caleb Luckhurst":"Caleb Luckhurst.jpg",
-  "Michael Shobande":"IMG_5046.jpeg","Matthew Thomas":"NASH.jpeg","Temi Ayetigbo":"Temi.jpg",
-  "Ayo Jimoh":"AJ.jpeg","Boye Oloyede":"Boye signed.png",
-  "Samuel Shobande":"IMG_5044.jpeg","Adriano Anglin":"IMG_5047.jpeg"
+"Evan Longman":"EVAN.jpg","Ben Van-de-Peer":"BEN.jpg","Jamie Blackham":"JAMIE.jpg",
+"Connor Mudima":"CONNOR.jpeg","Owen Longman":"OWEN.jpg","James Rocha":"james.jpg",
+"Tom Mercer":"Mercer.jpeg","Caleb Luckhurst":"Caleb Luckhurst.jpg",
+"Michael Shobande":"IMG_5046.jpeg","Matthew Thomas":"NASH.jpeg","Temi Ayetigbo":"Temi.jpg",
+"Ayo Jimoh":"AJ.jpeg","Boye Oloyede":"Boye signed.png",
+"Samuel Shobande":"IMG_5044.jpeg","Adriano Anglin":"IMG_5047.jpeg"
 };
 
 const defaultData = {
-"Evan Longman": {overall:72,type:"silver"},
-"Ben Van-de-Peer": {overall:78,type:"gold"},
-"Jamie Blackham": {overall:85,type:"gold"},
-"Connor Mudima": {overall:76,type:"gold"},
-"William Sims": {overall:65,type:"silver"},
-"Abdul-Raheem Sunmonu": {overall:70,type:"silver"},
-"Michael Shobande": {overall:92,type:"rare"},
-"Toby Ogundemuren": {overall:68,type:"silver"},
-"Samuel Shobande": {overall:94,type:"rare"},
-"Ayo Jimoh": {overall:90,type:"rare"},
-"Owen Longman": {overall:92,type:"rare"},
-"Matthew Thomas": {overall:84,type:"gold"},
-"James Rocha": {overall:75,type:"gold"},
-"Shaun Keen": {overall:66,type:"silver"},
-"Victor Okunowo": {overall:65,type:"silver"},
-"Bolu Buraimoh": {overall:64,type:"bronze"},
-"Tom Mercer": {overall:66,type:"silver"},
-"Jordan Buckfield-Waller": {overall:73,type:"silver"},
-"Michael Hurcomb": {overall:72,type:"silver"},
-"Adriano Anglin": {overall:82,type:"gold"},
-"Temi Ayetigbo": {overall:91,type:"rare"},
-"Caleb Luckhurst": {overall:67,type:"silver"},
-"Oge Agwu": {overall:63,type:"bronze"},
-"Yeni Yusuph": {overall:86,type:"gold"},
-"Yomi Yusuph": {overall:62,type:"bronze"},
-"Thomas Ngegba": {overall:93,type:"rare"},
-"Liam Riley": {overall:60,type:"bronze"},
-"Boye Oloyede": {overall:69,type:"silver"}
+"Evan Longman": {overall:72},
+"Ben Van-de-Peer": {overall:78},
+"Jamie Blackham": {overall:85},
+"Connor Mudima": {overall:76},
+"William Sims": {overall:65},
+"Abdul-Raheem Sunmonu": {overall:70},
+"Michael Shobande": {overall:92},
+"Samuel Shobande": {overall:94},
+"Ayo Jimoh": {overall:90},
+"Owen Longman": {overall:92},
+"Matthew Thomas": {overall:84},
+"James Rocha": {overall:75},
+"Shaun Keen": {overall:66},
+"Victor Okunowo": {overall:65},
+"Bolu Buraimoh": {overall:64},
+"Tom Mercer": {overall:66},
+"Jordan Buckfield-Waller": {overall:73},
+"Michael Hurcomb": {overall:72},
+"Adriano Anglin": {overall:82},
+"Temi Ayetigbo": {overall:91},
+"Caleb Luckhurst": {overall:67},
+"Oge Agwu": {overall:63},
+"Yeni Yusuph": {overall:86},
+"Yomi Yusuph": {overall:62},
+"Thomas Ngegba": {overall:93},
+"Liam Riley": {overall:60},
+"Boye Oloyede": {overall:69}
 };
 
 let playerStats = {};
-let currentPlayer = "";
 
 function generateStats(o,p){
   if(p==="Striker") return {pace:o-5,sho:o+5,pas:o-10,dri:o,def:o-25,phy:o-5};
@@ -127,6 +161,14 @@ function generateStats(o,p){
   if(p==="Midfielder") return {pace:o-5,sho:o-5,pas:o+5,dri:o,def:o-5,phy:o};
   if(p==="Defender") return {pace:o-10,sho:o-20,pas:o-5,dri:o-10,def:o+10,phy:o+5};
   return {pace:o,sho:o,pas:o,dri:o,def:o,phy:o};
+}
+
+/* ⭐ AUTO CARD STYLE */
+function getCardStyle(overall){
+  if(overall >= 90) return "special-card";
+  if(overall >= 80) return "bg-yellow-500";
+  if(overall >= 70) return "bg-gray-300 text-black";
+  return "bg-amber-700";
 }
 
 players.forEach(name=>{
@@ -141,43 +183,37 @@ players.forEach(name=>{
 });
 
 function openCard(name){
-  currentPlayer=name;
-
   if(!playerStats[name]){
-    let d=defaultData[name];
-    playerStats[name]={...generateStats(d.overall,positions[name]),...d};
+    let d = defaultData[name];
+    playerStats[name] = {...generateStats(d.overall, positions[name]), ...d};
   }
 
-  let s=playerStats[name];
+  let s = playerStats[name];
 
-  document.getElementById("playerModal").classList.remove("hidden");
-  document.getElementById("playerModal").classList.add("flex");
+  const card = document.getElementById("card");
+  card.className = "w-80 p-6 text-center relative rounded-3xl shadow-2xl text-white";
+  card.classList.add(getCardStyle(s.overall));
 
-  document.getElementById("cardName").innerText=name;
-  document.getElementById("cardPos").innerText=positions[name];
-  document.getElementById("posBadge").innerText=positions[name];
-  document.getElementById("overall").innerText=s.overall;
-  document.getElementById("playerImg").src = playerImages[name] || "placeholder.jpg";
+  playerModal.classList.remove("hidden");
+  playerModal.classList.add("flex");
 
-  paceBar.style.width=s.pace+"%";
-  shoBar.style.width=s.sho+"%";
-  pasBar.style.width=s.pas+"%";
-  driBar.style.width=s.dri+"%";
-  defBar.style.width=s.def+"%";
-  phyBar.style.width=s.phy+"%";
+  cardName.innerText = name;
+  cardPos.innerText = positions[name];
+  posBadge.innerText = positions[name];
+  overall.innerText = s.overall;
 
-  applyCardStyle(s.type);
-}
+  playerImg.src = playerImages[name] || "placeholder.jpg";
 
-function applyCardStyle(type){
-  if(type==="gold") card.style.background="linear-gradient(gold,orange)";
-  else if(type==="silver") card.style.background="linear-gradient(lightgray,gray)";
-  else if(type==="bronze") card.style.background="linear-gradient(#cd7f32,#8c4a1f)";
-  else card.style.background="linear-gradient(purple,pink,red)";
+  paceBar.style.width = s.pace + "%";
+  shoBar.style.width = s.sho + "%";
+  pasBar.style.width = s.pas + "%";
+  driBar.style.width = s.dri + "%";
+  defBar.style.width = s.def + "%";
+  phyBar.style.width = s.phy + "%";
 }
 
 function closeCard(){
-  document.getElementById("playerModal").classList.add("hidden");
+  playerModal.classList.add("hidden");
 }
 </script>
 
