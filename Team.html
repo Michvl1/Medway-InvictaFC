@@ -6,7 +6,37 @@
 <title>Our Squad - Medway Invicta FC</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+/* --- CARD TIERS --- */
+.bronze { background: linear-gradient(135deg, #cd7f32, #5a3a1a); }
+.silver { background: linear-gradient(135deg, #c0c0c0, #555); }
+.gold { background: linear-gradient(135deg, #ffd700, #b89600); color:black; }
+
+/* --- SPECIAL CARD --- */
+.special {
+  background: linear-gradient(135deg, #00f0ff, #0088ff);
+  border: 3px solid gold;
+  position: relative;
+  overflow: hidden;
+}
+
+.special::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: rotate(25deg) translateX(-100%); }
+  100% { transform: rotate(25deg) translateX(100%); }
+}
+</style>
 </head>
 
 <body class="bg-gradient-to-br from-black via-red-950 to-black text-white font-sans">
@@ -16,84 +46,118 @@
     <img src="MI logo.jpg" class="h-12 w-12"/>
     <span>Medway Invicta FC</span>
   </h1>
-
-  <nav class="hidden md:flex space-x-6">
-    <a href="index.html" class="hover:text-red-400">Home</a>
-    <a href="Team.html" class="hover:text-red-400">Team</a>
-    <a href="Fixtures.html" class="hover:text-red-400">Fixtures</a>
-    <a href="Standings.html" class="hover:text-red-400">Standings</a>
-    <a href="Contact.html" class="hover:text-red-400">Contact</a>
-    <a href="Gallery.html" class="hover:text-red-400">Gallery</a>
-    <a href="GA.html" class="hover:text-red-400">Goals</a>
-  </nav>
-
-  <button id="burger" class="md:hidden">
-    <i data-lucide="menu" class="w-8 h-8"></i>
-  </button>
-
-  <div id="mobileMenu" class="absolute top-full right-6 mt-2 bg-red-950 border border-red-600 rounded-lg shadow-lg w-40 p-4 space-y-2 hidden">
-    <a href="index.html">Home</a>
-    <a href="Team.html">Team</a>
-    <a href="Fixtures.html">Fixtures</a>
-    <a href="Standings.html">Standings</a>
-    <a href="Contact.html">Contact</a>
-    <a href="Gallery.html">Gallery</a>
-    <a href="GA.html">Goals</a>
-  </div>
 </header>
 
-<!-- PLAYERS GRID -->
+<!-- PLAYERS -->
 <section id="playersContainer" class="p-6 grid grid-cols-2 md:grid-cols-4 gap-6"></section>
 
+<!-- MODAL -->
+<div id="modal" class="fixed inset-0 bg-black/80 hidden items-center justify-center">
+  <div id="card" class="w-72 p-5 rounded-2xl text-center relative shadow-2xl">
+
+    <button onclick="closeCard()" class="absolute top-2 right-3 text-xl">✕</button>
+
+    <img id="modalImg" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover">
+
+    <h2 id="modalName" class="text-lg font-bold"></h2>
+    <p id="modalPos" class="text-sm mb-2"></p>
+    <p id="modalOverall" class="text-3xl font-extrabold mb-3"></p>
+
+    <!-- UPDATED STAT LAYOUT -->
+    <div class="text-sm mt-3 space-y-2 font-semibold">
+
+      <div class="flex justify-between">
+        <span>PAC <span id="pac"></span></span>
+        <span>|</span>
+        <span>DEF <span id="def"></span></span>
+      </div>
+
+      <div class="flex justify-between">
+        <span>SHO <span id="sho"></span></span>
+        <span>|</span>
+        <span>PAS <span id="pas"></span></span>
+      </div>
+
+      <div class="flex justify-between">
+        <span>PHY <span id="phy"></span></span>
+        <span>|</span>
+        <span>DRI <span id="dri"></span></span>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
 <script>
-lucide.createIcons();
-
-/* Burger menu */
-const burger = document.getElementById("burger");
-const mobileMenu = document.getElementById("mobileMenu");
-
-burger.addEventListener("click", () => {
-  mobileMenu.classList.toggle("hidden");
-});
-
-/* PLAYER DATA */
 const players = [
-  {name:"Emmanuel Akinso", position:"Defender", img:"MANNY.jpeg"},
-  {name:"Adriano Anglin", position:"Defender", img:"IMG_5047.jpeg"},
-  {name:"Temi Ayetigbo", position:"Winger", img:"Temi.jpg"},
-  {name:"Jamie Blackham", position:"Midfielder", img:"JAMIE.jpeg"},
-  {name:"Jordan Buckfield-Waller", position:"Defender", img:"placeholder.jpg"},
-  {name:"Ayo Jimoh", position:"Striker", img:"AJ.jpeg"},
-  {name:"Shaun Keen", position:"Defender", img:"placeholder.jpg"},
-  {name:"Evan Longman", position:"Goalkeeper", img:"EVAN.jpg"},
-  {name:"Owen Longman", position:"Defender", img:"OWEN.jpeg"},
-  {name:"Caleb Luckhurst", position:"Defender", img:"Caleb Luckhurst.jpg"},
-  {name:"Tom Mercer", position:"Midfielder", img:"MERCER.jpeg"},
-  {name:"Connor Mudima", position:"Midfielder", img:"CONNOR.jpeg"},
-  {name:"Thomas Ngegba", position:"Striker", img:"placeholder.jpg"},
-  {name:"Toby Ogundemuren", position:"Manager", img:"placeholder.jpg"},
-  {name:"Victor Okunowo", position:"Winger", img:"placeholder.jpg"},
-  {name:"Adeboye Oloyede", position:"Defender", img:"Boye signed.png"},
-  {name:"Liam Riley", position:"Goalkeeper", img:"placeholder.jpg"},
-  {name:"James Rocha", position:"Defender", img:"James.jpg"},
-  {name:"Michael Shobande", position:"Winger", img:"IMG_5046.jpeg"},
-  {name:"Samuel Shobande", position:"Winger", img:"IMG_5044.jpeg"},
-  {name:"William Sims", position:"Midfielder", img:"placeholder.jpg"},
-  {name:"Matthew Thomas", position:"Winger", img:"NASH.jpeg"},
-  {name:"Ben Van-de-Peer", position:"Defender", img:"BEN.jpeg"}
+  {name:"Emmanuel Akinso", pos:"Defender", img:"MANNY.jpeg", overall:76, type:"special",
+   stats:{pac:74,sho:70,pas:63,dri:72,def:77,phy:78}},
+   
+  {name:"Adriano Anglin", pos:"Defender", img:"IMG_5047.jpeg", overall:75, type:"gold",
+   stats:{pac:91,sho:71,pas:72,dri:80,def:76,phy:68}},
+
+  {name:"Jordan Buckfield-Waller", pos:"Defender", img:"placeholder.jpg", overall:72, type:"silver",
+   stats:{pac:68,sho:65,pas:80,dri:62,def:73,phy:74}},
+
+  {name:"Shaun Keen", pos:"Defender", img:"placeholder.jpg", overall:72, type:"silver",
+   stats:{pac:75,sho:65,pas:61,dri:77,def:74,phy:77}},
+
+  {name:"Owen Longman", pos:"Defender", img:"OWEN.jpeg", overall:80, type:"special",
+   stats:{pac:78,sho:82,pas:74,dri:70,def:82,phy:83}},
+
+  {name:"Caleb Luckhurst", pos:"Defender", img:"Caleb Luckhurst.jpg", overall:74, type:"silver",
+   stats:{pac:73,sho:58,pas:70,dri:63,def:84,phy:87}},
+
+  {name:"Adeboye Oloyede", pos:"Defender", img:"Boye signed.png", overall:71, type:"silver",
+   stats:{pac:77,sho:68,pas:79,dri:80,def:72,phy:64}},
+
+  {name:"James Rocha", pos:"Defender", img:"James.jpg", overall:79, type:"gold",
+   stats:{pac:62,sho:71,pas:67,dri:69,def:81,phy:82}},
+
+  {name:"Ben Van-de-Peer", pos:"Defender", img:"BEN.jpeg", overall:77, type:"gold",
+   stats:{pac:84,sho:44,pas:72,dri:68,def:78,phy:87}},
 ];
 
-/* RENDER PLAYERS */
 const container = document.getElementById("playersContainer");
 
-players.forEach(p => {
+/* Render cards */
+players.forEach((p,i)=>{
   container.innerHTML += `
-  <div class="bg-red-950 p-4 rounded-xl text-center hover:scale-105 transition">
+  <div onclick="openCard(${i})" class="bg-red-950 p-4 rounded-xl text-center cursor-pointer hover:scale-105 transition">
     <img src="${p.img}" class="h-20 w-20 mx-auto rounded-full mb-2 object-cover">
     <h3 class="font-semibold">${p.name}</h3>
-    <p class="text-red-400 text-sm">${p.position}</p>
+    <p class="text-red-400 text-sm">${p.pos}</p>
   </div>`;
 });
+
+/* Open modal */
+function openCard(i){
+  const p = players[i];
+
+  const card = document.getElementById("card");
+  card.className = "w-72 p-5 rounded-2xl text-center relative shadow-2xl " + p.type;
+
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+
+  modalImg.src = p.img;
+  modalName.innerText = p.name;
+  modalPos.innerText = p.pos;
+  modalOverall.innerText = p.overall;
+
+  pac.innerText = p.stats.pac;
+  sho.innerText = p.stats.sho;
+  pas.innerText = p.stats.pas;
+  dri.innerText = p.stats.dri;
+  def.innerText = p.stats.def;
+  phy.innerText = p.stats.phy;
+}
+
+/* Close modal */
+function closeCard(){
+  modal.classList.add("hidden");
+}
 </script>
 
 </body>
