@@ -8,12 +8,10 @@
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-/* --- CARD TIERS --- */
 .bronze { background: linear-gradient(135deg, #cd7f32, #5a3a1a); }
 .silver { background: linear-gradient(135deg, #c0c0c0, #555); }
 .gold { background: linear-gradient(135deg, #ffd700, #b89600); color:black; }
 
-/* --- SPECIAL CARD --- */
 .special {
   background: linear-gradient(135deg, #00f0ff, #0088ff);
   border: 3px solid gold;
@@ -48,7 +46,6 @@
   </h1>
 </header>
 
-<!-- PLAYERS -->
 <section id="playersContainer" class="p-6 grid grid-cols-2 md:grid-cols-4 gap-6"></section>
 
 <!-- MODAL -->
@@ -63,7 +60,6 @@
     <p id="modalPos" class="text-sm mb-2"></p>
     <p id="modalOverall" class="text-3xl font-extrabold mb-3"></p>
 
-    <!-- UPDATED STAT LAYOUT -->
     <div class="text-sm mt-3 space-y-2 font-semibold">
 
       <div class="flex justify-between">
@@ -91,9 +87,11 @@
 
 <script>
 const players = [
+
+  // --- DEFENDERS ---
   {name:"Emmanuel Akinso", pos:"Defender", img:"MANNY.jpeg", overall:76, type:"special",
    stats:{pac:74,sho:70,pas:63,dri:72,def:77,phy:78}},
-   
+
   {name:"Adriano Anglin", pos:"Defender", img:"IMG_5047.jpeg", overall:75, type:"gold",
    stats:{pac:91,sho:71,pas:72,dri:80,def:76,phy:68}},
 
@@ -117,11 +115,23 @@ const players = [
 
   {name:"Ben Van-de-Peer", pos:"Defender", img:"BEN.jpeg", overall:77, type:"gold",
    stats:{pac:84,sho:44,pas:72,dri:68,def:78,phy:87}},
+
+  // --- MIDFIELDERS ---
+  {name:"Jamie Blackham", pos:"Midfielder", img:"JAMIE.jpeg", overall:86, type:"special",
+   stats:{pac:79,sho:78,pas:87,dri:88,def:75,phy:76}},
+
+  {name:"Tom Mercer", pos:"Midfielder", img:"MERCER.jpeg", overall:81, type:"gold",
+   stats:{pac:74,sho:84,pas:86,dri:80,def:74,phy:73}},
+
+  {name:"Connor Mudima", pos:"Midfielder", img:"CONNOR.jpeg", overall:82, type:"gold",
+   stats:{pac:79,sho:77,pas:83,dri:73,def:78,phy:80}},
+
+  {name:"William Sims", pos:"Midfielder", img:"placeholder.jpg", overall:83, type:"gold",
+   stats:{pac:77,sho:79,pas:84,dri:83,def:76,phy:75}},
 ];
 
 const container = document.getElementById("playersContainer");
 
-/* Render cards */
 players.forEach((p,i)=>{
   container.innerHTML += `
   <div onclick="openCard(${i})" class="bg-red-950 p-4 rounded-xl text-center cursor-pointer hover:scale-105 transition">
@@ -131,7 +141,6 @@ players.forEach((p,i)=>{
   </div>`;
 });
 
-/* Open modal */
 function openCard(i){
   const p = players[i];
 
@@ -154,7 +163,6 @@ function openCard(i){
   phy.innerText = p.stats.phy;
 }
 
-/* Close modal */
 function closeCard(){
   modal.classList.add("hidden");
 }
