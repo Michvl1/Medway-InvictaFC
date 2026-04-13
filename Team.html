@@ -44,6 +44,30 @@
     <img src="MI logo.jpg" class="h-12 w-12"/>
     <span>Medway Invicta FC</span>
   </h1>
+  <nav class="hidden md:flex space-x-6">
+    <a href="index.html" class="hover:text-red-400">Home</a>
+    <a href="Team.html" class="hover:text-red-400">Team</a>
+    <a href="Fixtures.html" class="hover:text-red-400">Fixtures</a>
+    <a href="Standings.html" class="hover:text-red-400">Standings</a>
+    <a href="Contact.html" class="hover:text-red-400">Contact</a>
+    <a href="Gallery.html" class="hover:text-red-400">Gallery</a>
+    <a href="GA.html" class="hover:text-red-400">Goals</a>
+  </nav>
+
+  <button id="burger" class="md:hidden z-50">
+    <i data-lucide="menu" class="w-8 h-8 text-white"></i>
+  </button>
+
+  <div id="mobileMenu" class="absolute top-full right-6 mt-2 bg-red-950 border border-red-600 rounded-lg shadow-lg w-40 flex-col items-start p-4 space-y-2 hidden z-50">
+    <a href="index.html">Home</a>
+    <a href="Team.html">Team</a>
+    <a href="Fixtures.html">Fixtures</a>
+    <a href="Standings.html">Standings</a>
+    <a href="Contact.html">Contact</a>
+    <a href="Gallery.html">Gallery</a>
+    <a href="GA.html">Goals</a>
+  </div>
+
 </header>
 
 <section id="playersContainer" class="p-6 grid grid-cols-2 md:grid-cols-4 gap-6"></section>
@@ -60,27 +84,7 @@
     <p id="modalPos" class="text-sm mb-2"></p>
     <p id="modalOverall" class="text-3xl font-extrabold mb-3"></p>
 
-    <div class="text-sm mt-3 space-y-2 font-semibold">
-
-      <div class="flex justify-between">
-        <span>PAC <span id="pac"></span></span>
-        <span>|</span>
-        <span>DEF <span id="def"></span></span>
-      </div>
-
-      <div class="flex justify-between">
-        <span>SHO <span id="sho"></span></span>
-        <span>|</span>
-        <span>PAS <span id="pas"></span></span>
-      </div>
-
-      <div class="flex justify-between">
-        <span>PHY <span id="phy"></span></span>
-        <span>|</span>
-        <span>DRI <span id="dri"></span></span>
-      </div>
-
-    </div>
+    <div id="statBox" class="text-sm mt-3 space-y-2 font-semibold"></div>
 
   </div>
 </div>
@@ -88,7 +92,7 @@
 <script>
 const players = [
 
-  // --- DEFENDERS ---
+  // ================= DEFENDERS =================
   {name:"Emmanuel Akinso", pos:"Defender", img:"MANNY.jpeg", overall:76, type:"special",
    stats:{pac:74,sho:70,pas:63,dri:72,def:77,phy:78}},
 
@@ -116,7 +120,7 @@ const players = [
   {name:"Ben Van-de-Peer", pos:"Defender", img:"BEN.jpeg", overall:77, type:"gold",
    stats:{pac:84,sho:44,pas:72,dri:68,def:78,phy:87}},
 
-  // --- MIDFIELDERS ---
+  // ================= MIDFIELDERS =================
   {name:"Jamie Blackham", pos:"Midfielder", img:"JAMIE.jpeg", overall:86, type:"special",
    stats:{pac:79,sho:78,pas:87,dri:88,def:75,phy:76}},
 
@@ -128,6 +132,36 @@ const players = [
 
   {name:"William Sims", pos:"Midfielder", img:"placeholder.jpg", overall:83, type:"gold",
    stats:{pac:77,sho:79,pas:84,dri:83,def:76,phy:75}},
+
+  // ================= WINGERS =================
+  {name:"Temi Ayetigbo", pos:"Winger", img:"Temi.jpg", overall:78, type:"gold",
+   stats:{pac:86,sho:81,pas:72,dri:86,def:59,phy:68}},
+
+  {name:"Victor Okunowo", pos:"Winger", img:"placeholder.jpg", overall:80, type:"gold",
+   stats:{pac:84,sho:72,pas:76,dri:82,def:73,phy:70}},
+
+  {name:"Michael Shobande", pos:"Winger", img:"IMG_5046.jpeg", overall:85, type:"special",
+   stats:{pac:90,sho:84,pas:80,dri:86,def:73,phy:76}},
+
+  {name:"Samuel Shobande", pos:"Winger", img:"IMG_5044.jpeg", overall:91, type:"special",
+   stats:{pac:82,sho:92,pas:79,dri:81,def:82,phy:78}},
+
+  {name:"Matthew Thomas", pos:"Winger", img:"NASH.jpeg", overall:83, type:"gold",
+   stats:{pac:86,sho:76,pas:79,dri:84,def:57,phy:78}},
+
+  // ================= STRIKERS =================
+  {name:"Ayo Jimoh", pos:"Striker", img:"AJ.jpeg", overall:83, type:"gold",
+   stats:{pac:68,sho:81,pas:78,dri:72,def:82,phy:88}},
+
+  {name:"Thomas Ngegba", pos:"Striker", img:"placeholder.jpg", overall:87, type:"special",
+   stats:{pac:81,sho:87,pas:74,dri:85,def:72,phy:88}},
+
+  // ================= GOALKEEPERS =================
+  {name:"Evan Longman", pos:"Goalkeeper", img:"EVAN.jpg", overall:86, type:"special",
+   stats:{div:87,han:85,kic:82,ref:88,spe:60,pos:86}},
+
+  {name:"Liam Riley", pos:"Goalkeeper", img:"placeholder.jpg", overall:78, type:"silver",
+   stats:{div:79,han:77,kic:75,ref:80,spe:58,pos:77}},
 ];
 
 const container = document.getElementById("playersContainer");
@@ -155,12 +189,21 @@ function openCard(i){
   modalPos.innerText = p.pos;
   modalOverall.innerText = p.overall;
 
-  pac.innerText = p.stats.pac;
-  sho.innerText = p.stats.sho;
-  pas.innerText = p.stats.pas;
-  dri.innerText = p.stats.dri;
-  def.innerText = p.stats.def;
-  phy.innerText = p.stats.phy;
+  const box = document.getElementById("statBox");
+
+  if(p.pos === "Goalkeeper"){
+    box.innerHTML = `
+      <div>DIV ${p.stats.div} | HAN ${p.stats.han}</div>
+      <div>KIC ${p.stats.kic} | REF ${p.stats.ref}</div>
+      <div>SPE ${p.stats.spe} | POS ${p.stats.pos}</div>
+    `;
+  } else {
+    box.innerHTML = `
+      <div>PAC ${p.stats.pac} | DEF ${p.stats.def}</div>
+      <div>SHO ${p.stats.sho} | PAS ${p.stats.pas}</div>
+      <div>PHY ${p.stats.phy} | DRI ${p.stats.dri}</div>
+    `;
+  }
 }
 
 function closeCard(){
@@ -169,4 +212,4 @@ function closeCard(){
 </script>
 
 </body>
-</html>
+</html> 
