@@ -102,30 +102,28 @@ burger.addEventListener("click", () => {
 
 const container = document.getElementById("playersContainer");
 
-const players = ["Evan Longman","Ben Van-de-Peer","Jamie Blackham","Connor Mudima","William Sims","Abdul-Raheem Sunmonu","Michael Shobande","Toby Ogundemuren","Samuel Shobande","Ayo Jimoh","Owen Longman","Matthew Thomas","James Rocha","Shaun Keen","Victor Okunowo","Bolu Buraimoh","Tom Mercer","Jordan Buckfield-Waller","Michael Hurcomb","Adriano Anglin","Temi Ayetigbo","Caleb Luckhurst","Oge Agwu","Yeni Yusuph","Yomi Yusuph","Thomas Ngegba","Liam Riley","Boye Oloyede","TEST TEST"];
+const players = ["Evan Longman","Ben Van de Peer","Jamie Blackham","Connor Mudima","William Sims","Abdul-Raheem Sunmonu","Michael Shobande","Toby Ogundemuren","Samuel Shobande","Ayo Jimoh","Owen Longman","Matthew Thomas","James Rocha","Shaun Keen","Victor Okunowo","Bolu Buraimoh","Tom Mercer","Jordan Buckfield-Waller","Michael Hurcomb","Adriano Anglin","Caleb Luckhurst","Oge Agwu","Yeni Yusuph","Yomi Yusuph","Thomas Ngegba","Liam Riley","Boye Oloyede","Temi Ayetigbo"];
 
 const positions = {
-"Evan Longman":"Goalkeeper","Ben Van-de-Peer":"Defender","Jamie Blackham":"Midfielder","Connor Mudima":"Midfielder",
+"Evan Longman":"Goalkeeper","Jamie Blackham":"Midfielder","Connor Mudima":"Midfielder",
 "William Sims":"Midfielder","Abdul-Raheem Sunmonu":"Defender","Michael Shobande":"Winger","Toby Ogundemuren":"Midfielder",
 "Samuel Shobande":"Striker","Ayo Jimoh":"Striker","Owen Longman":"Defender","Matthew Thomas":"Winger",
 "James Rocha":"Defender","Shaun Keen":"Defender","Victor Okunowo":"Midfielder","Bolu Buraimoh":"Midfielder",
-"Tom Mercer":"Midfielder","Jordan Buckfield-Waller":"Defender","Michael Hurcomb":"Striker","Adriano Anglin":"Winger",
-"Temi Ayetigbo":"Winger","Caleb Luckhurst":"Midfielder","Oge Agwu":"Midfielder","Yeni Yusuph":"Striker",
-"Yomi Yusuph":"Defender","Thomas Ngegba":"Striker","Liam Riley":"Goalkeeper","Boye Oloyede":"Defender","TEST TEST":"Defender"
+"Tom Mercer":"Midfielder","Jordan Buckfield-Waller":"Defender","Michael Hurcomb":"Striker","Adriano Anglin":"Winger","Caleb Luckhurst":"Midfielder","Oge Agwu":"Midfielder","Yeni Yusuph":"Striker",
+"Yomi Yusuph":"Defender","Thomas Ngegba":"Striker","Liam Riley":"Goalkeeper","Boye Oloyede":"Defender","Temi Ayetigbo":"Winger","Ben Van de-Peer":"Defender","Ben Van-de Peer":"Defender"
 };
 
 const playerImages = {
-"Evan Longman":"EVAN.jpg","Ben Van-de-Peer":"BEN.jpeg","Jamie Blackham":"JAMIE.jpeg",
+"Evan Longman":"EVAN.jpg","Jamie Blackham":"JAMIE.jpeg",
 "Connor Mudima":"CONNOR.jpeg","Owen Longman":"OWEN.jpeg","James Rocha":"James.jpg",
 "Tom Mercer":"MERCER.jpeg","Caleb Luckhurst":"Caleb Luckhurst.jpg",
 "Michael Shobande":"IMG_5046.jpeg","Matthew Thomas":"NASH.jpeg","Temi Ayetigbo":"Temi.jpg",
 "Ayo Jimoh":"AJ.jpeg","Boye Oloyede":"Boye signed.png",
-"Samuel Shobande":"IMG_5044.jpeg","Adriano Anglin":"IMG_5047.jpeg","TEST TEST":"Temi.jpg"
+"Samuel Shobande":"IMG_5044.jpeg","Adriano Anglin":"IMG_5047.jpeg","Temi Ayetigbo":"Temi.jpg","Ben Van de Peer":"BEN.jpeg"
 };
 
 const defaultData = {
 "Evan Longman": {overall:72},
-"Ben Van-de-Peer": {overall:78},
 "Jamie Blackham": {overall:85},
 "Connor Mudima": {overall:81},
 "William Sims": {overall:82},
@@ -143,7 +141,6 @@ const defaultData = {
 "Jordan Buckfield-Waller": {overall:80},
 "Michael Hurcomb": {overall:72},
 "Adriano Anglin": {overall:84},
-"Temi Ayetigbo": {overall:79},
 "Caleb Luckhurst": {overall:79},
 "Oge Agwu": {overall:63},
 "Yeni Yusuph": {overall:77},
@@ -151,7 +148,8 @@ const defaultData = {
 "Thomas Ngegba": {overall:87},
 "Liam Riley": {overall:60},
 "Boye Oloyede": {overall:73},
-"TEST TEST": {overall:60}
+"Temi Ayetigbo": {overall:79},
+"Ben Van de Peer": {overall:78},
   
 };
 
