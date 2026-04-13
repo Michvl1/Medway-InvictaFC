@@ -163,7 +163,6 @@ function generateStats(o,p){
   return {pace:o,sho:o,pas:o,dri:o,def:o,phy:o};
 }
 
-/* ⭐ AUTO CARD STYLE */
 function getCardStyle(overall){
   if(overall >= 90) return "special-card";
   if(overall >= 80) return "bg-yellow-500";
@@ -183,9 +182,19 @@ players.forEach(name=>{
 });
 
 function openCard(name){
+  const d = defaultData[name];
+
+  if(!d){
+    console.warn(`Missing data for: ${name}`);
+    alert(`${name} does not have stats yet. Please add them.`);
+    return;
+  }
+
   if(!playerStats[name]){
-    let d = defaultData[name];
-    playerStats[name] = {...generateStats(d.overall, positions[name]), ...d};
+    playerStats[name] = {
+      ...generateStats(d.overall, positions[name]),
+      ...d
+    };
   }
 
   let s = playerStats[name];
