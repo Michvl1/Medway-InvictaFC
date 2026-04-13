@@ -5,111 +5,59 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Medway Invicta FC</title>
   <script src="https://cdn.tailwindcss.com"></script>
-   <style>
-  /* --- Default (Home Kit) Theme: Red & Black --- */
-  body {
-    background-image: linear-gradient(to bottom right, #7f1d1d, #000000);
-    color: #ffffff;
-  }
 
-  /* --- Away Kit Theme: Blue & Yellow --- */
-  .away-theme {
-    --tw-gradient-from: #002366; /* deep royal blue */
-    --tw-gradient-to: #ffcc00;   /* bright yellow */
-    background-image: linear-gradient(to bottom right, var(--tw-gradient-from), var(--tw-gradient-to));
-    color: #001a33; /* dark navy text for good contrast */
-  }
-
-  .away-theme header,
-  .away-theme footer,
-  .away-theme section {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: #ffcc00;
-  }
-
-  .away-theme a {
-    color: #002366;
-  }
-
-  .away-theme #themeToggle {
-    background-color: #002366;
-    color: #ffcc00;
-  }
-
-  .away-theme button,
-  .away-theme .bg-red-950,
-  .away-theme .bg-red-900,
-  .away-theme .bg-red-600 {
-    background-color: #002366 !important;
-  }
-
-  .away-theme .hover\:bg-red-500:hover,
-  .away-theme .hover\:bg-red-900:hover {
-    background-color: #003399 !important;
-  }
-
-  .away-theme .text-red-400,
-  .away-theme .border-red-600 {
-    color: #ffcc00 !important;
-    border-color: #ffcc00 !important;
-  }
-</style>
-
-
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <style>
+    body {
+      background-image: linear-gradient(to bottom right, #7f1d1d, #000000);
+      color: #ffffff;
+    }
+  </style>
 </head>
+
 <body class="bg-gradient-to-br from-red-900 to-black text-white font-sans">
 
   <!-- Header -->
   <header class="flex justify-between items-center p-6 border-b border-red-600 relative">
     <h1 class="flex items-center space-x-3 text-3xl font-bold tracking-wide">
-      <img src="MI logo.jpg" alt="Medway Invicta FC Logo" class="h-12 w-12 object-contain"/>
+      <img src="MI logo.jpg" class="h-12 w-12 object-contain"/>
       <span>Medway Invicta FC</span>
     </h1>
 
-    <!-- Desktop Nav -->
     <nav class="hidden md:flex space-x-6">
-      <a href="index.html" class="hover:text-red-400 transition">Home</a>
-      <a href="Team.html" class="hover:text-red-400 transition">Team</a>
-      <a href="Fixtures.html" class="hover:text-red-400 transition">Fixtures</a>
-      <a href="Standings.html" class="hover:text-red-400 transition">Standings</a>
-      <a href="Contact.html" class="hover:text-red-400 transition">Contact</a>
-      <a href="Gallery.html" class="hover:text-red-400 transition">Gallery</a>
-      <a href="GA.html" class="hover:text-red-400 transition">Goals</a>
+      <a href="index.html" class="hover:text-red-400">Home</a>
+      <a href="Team.html" class="hover:text-red-400">Team</a>
+      <a href="Fixtures.html" class="hover:text-red-400">Fixtures</a>
+      <a href="Standings.html" class="hover:text-red-400">Standings</a>
+      <a href="Contact.html" class="hover:text-red-400">Contact</a>
+      <a href="Gallery.html" class="hover:text-red-400">Gallery</a>
+      <a href="GA.html" class="hover:text-red-400">Goals</a>
     </nav>
 
-    <!-- Burger Icon -->
-    <button id="burger" class="md:hidden">
-      <i data-lucide="menu" class="w-8 h-8 text-white"></i>
-    </button>
+    <button id="burger" class="md:hidden">☰</button>
 
-    <!-- Mobile Menu -->
-    <div id="mobileMenu" class="absolute top-full right-6 mt-2 bg-red-950 border border-red-600 rounded-lg shadow-lg w-40 flex-col items-start p-4 space-y-2 hidden z-50">
-      <a href="index.html" class="block hover:text-red-400 transition">Home</a>
-      <a href="Team.html" class="block hover:text-red-400 transition">Team</a>
-      <a href="Fixtures.html" class="block hover:text-red-400 transition">Fixtures</a>
-      <a href="Standings.html" class="block hover:text-red-400 transition">Standings</a>
-      <a href="Contact.html" class="block hover:text-red-400 transition">Contact</a>
-      <a href="Gallery.html" class="block hover:text-red-400 transition">Gallery</a>
-      <a href="GA.html" class="block hover:text-red-400 transition">Goals</a>
+    <div id="mobileMenu" class="absolute top-full right-6 mt-2 bg-red-950 border border-red-600 rounded-lg w-40 p-4 space-y-2 hidden z-50">
+      <a href="index.html">Home</a>
+      <a href="Team.html">Team</a>
+      <a href="Fixtures.html">Fixtures</a>
+      <a href="Standings.html">Standings</a>
+      <a href="Contact.html">Contact</a>
+      <a href="Gallery.html">Gallery</a>
+      <a href="GA.html">Goals</a>
     </div>
   </header>
 
   <!-- Hero -->
   <section class="relative h-[90vh] flex items-center justify-center text-center">
-    <img src="IMG_3421.jpeg" alt="Team Background" class="absolute inset-0 w-full h-full object-cover opacity-20" />
+    <img src="IMG_3421.jpeg" class="absolute inset-0 w-full h-full object-cover opacity-20" />
     <div class="relative z-10 max-w-2xl mx-auto px-4">
-      <h2 class="text-5xl md:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-[#FFFFFF] to-white drop-shadow-lg">
+      <h2 class="text-5xl font-extrabold mb-4">
         Welcome to Medway Invicta FC
-        
-
-
       </h2>
-      <p class="text-lg text-gray-200 max-w-xl mx-auto mb-8">
-       Home of champions. Follow the passion, pride, and performance of Medway Invicta FC.
+      <p class="text-gray-200 mb-8">
+        Home of champions. Follow the passion, pride, and performance of Medway Invicta FC.
       </p>
       <a href="https://www.instagram.com/medwayinvictafc/?hl=en">
-        <button class="mt-8 bg-red-600 hover:bg-red-500 px-6 py-2 rounded-full text-lg font-medium transition">
+        <button class="bg-red-600 hover:bg-red-500 px-6 py-2 rounded-full">
           Our Instagram
         </button>
       </a>
@@ -118,205 +66,83 @@
 
   <!-- Info Cards -->
   <section class="grid grid-cols-1 md:grid-cols-3 gap-6 px-6 py-12">
-    
-   <!-- Matchday Countdown -->
-  <section class="py-12 text-center bg-gradient-to-b from-red-950 to-black border-t border-red-600">
-    <h2 class="text-3xl font-bold mb-4">Next Matchday Countdown</h2>
-    <p class="text-gray-300 mb-6">We play every Sunday at 10:30 AM</p>
-    <div id="countdown" class="text-5xl font-extrabold text-red-400 tracking-widest animate-pulse"></div>
-  </section>
 
     <!-- Squad -->
-    <a href="Team.html" class="bg-red-950 rounded-2xl p-6 shadow-lg text-center hover:bg-red-900 transition">
+    <a href="Team.html" class="bg-red-950 rounded-2xl p-6 text-center hover:bg-red-900">
       <div class="flex justify-center mb-4">
-        <i data-lucide="users" class="text-red-400 w-10 h-10"></i>
+        <img src="icons/squad.png" class="w-10 h-10 object-contain"/>
       </div>
       <h3 class="text-xl font-semibold">Our Squad</h3>
-      <p class="text-sm mt-2 text-gray-300">Meet the players driving our success.</p>
+      <p class="text-sm text-gray-300 mt-2">Meet the players driving our success.</p>
     </a>
 
     <!-- Fixtures -->
-    <a href="Fixtures.html" class="bg-red-950 rounded-2xl p-6 shadow-lg text-center hover:bg-red-900 transition">
+    <a href="Fixtures.html" class="bg-red-950 rounded-2xl p-6 text-center hover:bg-red-900">
       <div class="flex justify-center mb-4">
-        <i data-lucide="calendar" class="text-red-400 w-10 h-10"></i>
+        <img src="icons/fixtures.png" class="w-10 h-10 object-contain"/>
       </div>
       <h3 class="text-xl font-semibold">Fixtures</h3>
-      <p class="text-sm mt-2 text-gray-300">Never miss an upcoming match.</p>
+      <p class="text-sm text-gray-300 mt-2">Never miss an upcoming match.</p>
     </a>
 
     <!-- Standings -->
-    <a href="Standings.html" class="bg-red-950 rounded-2xl p-6 shadow-lg text-center hover:bg-red-900 transition">
+    <a href="Standings.html" class="bg-red-950 rounded-2xl p-6 text-center hover:bg-red-900">
       <div class="flex justify-center mb-4">
-        <i data-lucide="trophy.png" class="text-red-400 w-10 h-10"></i>
+        <img src="icons/standings.png" class="w-10 h-10 object-contain"/>
       </div>
       <h3 class="text-xl font-semibold">Standings</h3>
-      <p class="text-sm mt-2 text-gray-300">Track our position in the league.</p>
+      <p class="text-sm text-gray-300 mt-2">Track our position in the league.</p>
     </a>
 
-    <!-- STATS -->
-    <a href="GA.html" class="bg-red-950 rounded-2xl p-6 shadow-lg text-center hover:bg-red-900 transition">
+    <!-- Goals -->
+    <a href="GA.html" class="bg-red-950 rounded-2xl p-6 text-center hover:bg-red-900">
       <div class="flex justify-center mb-4">
-        <i data-lucide="chart-no-axes-combined" class="text-red-400 w-10 h-10"></i>
+        <img src="icons/goals.png" class="w-10 h-10 object-contain"/>
       </div>
       <h3 class="text-xl font-semibold">Goals</h3>
-      <p class="text-sm mt-2 text-gray-300">Keep up with the Stats.</p>
+      <p class="text-sm text-gray-300 mt-2">Keep up with the stats.</p>
     </a>
   </section>
 
-  <!-- News Section -->
+  <!-- News -->
   <section class="px-6 py-12 bg-gradient-to-b from-black to-red-950 border-t border-red-600">
     <h2 class="text-3xl font-bold text-center mb-8">Latest News</h2>
-    <div id="newsGrid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <!-- Articles inserted by JS -->
-    </div>
-    <div class="flex justify-center mt-8">
-      <button id="loadMore" class="bg-red-600 hover:bg-red-500 px-6 py-2 rounded-full text-lg font-medium transition">Load More</button>
-    </div>
+    <div id="newsGrid" class="grid md:grid-cols-3 gap-6"></div>
   </section>
-
-  <!-- Dark Mode Toggle -->
-  <button id="themeToggle" 
-          class="fixed bottom-6 right-6 bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-full shadow-lg transition z-50">
-    🌙 Dark Mode
-  </button>
-
 
   <!-- Footer -->
   <footer class="text-center border-t border-red-600 py-6 text-sm">
-    &copy; 2025 Medway Invicta FC. All rights reserved.
+    &copy; 2025 Medway Invicta FC
   </footer>
 
   <script>
-
-    
-    lucide.createIcons();
-
-    // Burger menu toggle
     const burger = document.getElementById('burger');
     const mobileMenu = document.getElementById('mobileMenu');
+
     burger.addEventListener('click', () => {
       mobileMenu.classList.toggle('hidden');
     });
 
-    // Sample News Data
     const ARTICLES = [
-      {id:1,title:'MOTM: Ayo Jimoh',excerpt:'Striker AJ earns himself MOTM after a great perfomance on Invicta's first game back.',image:'AJ.jpeg'},
-      {id:1,title:'Owen Longman: POTM',excerpt:'Defender Owen Longman is our POTM this month.',image:'OWEN.jpeg'},
-     
+      {title:'MOTM: Ayo Jimoh',excerpt:'Great performance.',image:'AJ.jpeg'},
+      {title:'Owen Longman: POTM',excerpt:'Top defender.',image:'OWEN.jpeg'}
     ];
 
     const grid = document.getElementById('newsGrid');
-    const loadMoreBtn = document.getElementById('loadMore');
-    let visibleCount = 3;
 
-    function renderNews(){
-      grid.innerHTML = '';
-      const items = ARTICLES.slice(0, visibleCount);
-      items.forEach(a => {
-        const el = document.createElement('article');
-        el.className = 'bg-red-950 rounded-2xl shadow-lg overflow-hidden flex flex-col';
-        el.innerHTML = `
-          <div class=\"w-full h-48 bg-black flex items-center justify-center\">
-            <img src=\"${a.image}\" alt=\"${a.title}\" class=\"max-h-full object-contain\">
-          </div>
-          <div class=\"p-4 flex flex-col flex-1\">
-            <h3 class=\"text-lg font-semibold mb-2\">${a.title}</h3>
-            <p class=\"text-sm text-gray-300 flex-1\">${a.excerpt}</p>
-            <span class=\"text-xs text-gray-400 mt-2\">${new Date(a.date).toLocaleDateString()}</span>
-          </div>
-        `;
-        grid.appendChild(el);
-      });
-      loadMoreBtn.style.display = ARTICLES.length > visibleCount ? 'block' : 'none';
-    }
-
-    loadMoreBtn.addEventListener('click', () => {
-      visibleCount += 3;
-      renderNews();
+    ARTICLES.forEach(a => {
+      const el = document.createElement('div');
+      el.className = 'bg-red-950 rounded-2xl overflow-hidden';
+      el.innerHTML = `
+        <img src="${a.image}" class="w-full h-48 object-contain bg-black">
+        <div class="p-4">
+          <h3 class="font-semibold">${a.title}</h3>
+          <p class="text-sm text-gray-300">${a.excerpt}</p>
+        </div>
+      `;
+      grid.appendChild(el);
     });
-
-    renderNews();
-
-        // --- MATCHDAY COUNTDOWN ---
-    function getNextSundayAt8AM() {
-      const now = new Date();
-      const nextSunday = new Date(now);
-      nextSunday.setDate(now.getDate() + ((7 - now.getDay()) % 7)); // next Sunday (or today if Sunday)
-      nextSunday.setHours(10, 0, 0, 0); // 10:00 AM
-
-      // If it's already past 10 AM on Sunday, move to next week
-      if (now > nextSunday) {
-        nextSunday.setDate(nextSunday.getDate() + 7);
-      }
-      return nextSunday;
-    }
-
-    function updateCountdown() {
-      const countdownEl = document.getElementById('countdown');
-      const now = new Date();
-      const nextMatch = getNextSundayAt8AM();
-      const diff = nextMatch - now;
-
-      if (diff <= 0) {
-        countdownEl.textContent = "It's Matchday!";
-        return;
-      }
-
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / (1000 * 60)) % 60);
-      const seconds = Math.floor((diff / 1000) % 60);
-
-      countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-    }
-
-    // Run every second
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-    
-   // --- AWAY THEME TOGGLE ---
-const themeToggle = document.getElementById('themeToggle');
-const body = document.body;
-
-// Load saved preference
-if (localStorage.getItem('theme') === 'away') {
-  body.classList.add('away-theme');
-  themeToggle.textContent = '🏠 Home Theme';
-}
-
-themeToggle.addEventListener('click', () => {
-  body.classList.toggle('away-theme');
-  const awayThemeEnabled = body.classList.contains('away-theme');
-
-  themeToggle.textContent = awayThemeEnabled ? '🏠 Home Theme' : ' Away Theme';
-  localStorage.setItem('theme', awayThemeEnabled ? 'away' : 'home');
-});
-
-
   </script>
+
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
