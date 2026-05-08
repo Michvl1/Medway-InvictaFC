@@ -3,148 +3,417 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
 <title>Our Squad - Medway Invicta FC</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-.bronze { background: linear-gradient(135deg, #cd7f32, #5a3a1a); }
-.silver { background: linear-gradient(135deg, #c0c0c0, #555); }
-.gold { background: linear-gradient(135deg, #ffd700, #b89600); color:black; }
 
-.special {
-  background: linear-gradient(135deg, #00f0ff, #0088ff);
-  border: 3px solid gold;
-  position: relative;
-  overflow: hidden;
+/* BACKGROUND */
+
+body{
+  background:
+    radial-gradient(circle at top, #450a0a, #000000 75%);
+  min-height:100vh;
 }
 
-.special::before {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
+/* CARD THEMES */
+
+.bronze{
+  background:linear-gradient(135deg,#9a6b3d,#3f2a18);
+}
+
+.silver{
+  background:linear-gradient(135deg,#d1d5db,#4b5563);
+}
+
+.gold{
+  background:linear-gradient(135deg,#facc15,#a16207);
+  color:black;
+}
+
+.special{
+  background:linear-gradient(135deg,#ff2d2d,#7f0000);
+  border:2px solid gold;
+  box-shadow:0 0 25px rgba(255,0,0,.45);
+  position:relative;
+  overflow:hidden;
+}
+
+.special::before{
+  content:"";
+  position:absolute;
+  top:-50%;
+  left:-50%;
+  width:200%;
+  height:200%;
+  background:
+    linear-gradient(
+      120deg,
+      transparent,
+      rgba(255,255,255,0.3),
+      transparent
+    );
   animation: shimmer 3s infinite;
 }
 
-@keyframes shimmer {
-  0% { transform: rotate(25deg) translateX(-100%); }
-  100% { transform: rotate(25deg) translateX(100%); }
+@keyframes shimmer{
+  0%{
+    transform:rotate(25deg) translateX(-100%);
+  }
+  100%{
+    transform:rotate(25deg) translateX(100%);
+  }
 }
+
+/* PLAYER CARD */
+
+.player-card{
+  position:relative;
+  overflow:hidden;
+  border-radius:24px;
+  transition:.35s ease;
+  cursor:pointer;
+}
+
+.player-card:hover{
+  transform:translateY(-8px) scale(1.03);
+  box-shadow:0 0 35px rgba(255,0,0,.4);
+}
+
+.player-card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,0.15),
+      transparent 40%
+    );
+  pointer-events:none;
+}
+
+.player-img{
+  width:110px;
+  height:110px;
+  object-fit:cover;
+  border-radius:9999px;
+  border:4px solid rgba(255,255,255,.8);
+}
+
+.rating{
+  position:absolute;
+  top:14px;
+  left:14px;
+  background:#020617;
+  color:white;
+  width:52px;
+  height:52px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+  font-size:18px;
+  border:2px solid white;
+}
+
+.position-badge{
+  position:absolute;
+  top:14px;
+  right:14px;
+  background:#b91c1c;
+  color:white;
+  padding:4px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:700;
+}
+
+.stat-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+  margin-top:16px;
+}
+
+.stat{
+  background:rgba(255,255,255,0.12);
+  padding:7px;
+  border-radius:12px;
+  font-size:12px;
+  font-weight:700;
+}
+
+/* NAV */
+
+.glow{
+  text-shadow:
+    0 0 10px rgba(255,0,0,.7),
+    0 0 20px rgba(220,38,38,.5);
+}
+
+.mobile-menu{
+  display:none;
+}
+
+.mobile-menu.active{
+  display:flex;
+}
+
 </style>
 </head>
 
-<body class="bg-gradient-to-br from-black via-red-950 to-black text-white font-sans">
+<body class="text-white font-sans">
 
-<header class="flex justify-between items-center p-6 border-b border-red-600">
-  <h1 class="flex items-center space-x-3 text-3xl font-bold">
-    <img src="MI logo.jpg" class="h-12 w-12"/>
-    <span>Medway Invicta FC</span>
-  </h1>
-  <nav class="hidden md:flex space-x-6">
-    <a href="index.html" class="hover:text-red-400">Home</a>
-    <a href="Team.html" class="hover:text-red-400">Team</a>
-    <a href="Fixtures.html" class="hover:text-red-400">Fixtures</a>
-    <a href="Standings.html" class="hover:text-red-400">Standings</a>
-    <a href="Contact.html" class="hover:text-red-400">Contact</a>
-    <a href="Gallery.html" class="hover:text-red-400">Gallery</a>
-    <a href="GA.html" class="hover:text-red-400">Goals</a>
-  </nav>
+<!-- HEADER -->
+
+<header class="border-b border-red-600 bg-black/30 backdrop-blur-lg sticky top-0 z-50">
+
+  <div class="flex justify-between items-center px-6 py-4">
+
+    <!-- LOGO -->
+
+    <h1 class="flex items-center space-x-3 text-2xl md:text-3xl font-bold glow">
+
+      <img src="MI logo.jpg" class="h-12 w-12 rounded-full object-cover"/>
+
+      <span>Medway Invicta FC</span>
+
+    </h1>
+
+    <!-- DESKTOP NAV -->
+
+    <nav class="hidden md:flex space-x-6 font-semibold">
+
+      <a href="index.html" class="hover:text-red-400 transition">
+        Home
+      </a>
+
+      <a href="Team.html" class="text-red-400">
+        Team
+      </a>
+
+      <a href="Fixtures.html" class="hover:text-red-400 transition">
+        Fixtures
+      </a>
+
+      <a href="Standings.html" class="hover:text-red-400 transition">
+        Standings
+      </a>
+
+      <a href="Gallery.html" class="hover:text-red-400 transition">
+        Gallery
+      </a>
+
+      <a href="GA.html" class="hover:text-red-400 transition">
+        Goals
+      </a>
+
+      <a href="Contact.html" class="hover:text-red-400 transition">
+        Contact
+      </a>
+
+    </nav>
+
+    <!-- BURGER -->
+
+    <button
+      id="menuBtn"
+      class="md:hidden text-3xl"
+    >
+      ☰
+    </button>
+
+  </div>
+
+  <!-- MOBILE MENU -->
+
+  <div
+    id="mobileMenu"
+    class="mobile-menu flex-col px-6 pb-6 space-y-4 md:hidden bg-black"
+  >
+
+    <a href="index.html" class="hover:text-red-400">
+      Home
+    </a>
+
+    <a href="Team.html" class="text-red-400">
+      Team
+    </a>
+
+    <a href="Fixtures.html" class="hover:text-red-400">
+      Fixtures
+    </a>
+
+    <a href="Standings.html" class="hover:text-red-400">
+      Standings
+    </a>
+
+    <a href="Gallery.html" class="hover:text-red-400">
+      Gallery
+    </a>
+
+    <a href="GA.html" class="hover:text-red-400">
+      Goals
+    </a>
+
+    <a href="Contact.html" class="hover:text-red-400">
+      Contact
+    </a>
+
+  </div>
+
 </header>
 
 <!-- MANAGER -->
-<section class="p-6 text-center">
-  <h2 class="text-2xl font-bold mb-4 text-red-400">Manager</h2>
 
-  <div class="max-w-xs mx-auto bg-red-950 p-5 rounded-xl shadow-xl border border-yellow-400">
-    <img src="placeholder.jpg" class="h-24 w-24 mx-auto rounded-full mb-3 object-cover">
-    <h3 class="text-lg font-semibold">Toby Ogundemuren</h3>
-    <p class="text-yellow-400 text-sm">Manager</p>
+<section class="p-8 text-center">
+
+  <h2 class="text-3xl font-bold mb-6 text-red-400 glow">
+    Manager
+  </h2>
+
+  <div class="max-w-xs mx-auto bg-black/40 p-6 rounded-3xl shadow-2xl border border-yellow-400">
+
+    <img
+      src="placeholder.jpg"
+      class="h-28 w-28 mx-auto rounded-full mb-4 object-cover border-4 border-red-400"
+    >
+
+    <h3 class="text-2xl font-bold">
+      Toby Ogundemuren
+    </h3>
+
+    <p class="text-red-400 mt-1">
+      First Team Manager
+    </p>
+
   </div>
+
+</section>
+
+<!-- TITLE -->
+
+<section class="text-center pb-8">
+
+  <h2 class="text-5xl font-extrabold glow">
+    OUR SQUAD
+  </h2>
+
+  <p class="text-slate-300 mt-3">
+    2026 Season Roster
+  </p>
+
 </section>
 
 <!-- FILTER -->
-<div class="px-6 pb-4 text-center">
-  <select id="filter" class="bg-red-950 border border-red-600 px-4 py-2 rounded-lg">
+
+<div class="text-center mb-8">
+
+  <select
+    id="filter"
+    class="bg-black/40 border border-red-600 px-5 py-3 rounded-xl outline-none"
+  >
+
     <option value="All">All Positions</option>
     <option value="Defender">Defenders</option>
     <option value="Midfielder">Midfielders</option>
     <option value="Winger">Wingers</option>
     <option value="Striker">Strikers</option>
     <option value="Goalkeeper">Goalkeepers</option>
+
   </select>
+
 </div>
 
-<section id="playersContainer" class="p-6 grid grid-cols-2 md:grid-cols-4 gap-6"></section>
+<!-- PLAYERS -->
 
-<!-- MODAL -->
-<div id="modal" class="fixed inset-0 bg-black/80 hidden items-center justify-center">
-  <div id="card" class="w-72 p-5 rounded-2xl text-center relative shadow-2xl">
-
-    <button onclick="closeCard()" class="absolute top-2 right-3 text-xl">✕</button>
-
-    <img id="modalImg" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover">
-
-    <h2 id="modalName" class="text-lg font-bold"></h2>
-    <p id="modalPos" class="text-sm mb-2"></p>
-    <p id="modalOverall" class="text-3xl font-extrabold mb-3"></p>
-
-    <div id="statBox" class="text-sm mt-3 space-y-2 font-semibold"></div>
-
-  </div>
-</div>
+<section
+  id="playersContainer"
+  class="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
+></section>
 
 <script>
+
+/* MOBILE MENU */
+
+const menuBtn = document.getElementById("menuBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+
+menuBtn.addEventListener("click", () => {
+  mobileMenu.classList.toggle("active");
+});
+
+/* PLAYERS */
+
 const players = [
+
   {name:"Emmanuel Akinso", pos:"Defender", img:"MANNY.jpeg", overall:80, type:"special",
    stats:{pac:74,sho:70,pas:63,dri:72,def:77,phy:78}},
+
   {name:"Adriano Anglin", pos:"Defender", img:"IMG_5047.jpeg", overall:80, type:"gold",
    stats:{pac:91,sho:71,pas:72,dri:80,def:76,phy:68}},
+
   {name:"Jordan Buckfield-Waller", pos:"Defender", img:"placeholder.jpg", overall:80, type:"gold",
    stats:{pac:68,sho:65,pas:80,dri:62,def:73,phy:74}},
+
   {name:"Shaun Keen", pos:"Defender", img:"placeholder.jpg", overall:80, type:"gold",
    stats:{pac:75,sho:65,pas:61,dri:77,def:74,phy:77}},
+
   {name:"Owen Longman", pos:"Defender", img:"OWEN.jpeg", overall:80, type:"gold",
    stats:{pac:78,sho:82,pas:74,dri:70,def:82,phy:83}},
+
   {name:"Caleb Luckhurst", pos:"Defender", img:"Caleb Luckhurst.jpg", overall:80, type:"gold",
    stats:{pac:73,sho:58,pas:70,dri:63,def:84,phy:87}},
+
   {name:"Adeboye Oloyede", pos:"Defender", img:"Boye signed.png", overall:81, type:"gold",
    stats:{pac:77,sho:68,pas:79,dri:80,def:72,phy:64}},
+
   {name:"James Rocha", pos:"Defender", img:"James.jpg", overall:80, type:"gold",
    stats:{pac:62,sho:71,pas:67,dri:69,def:81,phy:82}},
+
   {name:"Ben Van-de-Peer", pos:"Defender", img:"BEN.jpeg", overall:80, type:"gold",
    stats:{pac:84,sho:44,pas:72,dri:68,def:78,phy:87}},
 
   {name:"Jamie Blackham", pos:"Midfielder", img:"JAMIE.jpeg", overall:86, type:"gold",
    stats:{pac:79,sho:78,pas:87,dri:88,def:75,phy:76}},
+
   {name:"Tom Mercer", pos:"Midfielder", img:"MERCER.jpeg", overall:81, type:"gold",
    stats:{pac:74,sho:84,pas:86,dri:80,def:74,phy:73}},
+
   {name:"Connor Mudima", pos:"Midfielder", img:"CONNOR.jpeg", overall:82, type:"gold",
    stats:{pac:79,sho:77,pas:83,dri:73,def:78,phy:80}},
+
   {name:"William Sims", pos:"Midfielder", img:"placeholder.jpg", overall:83, type:"gold",
    stats:{pac:77,sho:79,pas:84,dri:83,def:76,phy:75}},
 
   {name:"Temi Ayetigbo", pos:"Winger", img:"Temi.jpg", overall:80, type:"gold",
    stats:{pac:86,sho:81,pas:72,dri:86,def:59,phy:68}},
+
   {name:"Victor Okunowo", pos:"Winger", img:"placeholder.jpg", overall:80, type:"gold",
    stats:{pac:84,sho:72,pas:76,dri:82,def:73,phy:70}},
+
   {name:"Michael Shobande", pos:"Winger", img:"IMG_5046.jpeg", overall:80, type:"gold",
    stats:{pac:90,sho:84,pas:80,dri:86,def:73,phy:76}},
-  {name:"Samuel Shobande", pos:"Winger", img:"IMG_5044.jpeg", overall:91, type:"Special",
+
+  {name:"Samuel Shobande", pos:"Winger", img:"IMG_5044.jpeg", overall:91, type:"special",
    stats:{pac:82,sho:92,pas:79,dri:81,def:82,phy:78}},
+
   {name:"Matthew Thomas", pos:"Winger", img:"NASH.jpeg", overall:83, type:"gold",
    stats:{pac:86,sho:76,pas:79,dri:84,def:57,phy:78}},
 
   {name:"Ayo Jimoh", pos:"Striker", img:"AJ.jpeg", overall:83, type:"gold",
    stats:{pac:68,sho:81,pas:78,dri:72,def:82,phy:88}},
+
   {name:"Thomas Ngegba", pos:"Striker", img:"placeholder.jpg", overall:87, type:"gold",
    stats:{pac:81,sho:87,pas:74,dri:85,def:72,phy:88}},
 
-  {name:"Evan Longman", pos:"Goalkeeper", img:"EVAN.jpg", overall:86, type:"Special",
+  {name:"Evan Longman", pos:"Goalkeeper", img:"EVAN.jpg", overall:86, type:"gold",
    stats:{div:87,han:85,kic:82,ref:88,spe:60,pos:86}},
+
   {name:"Liam Riley", pos:"Goalkeeper", img:"placeholder.jpg", overall:78, type:"silver",
    stats:{div:79,han:77,kic:75,ref:80,spe:58,pos:77}},
 ];
@@ -153,17 +422,66 @@ const container = document.getElementById("playersContainer");
 const filter = document.getElementById("filter");
 
 function renderPlayers(filterValue = "All") {
+
   container.innerHTML = "";
 
   players
     .filter(p => filterValue === "All" || p.pos === filterValue)
-    .forEach((p, i) => {
+    .forEach((p) => {
+
+      let statsHTML = "";
+
+      if(p.pos === "Goalkeeper"){
+
+        statsHTML = `
+          <div class="stat">DIV ${p.stats.div}</div>
+          <div class="stat">HAN ${p.stats.han}</div>
+          <div class="stat">KIC ${p.stats.kic}</div>
+          <div class="stat">REF ${p.stats.ref}</div>
+          <div class="stat">SPE ${p.stats.spe}</div>
+          <div class="stat">POS ${p.stats.pos}</div>
+        `;
+
+      } else {
+
+        statsHTML = `
+          <div class="stat">PAC ${p.stats.pac}</div>
+          <div class="stat">SHO ${p.stats.sho}</div>
+          <div class="stat">PAS ${p.stats.pas}</div>
+          <div class="stat">DRI ${p.stats.dri}</div>
+          <div class="stat">DEF ${p.stats.def}</div>
+          <div class="stat">PHY ${p.stats.phy}</div>
+        `;
+      }
+
       container.innerHTML += `
-      <div onclick="openCard(${players.indexOf(p)})" class="bg-red-950 p-4 rounded-xl text-center cursor-pointer hover:scale-105 transition">
-        <img src="${p.img}" class="h-20 w-20 mx-auto rounded-full mb-2 object-cover">
-        <h3 class="font-semibold">${p.name}</h3>
-        <p class="text-red-400 text-sm">${p.pos}</p>
-      </div>`;
+
+        <div class="player-card ${p.type} p-6 text-center">
+
+          <div class="rating">
+            ${p.overall}
+          </div>
+
+          <div class="position-badge">
+            ${p.pos}
+          </div>
+
+          <img
+            src="${p.img}"
+            class="player-img mx-auto mb-4"
+          >
+
+          <h3 class="text-xl font-bold mt-2">
+            ${p.name}
+          </h3>
+
+          <div class="stat-grid">
+            ${statsHTML}
+          </div>
+
+        </div>
+
+      `;
     });
 }
 
@@ -173,39 +491,6 @@ filter.addEventListener("change", (e) => {
   renderPlayers(e.target.value);
 });
 
-function openCard(i){
-  const p = players[i];
-  const card = document.getElementById("card");
-  card.className = "w-72 p-5 rounded-2xl text-center relative shadow-2xl " + p.type;
-
-  modal.classList.remove("hidden");
-  modal.classList.add("flex");
-
-  modalImg.src = p.img;
-  modalName.innerText = p.name;
-  modalPos.innerText = p.pos;
-  modalOverall.innerText = p.overall;
-
-  const box = document.getElementById("statBox");
-
-  if(p.pos === "Goalkeeper"){
-    box.innerHTML = `
-      <div>DIV ${p.stats.div} | HAN ${p.stats.han}</div>
-      <div>KIC ${p.stats.kic} | REF ${p.stats.ref}</div>
-      <div>SPE ${p.stats.spe} | POS ${p.stats.pos}</div>
-    `;
-  } else {
-    box.innerHTML = `
-      <div>PAC ${p.stats.pac} | DEF ${p.stats.def}</div>
-      <div>SHO ${p.stats.sho} | PAS ${p.stats.pas}</div>
-      <div>PHY ${p.stats.phy} | DRI ${p.stats.dri}</div>
-    `;
-  }
-}
-
-function closeCard(){
-  modal.classList.add("hidden");
-}
 </script>
 
 </body>
