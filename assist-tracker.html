@@ -184,18 +184,37 @@
 </head>
 <body>
 
-<header>
-  <div class="header-container">
-    <div class="title-section">
-      <h1>Medway Invicta FC</h1>
-      <p>Football Assists Analytics Dashboard</p>
-    </div>
+ <!-- Header -->
+  <header class="flex justify-between items-center p-6 border-b border-red-600 relative">
+    <h1 class="flex items-center space-x-3 text-3xl font-bold tracking-wide">
+      <img src="MI logo.jpg" class="h-12 w-12 object-contain"/>
+      <span>Medway Invicta FC - Assist Tracker</span>
+    </h1>
 
-    <div class="MI logo.jpg">
-    
+    <nav class="hidden md:flex space-x-6">
+      <a href="index.html" class="hover:text-red-400">Home</a>
+      <a href="Team.html" class="hover:text-red-400">Team</a>
+      <a href="Fixtures.html" class="hover:text-red-400">Fixtures</a>
+      <a href="Standings.html" class="hover:text-red-400">Standings</a>
+      <a href="Contact.html" class="hover:text-red-400">Contact</a>
+      <a href="Gallery.html" class="hover:text-red-400">Gallery</a>
+      <a href="GA.html" class="hover:text-red-400">Goals</a>
+      <a href="assist-tracker.html" class="hover:text-red-400">Assists</a>
+    </nav>
+
+    <button id="burger" class="md:hidden">☰</button>
+
+    <div id="mobileMenu" class="absolute top-full right-6 mt-2 bg-red-950 border border-red-600 rounded-lg w-40 p-4 space-y-2 hidden z-50">
+      <a href="index.html">Home</a>
+      <a href="Team.html">Team</a>
+      <a href="Fixtures.html">Fixtures</a>
+      <a href="Standings.html">Standings</a>
+      <a href="Contact.html">Contact</a>
+      <a href="Gallery.html">Gallery</a>
+      <a href="GA.html">Goals</a>
+      <a href="assist-tracker.html">Assists</a>
     </div>
-  </div>
-</header>
+  </header>
 
 <div class="container">
 
