@@ -75,6 +75,7 @@ body{
   border-radius:24px;
   transition:.35s ease;
   cursor:pointer;
+  min-height:420px;
 }
 
 .player-card:hover{
@@ -145,6 +146,39 @@ body{
   border-radius:12px;
   font-size:12px;
   font-weight:700;
+  backdrop-filter:blur(4px);
+}
+
+/* COLLAPSIBLE CARD */
+
+.card-preview{
+  transition:0.3s ease;
+}
+
+.card-details{
+  max-height:0;
+  overflow:hidden;
+  opacity:0;
+  transition:all .45s ease;
+}
+
+.player-card.active .card-details{
+  max-height:500px;
+  opacity:1;
+  margin-top:18px;
+}
+
+.player-card.active .expand-text{
+  opacity:0;
+}
+
+.expand-text{
+  margin-top:14px;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:1px;
+  opacity:.8;
+  transition:.3s ease;
 }
 
 /* NAV */
@@ -163,10 +197,84 @@ body{
   display:flex;
 }
 
+/* UNDER CONSTRUCTION OVERLAY */
+
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.55);
+  backdrop-filter:blur(3px);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+.overlay-box{
+  background:rgba(20,20,20,0.92);
+  border:2px solid #dc2626;
+  padding:40px;
+  border-radius:24px;
+  text-align:center;
+  max-width:420px;
+  width:90%;
+  box-shadow:0 0 35px rgba(255,0,0,.35);
+}
+
+.overlay-box h2{
+  font-size:2rem;
+  font-weight:800;
+  margin-bottom:12px;
+  color:#ef4444;
+}
+
+.overlay-box p{
+  color:#d1d5db;
+  margin-bottom:24px;
+  line-height:1.6;
+}
+
+.overlay-box button{
+  background:#dc2626;
+  color:white;
+  padding:12px 24px;
+  border:none;
+  border-radius:12px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.3s ease;
+}
+
+.overlay-box button:hover{
+  background:#ef4444;
+  transform:translateY(-2px);
+}
+
 </style>
 </head>
 
 <body class="text-white font-sans">
+
+<!-- UNDER CONSTRUCTION OVERLAY -->
+
+<div class="overlay" id="overlay">
+
+  <div class="overlay-box">
+
+    <h2>🚧 Under Construction</h2>
+
+    <p>
+      The new interactive squad experience is currently being developed.
+      Some features may still be in progress.
+    </p>
+
+    <button onclick="closeOverlay()">
+      Enter Page
+    </button>
+
+  </div>
+
+</div>
 
 <!-- HEADER -->
 
@@ -212,7 +320,7 @@ body{
         Goals
       </a>
 
-       <a href="assist-tracker.html" class="hover:text-red-400 transition">
+      <a href="assist-tracker.html" class="hover:text-red-400 transition">
         Assists
       </a>
 
@@ -259,8 +367,8 @@ body{
     <a href="Gallery.html" class="hover:text-red-400">
       Gallery
     </a>
-    
-     <a href="GA.html" class="hover:text-red-400">
+
+    <a href="GA.html" class="hover:text-red-400">
       Goals
     </a>
 
@@ -312,7 +420,7 @@ body{
   </h2>
 
   <p class="text-slate-300 mt-3">
-    2026 Season Roster
+    Click a player card to reveal stats
   </p>
 
 </section>
@@ -354,6 +462,12 @@ const mobileMenu = document.getElementById("mobileMenu");
 menuBtn.addEventListener("click", () => {
   mobileMenu.classList.toggle("active");
 });
+
+/* OVERLAY */
+
+function closeOverlay(){
+  document.getElementById("overlay").style.display = "none";
+}
 
 /* PLAYERS */
 
@@ -466,31 +580,61 @@ function renderPlayers(filterValue = "All") {
 
         <div class="player-card ${p.type} p-6 text-center">
 
-          <div class="rating">
-            ${p.overall}
+          <div class="card-preview">
+
+            <div class="rating">
+              ${p.overall}
+            </div>
+
+            <div class="position-badge">
+              ${p.pos}
+            </div>
+
+            <img
+              src="${p.img}"
+              class="player-img mx-auto mb-4"
+            >
+
+            <h3 class="text-xl font-bold mt-2">
+              ${p.name}
+            </h3>
+
+            <p class="expand-text">
+              CLICK TO VIEW STATS
+            </p>
+
           </div>
 
-          <div class="position-badge">
-            ${p.pos}
-          </div>
+          <div class="card-details">
 
-          <img
-            src="${p.img}"
-            class="player-img mx-auto mb-4"
-          >
+            <div class="stat-grid">
+              ${statsHTML}
+            </div>
 
-          <h3 class="text-xl font-bold mt-2">
-            ${p.name}
-          </h3>
-
-          <div class="stat-grid">
-            ${statsHTML}
           </div>
 
         </div>
 
       `;
     });
+
+  attachCardEvents();
+}
+
+function attachCardEvents(){
+
+  const cards = document.querySelectorAll(".player-card");
+
+  cards.forEach(card => {
+
+    card.addEventListener("click", () => {
+
+      card.classList.toggle("active");
+
+    });
+
+  });
+
 }
 
 renderPlayers();
