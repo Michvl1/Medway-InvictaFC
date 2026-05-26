@@ -7,12 +7,227 @@
 
   <title>Medway Invicta FC | Assist Tracker</title>
 
+  <!-- CHART -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <!-- FIREBASE (MODULE) -->
+  <!-- STYLES -->
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background:#0f0f0f;
+      color:white;
+      min-height:100vh;
+    }
+
+    a{
+      text-decoration:none;
+      color:white;
+    }
+
+    .main-header{
+      background:linear-gradient(135deg,#c40000,#000000);
+      border-bottom:3px solid white;
+      position:sticky;
+      top:0;
+      z-index:1000;
+    }
+
+    .nav-container{
+      max-width:1400px;
+      margin:auto;
+      padding:18px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .brand img{
+      width:60px;
+      height:60px;
+      object-fit:contain;
+    }
+
+    .brand-text h1{
+      font-size:1.4rem;
+    }
+
+    .desktop-nav{
+      display:flex;
+      gap:20px;
+    }
+
+    .desktop-nav a.active{
+      color:#ff4d4d;
+    }
+
+    .burger-btn{
+      display:none;
+      background:none;
+      border:none;
+      color:white;
+      font-size:2rem;
+      cursor:pointer;
+    }
+
+    .mobile-menu{
+      display:none;
+      flex-direction:column;
+      background:#161616;
+    }
+
+    .mobile-menu.show{
+      display:flex;
+    }
+
+    .mobile-menu a{
+      padding:16px 20px;
+      border-bottom:1px solid rgba(255,255,255,0.08);
+    }
+
+    .container{
+      max-width:1400px;
+      margin:30px auto;
+      padding:0 20px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+      gap:20px;
+      margin-bottom:30px;
+    }
+
+    .card{
+      background:#1a1a1a;
+      border-radius:18px;
+      padding:25px;
+      border:1px solid rgba(255,255,255,0.08);
+      box-shadow:0 10px 25px rgba(0,0,0,0.4);
+    }
+
+    .card h2{
+      margin-bottom:20px;
+    }
+
+    form{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+
+    input,
+    select,
+    button{
+      width:100%;
+      padding:12px;
+      border-radius:10px;
+      border:none;
+      font-size:1rem;
+    }
+
+    input,
+    select{
+      background:#2b2b2b;
+      color:white;
+      border:1px solid rgba(255,255,255,0.08);
+    }
+
+    button{
+      background:#c40000;
+      color:white;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.3s ease;
+    }
+
+    button:hover{
+      background:#ff1a1a;
+    }
+
+    .filters{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:15px;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:900px;
+    }
+
+    thead{
+      background:#c40000;
+    }
+
+    th,
+    td{
+      padding:14px;
+      border-bottom:1px solid rgba(255,255,255,0.08);
+      text-align:left;
+    }
+
+    tbody tr{
+      background:#1b1b1b;
+    }
+
+    tbody tr:hover{
+      background:#242424;
+    }
+
+    .leaderboard-item{
+      display:flex;
+      justify-content:space-between;
+      padding:12px 0;
+      border-bottom:1px solid rgba(255,255,255,0.08);
+    }
+
+    .stat-number{
+      color:#ff4d4d;
+      font-weight:bold;
+    }
+
+    .table-wrapper{
+      overflow-x:auto;
+    }
+
+    .chart-container{
+      height:400px;
+    }
+
+    @media(max-width:980px){
+
+      .desktop-nav{
+        display:none;
+      }
+
+      .burger-btn{
+        display:block;
+      }
+
+    }
+
+  </style>
+
+  <!-- FIREBASE -->
   <script type="module">
 
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { initializeApp }
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
     import {
       getFirestore,
@@ -21,192 +236,499 @@
       deleteDoc,
       doc,
       onSnapshot
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    }
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    /* ================================
-       YOUR FIREBASE CONFIG (ADDED)
-    ================================ */
+    /* FIREBASE CONFIG */
+
     const firebaseConfig = {
+
       apiKey: "AIzaSyCnJUmg-0w-e7RUgY99k11X7JKGfvQc0cM",
-      authDomain: "medway-invicta-fc---assists.firebaseapp.com",
-      projectId: "medway-invicta-fc---assists",
-      storageBucket: "medway-invicta-fc---assists.firebasestorage.app",
-      messagingSenderId: "332175149224",
-      appId: "1:332175149224:web:035d21fc79afbbe8115a9d",
-      measurementId: "G-XTRB0E23F7"
+
+      authDomain:
+      "medway-invicta-fc---assists.firebaseapp.com",
+
+      projectId:
+      "medway-invicta-fc---assists",
+
+      storageBucket:
+      "medway-invicta-fc---assists.firebasestorage.app",
+
+      messagingSenderId:
+      "332175149224",
+
+      appId:
+      "1:332175149224:web:035d21fc79afbbe8115a9d",
+
+      measurementId:
+      "G-XTRB0E23F7"
+
     };
 
     const app = initializeApp(firebaseConfig);
+
     const db = getFirestore(app);
 
     let assists = [];
+
     let assistChart;
 
     const players = [
-      'David Abe','Oge Agwu','Emmanuel Akinso','Adriano Anglin','Temi Ayetigbo',
-      'Jamie Blackham','Jordan Buckfield-Waller','Bolu Buraimoh','Michael Hurcomb',
-      'Ayo Jimoh','Shaun Keen','Evan Longman','Owen Longman','Caleb Luckhurst',
-      'Tom Mercer','Connor Mudima','Thomas Ngegba','Toby Ogundemuren','Victor Okunowo',
-      'Adeboye Oloyede','Liam Riley','James Rocha','Michael Shobande','Samuel Shobande',
-      'William Sims','Abdul-Raheem Sunmonu','Matthew Thomas','Ben Van-de-Peer',
-      'Yeni Yusuph','Yomi Yusuph'
+
+      'David Abe',
+      'Oge Agwu',
+      'Emmanuel Akinso',
+      'Adriano Anglin',
+      'Temi Ayetigbo',
+      'Jamie Blackham',
+      'Jordan Buckfield-Waller',
+      'Bolu Buraimoh',
+      'Michael Hurcomb',
+      'Ayo Jimoh',
+      'Shaun Keen',
+      'Evan Longman',
+      'Owen Longman',
+      'Caleb Luckhurst',
+      'Tom Mercer',
+      'Connor Mudima',
+      'Thomas Ngegba',
+      'Toby Ogundemuren',
+      'Victor Okunowo',
+      'Adeboye Oloyede',
+      'Liam Riley',
+      'James Rocha',
+      'Michael Shobande',
+      'Samuel Shobande',
+      'William Sims',
+      'Abdul-Raheem Sunmonu',
+      'Matthew Thomas',
+      'Ben Van-de-Peer',
+      'Yeni Yusuph',
+      'Yomi Yusuph'
+
     ];
 
-    window.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', () => {
 
-      const assistForm = document.getElementById('assistForm');
-      const assistTableBody = document.getElementById('assistTableBody');
-      const leaderboard = document.getElementById('leaderboard');
+      /* ELEMENTS */
 
-      const filterOpponent = document.getElementById('filterOpponent');
-      const filterCompetition = document.getElementById('filterCompetition');
-      const filterPlayer = document.getElementById('filterPlayer');
+      const assistForm =
+        document.getElementById('assistForm');
+
+      const assistTableBody =
+        document.getElementById('assistTableBody');
+
+      const leaderboard =
+        document.getElementById('leaderboard');
+
+      const filterOpponent =
+        document.getElementById('filterOpponent');
+
+      const filterCompetition =
+        document.getElementById('filterCompetition');
+
+      const filterPlayer =
+        document.getElementById('filterPlayer');
+
+      const assistProvider =
+        document.getElementById('assistProvider');
+
+      const goalScorer =
+        document.getElementById('goalScorer');
 
       /* MOBILE MENU */
-      document.getElementById('burger').addEventListener('click', () => {
-        document.getElementById('mobileMenu').classList.toggle('show');
+
+      document.getElementById('burger')
+      .addEventListener('click', () => {
+
+        document.getElementById('mobileMenu')
+        .classList.toggle('show');
+
       });
 
       /* POPULATE DROPDOWNS */
-      const assistProvider = document.getElementById('assistProvider');
-      const goalScorer = document.getElementById('goalScorer');
 
-      players.forEach(p => {
-        assistProvider.innerHTML += `<option value="${p}">${p}</option>`;
-        goalScorer.innerHTML += `<option value="${p}">${p}</option>`;
-        filterPlayer.innerHTML += `<option value="${p}">${p}</option>`;
+      players.forEach(player => {
+
+        assistProvider.innerHTML += `
+          <option value="${player}">
+            ${player}
+          </option>
+        `;
+
+        goalScorer.innerHTML += `
+          <option value="${player}">
+            ${player}
+          </option>
+        `;
+
+        filterPlayer.innerHTML += `
+          <option value="${player}">
+            ${player}
+          </option>
+        `;
+
       });
 
-      /* FIREBASE REALTIME */
-      onSnapshot(collection(db, "assists"), (snapshot) => {
-        assists = [];
+      /* CHART */
 
-        snapshot.forEach(docSnap => {
-          assists.push({ id: docSnap.id, ...docSnap.data() });
-        });
+      assistChart = new Chart(
+        document.getElementById('assistChart'),
+        {
 
-        renderTable();
-        updateLeaderboard();
-        updateChart();
-      });
+          type:'bar',
+
+          data:{
+
+            labels:[],
+
+            datasets:[{
+
+              label:'Total Assists',
+
+              data:[],
+
+              backgroundColor:'rgba(196,0,0,0.8)',
+
+              borderColor:'white',
+
+              borderWidth:1
+
+            }]
+
+          },
+
+          options:{
+
+            responsive:true,
+
+            maintainAspectRatio:false,
+
+            plugins:{
+              legend:{
+                labels:{
+                  color:'white'
+                }
+              }
+            },
+
+            scales:{
+
+              x:{
+                ticks:{
+                  color:'white'
+                }
+              },
+
+              y:{
+                ticks:{
+                  color:'white'
+                }
+              }
+
+            }
+
+          }
+
+        }
+
+      );
+
+      /* REALTIME FIREBASE */
+
+      onSnapshot(
+        collection(db, "assists"),
+        (snapshot) => {
+
+          assists = [];
+
+          snapshot.forEach(docSnap => {
+
+            assists.push({
+
+              id: docSnap.id,
+
+              ...docSnap.data()
+
+            });
+
+          });
+
+          renderTable();
+
+          updateLeaderboard();
+
+          updateChart();
+
+        }
+      );
 
       /* ADD ASSIST */
-      assistForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
 
-        const record = {
-          date: document.getElementById('date').value,
-          opponent: document.getElementById('opponent').value,
-          competition: document.getElementById('competition').value,
-          provider: assistProvider.value,
-          scorer: goalScorer.value
-        };
+      assistForm.addEventListener(
+        'submit',
+        async (e) => {
 
-        await addDoc(collection(db, "assists"), record);
+          e.preventDefault();
 
-        assistForm.reset();
+          const record = {
+
+            date:
+              document.getElementById('date').value,
+
+            opponent:
+              document.getElementById('opponent').value,
+
+            competition:
+              document.getElementById('competition').value,
+
+            provider:
+              assistProvider.value,
+
+            scorer:
+              goalScorer.value
+
+          };
+
+          try{
+
+            await addDoc(
+              collection(db, "assists"),
+              record
+            );
+
+            assistForm.reset();
+
+          }
+
+          catch(error){
+
+            console.error(error);
+
+            alert("Error saving assist.");
+
+          }
+
+        }
+      );
+
+      /* FILTER EVENTS */
+
+      filterOpponent.addEventListener(
+        'input',
+        renderTable
+      );
+
+      filterCompetition.addEventListener(
+        'input',
+        renderTable
+      );
+
+      filterPlayer.addEventListener(
+        'change',
+        renderTable
+      );
+
+      /* EXPORT CSV */
+
+      document.getElementById('exportBtn')
+      .addEventListener('click', () => {
+
+        let csv =
+          'Date,Opponent,Competition,Assist Provider,Goal Scorer\n';
+
+        assists.forEach(record => {
+
+          csv +=
+          `${record.date},${record.opponent},${record.competition},${record.provider},${record.scorer}\n`;
+
+        });
+
+        const blob = new Blob(
+          [csv],
+          { type:'text/csv' }
+        );
+
+        const url =
+          window.URL.createObjectURL(blob);
+
+        const a =
+          document.createElement('a');
+
+        a.href = url;
+
+        a.download = 'assists.csv';
+
+        a.click();
+
       });
 
       /* DELETE */
-      window.deleteAssist = async (id) => {
-        await deleteDoc(doc(db, "assists", id));
-      };
+
+      window.deleteAssist =
+      async function(id){
+
+        if(confirm(
+          "Delete this assist record?"
+        )){
+
+          await deleteDoc(
+            doc(db, "assists", id)
+          );
+
+        }
+
+      }
 
       /* TABLE */
-      function renderTable() {
 
-        const opFilter = filterOpponent.value.toLowerCase();
-        const compFilter = filterCompetition.value.toLowerCase();
-        const playerFilter = filterPlayer.value;
+      function renderTable(){
 
         assistTableBody.innerHTML = '';
 
+        const opFilter =
+          filterOpponent.value.toLowerCase();
+
+        const compFilter =
+          filterCompetition.value.toLowerCase();
+
+        const playerFilter =
+          filterPlayer.value;
+
         assists
-          .filter(r =>
-            r.opponent.toLowerCase().includes(opFilter) &&
-            r.competition.toLowerCase().includes(compFilter) &&
-            (!playerFilter || r.provider === playerFilter)
+
+        .filter(r =>
+
+          r.opponent.toLowerCase()
+          .includes(opFilter)
+
+          &&
+
+          r.competition.toLowerCase()
+          .includes(compFilter)
+
+          &&
+
+          (
+            !playerFilter
+            ||
+            r.provider === playerFilter
           )
-          .forEach(r => {
-            assistTableBody.innerHTML += `
-              <tr>
-                <td>${r.date}</td>
-                <td>${r.opponent}</td>
-                <td>${r.competition}</td>
-                <td>${r.provider}</td>
-                <td>${r.scorer}</td>
-                <td><button onclick="deleteAssist('${r.id}')">Delete</button></td>
-              </tr>
-            `;
-          });
+
+        )
+
+        .forEach(r => {
+
+          assistTableBody.innerHTML += `
+
+            <tr>
+
+              <td>${r.date}</td>
+
+              <td>${r.opponent}</td>
+
+              <td>${r.competition}</td>
+
+              <td>${r.provider}</td>
+
+              <td>${r.scorer}</td>
+
+              <td>
+
+                <button
+                  type="button"
+                  onclick="deleteAssist('${r.id}')"
+                  style="
+                    background:#ff1a1a;
+                    color:white;
+                    border:none;
+                    padding:8px 12px;
+                    border-radius:8px;
+                    cursor:pointer;
+                  "
+                >
+                  Delete
+                </button>
+
+              </td>
+
+            </tr>
+
+          `;
+
+        });
+
       }
 
       /* LEADERBOARD */
-      function updateLeaderboard() {
+
+      function updateLeaderboard(){
 
         const totals = {};
 
         assists.forEach(a => {
-          totals[a.provider] = (totals[a.provider] || 0) + 1;
+
+          totals[a.provider] =
+            (totals[a.provider] || 0) + 1;
+
         });
 
-        leaderboard.innerHTML = Object.entries(totals)
+        leaderboard.innerHTML =
+
+          Object.entries(totals)
+
           .sort((a,b) => b[1] - a[1])
-          .map(p => `
+
+          .map(player => `
+
             <div class="leaderboard-item">
-              <span>${p[0]}</span>
-              <span class="stat-number">${p[1]}</span>
+
+              <span>${player[0]}</span>
+
+              <span class="stat-number">
+                ${player[1]}
+              </span>
+
             </div>
-          `).join('');
+
+          `)
+
+          .join('');
+
       }
 
-      /* CHART */
-      function updateChart() {
+      /* UPDATE CHART */
+
+      function updateChart(){
 
         const totals = {};
 
         assists.forEach(a => {
-          totals[a.provider] = (totals[a.provider] || 0) + 1;
+
+          totals[a.provider] =
+            (totals[a.provider] || 0) + 1;
+
         });
 
-        assistChart.data.labels = Object.keys(totals);
-        assistChart.data.datasets[0].data = Object.values(totals);
-        assistChart.update();
-      }
+        assistChart.data.labels =
+          Object.keys(totals);
 
-      assistChart = new Chart(document.getElementById('assistChart'), {
-        type: 'bar',
-        data: {
-          labels: [],
-          datasets: [{
-            label: 'Assists',
-            data: [],
-            backgroundColor: 'rgba(196,0,0,0.8)',
-            borderColor: 'white',
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            x: { ticks: { color: 'white' } },
-            y: { ticks: { color: 'white' } }
-          }
-        }
-      });
+        assistChart.data.datasets[0].data =
+          Object.values(totals);
+
+        assistChart.update();
+
+      }
 
     });
 
   </script>
 
-  <!-- (YOUR CSS STAYS EXACTLY THE SAME — NOT REPEATED TO KEEP IT CLEAN) -->
-
 </head>
 
 <body>
 
-  <!-- HEADER -->
+  <!-- NAVBAR -->
 
   <header class="main-header">
 
@@ -306,8 +828,6 @@
             required
           >
 
-          <!-- ASSIST PROVIDER -->
-
           <select id="assistProvider" required>
 
             <option value="">
@@ -315,8 +835,6 @@
             </option>
 
           </select>
-
-          <!-- GOAL SCORER -->
 
           <select id="goalScorer" required>
 
@@ -348,7 +866,10 @@
 
     <!-- FILTERS -->
 
-    <div class="card" style="margin-bottom:30px;">
+    <div
+      class="card"
+      style="margin-bottom:30px;"
+    >
 
       <h2>Filters & Export</h2>
 
@@ -374,7 +895,10 @@
 
         </select>
 
-        <button id="exportBtn">
+        <button
+          type="button"
+          id="exportBtn"
+        >
           Export CSV
         </button>
 
@@ -384,7 +908,10 @@
 
     <!-- TABLE -->
 
-    <div class="card" style="margin-bottom:30px;">
+    <div
+      class="card"
+      style="margin-bottom:30px;"
+    >
 
       <h2>Assist Records</h2>
 
@@ -435,66 +962,6 @@
     </div>
 
   </div>
-
-  <!-- PLAYER DROPDOWN SCRIPT -->
-
-  <script>
-
-    const playerSelects = [
-      document.getElementById('assistProvider'),
-      document.getElementById('goalScorer')
-    ];
-
-    const allPlayers = [
-
-      'David Abe',
-      'Oge Agwu',
-      'Emmanuel Akinso',
-      'Adriano Anglin',
-      'Temi Ayetigbo',
-      'Jamie Blackham',
-      'Jordan Buckfield-Waller',
-      'Bolu Buraimoh',
-      'Michael Hurcomb',
-      'Ayo Jimoh',
-      'Shaun Keen',
-      'Evan Longman',
-      'Owen Longman',
-      'Caleb Luckhurst',
-      'Tom Mercer',
-      'Connor Mudima',
-      'Thomas Ngegba',
-      'Toby Ogundemuren',
-      'Victor Okunowo',
-      'Adeboye Oloyede',
-      'Liam Riley',
-      'James Rocha',
-      'Michael Shobande',
-      'Samuel Shobande',
-      'William Sims',
-      'Abdul-Raheem Sunmonu',
-      'Matthew Thomas',
-      'Ben Van-de-Peer',
-      'Yeni Yusuph',
-      'Yomi Yusuph'
-
-    ];
-
-    playerSelects.forEach(select => {
-
-      allPlayers.forEach(player => {
-
-        select.innerHTML += `
-          <option value="${player}">
-            ${player}
-          </option>
-        `;
-
-      });
-
-    });
-
-  </script>
 
 </body>
 </html>
