@@ -3,101 +3,240 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Contact - Medway Invicta FC</title>
+  <title>Contact — Medway Invicta FC</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    function toggleMenu() {
-      document.getElementById('mobile-menu').classList.toggle('hidden');
+
+  <!-- Fonts: same pairing as the rest of the site -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;1,700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --mi-red: #DC2626;
+      --mi-red-deep: #7F1D1D;
+      --mi-black: #0B0B0D;
+      --mi-panel: #141216;
+      --mi-cream: #F5F2ED;
     }
-  </script>
+
+    body {
+      background-color: var(--mi-black);
+      color: var(--mi-cream);
+      font-family: 'Barlow', sans-serif;
+    }
+
+    .display {
+      font-family: 'Barlow Condensed', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.35em;
+      font-size: 0.75rem;
+      color: var(--mi-red);
+      font-weight: 700;
+    }
+
+    /* Kit-sash motif */
+    .sash {
+      background: linear-gradient(
+        115deg,
+        transparent 0 46%,
+        var(--mi-red-deep) 46% 49%,
+        transparent 49% 52%,
+        var(--mi-red) 52% 55%,
+        transparent 55%
+      );
+    }
+
+    /* Stadium-hoarding ticker */
+    .ticker-track {
+      display: flex;
+      width: max-content;
+      animation: ticker 28s linear infinite;
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .ticker-track { animation: none; }
+    }
+
+    /* Form fields */
+    .field {
+      width: 100%;
+      padding: 12px 14px;
+      background: #1e1b20;
+      color: white;
+      border: 1px solid rgba(127,29,29,.5);
+      font-family: 'Barlow', sans-serif;
+      font-size: 1rem;
+    }
+    .field::placeholder { color: #6b7280; }
+    .field:focus {
+      outline: none;
+      border-color: var(--mi-red);
+      box-shadow: 0 0 0 1px var(--mi-red);
+    }
+
+    .field-label {
+      display: block;
+      font-family: 'Barlow Condensed', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: #9ca3af;
+      margin-bottom: 6px;
+    }
+
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--mi-red);
+      outline-offset: 3px;
+    }
+  </style>
 </head>
-<body class="bg-gradient-to-br from-red-900 to-black text-white font-sans">
 
-  <!-- Header -->
-  <header class="flex justify-between items-center p-6 border-b border-red-600">
-    <h1 class="flex items-center space-x-3 text-2xl sm:text-3xl font-bold tracking-wide">
-      <img src="MI logo.jpg" alt="Medway Invicta FC Logo" class="h-10 w-10 object-contain" />
-      <span>Medway Invicta FC</span>
-    </h1>
+<body class="antialiased min-h-screen flex flex-col">
 
-    <!-- Desktop Nav -->
-    <nav class="hidden md:flex space-x-6">
-      <a href="index.html" class="hover:text-red-400 transition">Home</a>
-      <a href="Team.html" class="hover:text-red-400 transition">Team</a>
-      <a href="Fixtures.html" class="hover:text-red-400 transition">Fixtures</a>
-      <a href="Standings.html" class="hover:text-red-400 transition">Standings</a>
-      <a href="Contact.html" class="text-red-400 font-semibold">Contact</a>
-      <a href="Gallery.html" class="hover:text-red-400 transition">Gallery</a>
-      <a href="GA.html" class="hover:text-red-400 transition">Goals</a>
-      <a href="assist-tracker.html" class="hover:text-red-400 transition">Assists</a>
-    </nav>
-
-    <!-- Mobile Hamburger -->
-    <button class="md:hidden focus:outline-none" onclick="toggleMenu()" aria-label="Toggle Menu">
-      <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-      </svg>
-    </button>
-  </header>
-
-  <!-- Mobile Nav -->
-  <div id="mobile-menu" class="md:hidden hidden px-6 pb-4 space-y-2 bg-black border-b border-red-600">
-    <a href="index.html" class="block hover:text-red-400">Home</a>
-    <a href="Team.html" class="block hover:text-red-400">Team</a>
-    <a href="Fixtures.html" class="block hover:text-red-400">Fixtures</a>
-    <a href="Standings.html" class="block hover:text-red-400">Standings</a>
-    <a href="Contact.html" class="block text-red-400 font-semibold">Contact</a>
-    <a href="Gallery.html" class="block hover:text-red-400">Gallery</a>
-    <a href="GA.html" class="block hover:text-red-400">Goals</a>
-    <a href="assist-tracker.html" class="block hover:text-red-400">Assists</a>
+  <!-- Top ticker -->
+  <div class="bg-red-700 text-black overflow-hidden py-1.5 border-b border-red-900">
+    <div class="ticker-track display font-bold text-sm">
+      <span class="px-6 whitespace-nowrap">Medway Invicta FC &nbsp;•&nbsp; Pride of Medway &nbsp;•&nbsp; 3rd Place — 25/26 Season &nbsp;•&nbsp; Follow us on Instagram &nbsp;•&nbsp; Medway Invicta FC &nbsp;•&nbsp; Pride of Medway &nbsp;•&nbsp; 3rd Place — 25/26 Season &nbsp;•&nbsp; Follow us on Instagram &nbsp;•&nbsp;</span>
+      <span class="px-6 whitespace-nowrap" aria-hidden="true">Medway Invicta FC &nbsp;•&nbsp; Pride of Medway &nbsp;•&nbsp; 3rd Place — 25/26 Season &nbsp;•&nbsp; Follow us on Instagram &nbsp;•&nbsp; Medway Invicta FC &nbsp;•&nbsp; Pride of Medway &nbsp;•&nbsp; 3rd Place — 25/26 Season &nbsp;•&nbsp; Follow us on Instagram &nbsp;•&nbsp;</span>
+    </div>
   </div>
 
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-black/85 backdrop-blur border-b border-red-900/60">
+    <div class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4 relative">
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="MI logo.jpg" alt="Medway Invicta FC crest" class="h-12 w-12 object-contain"/>
+        <span class="display font-extrabold text-2xl leading-none">
+          Medway <span class="text-red-500">Invicta</span> FC
+        </span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-7 display font-semibold text-sm tracking-widest">
+        <a href="index.html" class="hover:text-red-400 transition-colors">Home</a>
+        <a href="Team.html" class="hover:text-red-400 transition-colors">Team</a>
+        <a href="Fixtures.html" class="hover:text-red-400 transition-colors">Fixtures</a>
+        <a href="Standings.html" class="hover:text-red-400 transition-colors">Standings</a>
+        <a href="GA.html" class="hover:text-red-400 transition-colors">Goals</a>
+        <a href="assist-tracker.html" class="hover:text-red-400 transition-colors">Assists</a>
+        <a href="Gallery.html" class="hover:text-red-400 transition-colors">Gallery</a>
+        <a href="Contact.html" class="text-red-500">Contact</a>
+      </nav>
+
+      <button id="burger" class="md:hidden text-2xl px-2" aria-label="Open menu" aria-expanded="false">☰</button>
+
+      <div id="mobileMenu" class="absolute top-full right-6 mt-2 bg-[#141216] border border-red-800 rounded-xl w-48 p-4 hidden z-50 shadow-2xl shadow-black/60">
+        <nav class="flex flex-col gap-3 display font-semibold tracking-widest text-sm">
+          <a href="index.html" class="hover:text-red-400">Home</a>
+          <a href="Team.html" class="hover:text-red-400">Team</a>
+          <a href="Fixtures.html" class="hover:text-red-400">Fixtures</a>
+          <a href="Standings.html" class="hover:text-red-400">Standings</a>
+          <a href="GA.html" class="hover:text-red-400">Goals</a>
+          <a href="assist-tracker.html" class="hover:text-red-400">Assists</a>
+          <a href="Gallery.html" class="hover:text-red-400">Gallery</a>
+          <a href="Contact.html" class="text-red-500">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page hero -->
+  <section class="relative overflow-hidden border-b border-red-900/40">
+    <div class="sash absolute inset-0 opacity-50 pointer-events-none"></div>
+    <div class="relative z-10 max-w-6xl mx-auto px-6 pt-16 pb-12">
+      <p class="eyebrow mb-3">The Club &nbsp;·&nbsp; Medway, Kent</p>
+      <h1 class="display font-extrabold text-6xl md:text-8xl leading-[0.9]">
+        Get in <span class="text-red-500">Touch</span>
+      </h1>
+      <p class="text-gray-400 mt-4 max-w-md">Questions, sponsorship, or want to support Medway Invicta FC? Drop us a message and we'll get back to you.</p>
+    </div>
+  </section>
+
   <!-- Contact Section -->
-  <section class="max-w-5xl mx-auto px-4 sm:px-6 py-16">
-    <h2 class="text-3xl sm:text-5xl font-extrabold mb-8 text-center">Get in Touch</h2>
-    <p class="text-center text-gray-300 mb-12 max-w-xl mx-auto">
-      Have questions or want to support Medway Invicta FC? Drop us a message and we’ll get back to you!
-    </p>
+  <section class="max-w-6xl mx-auto px-6 pt-12 pb-20 flex-1 w-full">
+    <div class="grid md:grid-cols-2 gap-6 items-start">
 
-    <div class="flex flex-col md:flex-row gap-12">
       <!-- Contact Info -->
-      <div class="md:w-1/2 space-y-8">
-        <div>
-          <h3 class="text-2xl font-semibold mb-2">Address</h3>
-          <p>450 Grange Rd, Gillingham ME7 2UB</p>
+      <div class="space-y-6">
+
+        <div class="bg-[#141216] border border-red-900/50 rounded-xl p-7 relative overflow-hidden">
+          <div class="absolute left-0 top-0 bottom-0 w-1 bg-red-600"></div>
+          <p class="eyebrow mb-2">Home Ground</p>
+          <h3 class="display font-extrabold text-3xl mb-2">Address</h3>
+          <p class="text-gray-300">450 Grange Rd, Gillingham ME7 2UB</p>
         </div>
 
-        <div>
-          <h3 class="text-2xl font-semibold mb-2">Social</h3>
-          <p>
-            <a href="https://x.com/medwayinvictafc" class="text-red-400 hover:underline">Twitter</a> | 
-            <a href="https://www.instagram.com/medwayinvictafc/?hl=en" class="text-red-400 hover:underline">Instagram</a>
-          </p>
+        <div class="bg-[#141216] border border-red-900/50 rounded-xl p-7 relative overflow-hidden">
+          <div class="absolute left-0 top-0 bottom-0 w-1 bg-red-600"></div>
+          <p class="eyebrow mb-2">Follow the Club</p>
+          <h3 class="display font-extrabold text-3xl mb-4">Social</h3>
+          <div class="flex flex-wrap gap-3">
+            <a href="https://x.com/medwayinvictafc"
+               class="display font-bold tracking-widest text-sm border border-red-600 hover:bg-red-600/15 transition-colors px-6 py-2.5">
+              Twitter / X
+            </a>
+            <a href="https://www.instagram.com/medwayinvictafc/?hl=en"
+               class="display font-bold tracking-widest text-sm border border-red-600 hover:bg-red-600/15 transition-colors px-6 py-2.5">
+              Instagram
+            </a>
+          </div>
         </div>
+
       </div>
 
       <!-- Contact Form -->
-      <form class="md:w-1/2 bg-red-950 rounded-lg p-6 sm:p-8 shadow-lg" action="#" method="POST">
-        <label for="name" class="block mb-2 font-semibold">Name</label>
-        <input type="text" id="name" name="name" required class="w-full mb-6 px-4 py-3 rounded-md bg-red-900 border border-red-700 focus:outline-none focus:ring-2 focus:ring-red-600" />
+      <form class="bg-[#141216] border border-red-900/50 rounded-xl p-7 sm:p-8 relative overflow-hidden" action="#" method="POST">
+        <div class="absolute left-0 top-0 bottom-0 w-1 bg-red-600"></div>
+        <p class="eyebrow mb-2">Message Us</p>
+        <h3 class="display font-extrabold text-3xl mb-6">Send a Message</h3>
 
-        <label for="email" class="block mb-2 font-semibold">Email</label>
-        <input type="email" id="email" name="email" required class="w-full mb-6 px-4 py-3 rounded-md bg-red-900 border border-red-700 focus:outline-none focus:ring-2 focus:ring-red-600" />
+        <label for="name" class="field-label">Name</label>
+        <input type="text" id="name" name="name" required class="field mb-5" />
 
-        <label for="message" class="block mb-2 font-semibold">Message</label>
-        <textarea id="message" name="message" rows="5" required class="w-full mb-6 px-4 py-3 rounded-md bg-red-900 border border-red-700 resize-none focus:outline-none focus:ring-2 focus:ring-red-600"></textarea>
+        <label for="email" class="field-label">Email</label>
+        <input type="email" id="email" name="email" required class="field mb-5" />
 
-        <button type="submit" class="w-full bg-red-700 hover:bg-red-600 text-white font-bold py-3 rounded-md transition">
+        <label for="message" class="field-label">Message</label>
+        <textarea id="message" name="message" rows="5" required class="field mb-6 resize-none"></textarea>
+
+        <button type="submit"
+          class="w-full display font-bold tracking-widest text-lg bg-red-600 hover:bg-red-500 text-white py-3 transition-colors">
           Send Message
         </button>
       </form>
+
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="text-center border-t border-red-600 py-6 text-sm">
-    &copy; 2025 Medway Invicta FC. All rights reserved.
+  <footer class="border-t border-red-900/60">
+    <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <img src="MI logo.jpg" alt="" class="h-8 w-8 object-contain"/>
+        <span class="display font-bold tracking-widest text-sm">Medway Invicta FC</span>
+      </div>
+      <p class="text-xs text-gray-500">&copy; 2026 Medway Invicta FC. Pride of Medway.</p>
+    </div>
   </footer>
+
+  <script>
+    const burger = document.getElementById('burger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    burger.addEventListener('click', () => {
+      const hidden = mobileMenu.classList.toggle('hidden');
+      burger.setAttribute('aria-expanded', String(!hidden));
+    });
+  </script>
 
 </body>
 </html>
