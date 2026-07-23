@@ -3,474 +3,452 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-<title>Our Squad - Medway Invicta FC</title>
+<title>Our Squad — Medway Invicta FC</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
+<!-- Fonts: same pairing as the homepage -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;1,700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+
 <style>
+:root {
+  --mi-red: #DC2626;
+  --mi-red-deep: #7F1D1D;
+  --mi-black: #0B0B0D;
+  --mi-panel: #141216;
+  --mi-cream: #F5F2ED;
+}
 
-/* BACKGROUND */
+body {
+  background-color: var(--mi-black);
+  color: var(--mi-cream);
+  font-family: 'Barlow', sans-serif;
+  min-height: 100vh;
+}
 
-body{
+.display {
+  font-family: 'Barlow Condensed', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.35em;
+  font-size: 0.75rem;
+  color: var(--mi-red);
+  font-weight: 700;
+}
+
+/* Kit-sash motif from the homepage */
+.sash {
+  background: linear-gradient(
+    115deg,
+    transparent 0 46%,
+    var(--mi-red-deep) 46% 49%,
+    transparent 49% 52%,
+    var(--mi-red) 52% 55%,
+    transparent 55%
+  );
+}
+
+/* Stadium-hoarding ticker */
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: ticker 28s linear infinite;
+}
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track { animation: none; }
+  .player-card, .player-card::before { transition: none; }
+}
+
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--mi-red);
+  outline-offset: 3px;
+}
+
+/* ---- CARD TIERS (proper metallic faces) ---- */
+.bronze {
   background:
-    radial-gradient(circle at top, #450a0a, #000000 75%);
-  min-height:100vh;
+    linear-gradient(160deg, rgba(255,255,255,.14) 0%, transparent 35%),
+    linear-gradient(135deg, #b07f4a 0%, #8a5c2e 40%, #5b3a1a 75%, #3f2a18 100%);
+  border-color: #c08a52;
+  color: #fdf6ee;
 }
+.bronze .tier-tag { color:#ffe3bf; border-color:#ffe3bf; }
+.bronze .stat { background: rgba(0,0,0,.28); border-color: rgba(0,0,0,.2); }
+.bronze .expand-text { color:#ffe3bf; }
 
-/* CARD THEMES */
-
-.bronze{
-  background:linear-gradient(135deg,#9a6b3d,#3f2a18);
+.silver {
+  background:
+    linear-gradient(160deg, rgba(255,255,255,.45) 0%, transparent 35%),
+    linear-gradient(135deg, #e5e7eb 0%, #b6bcc6 40%, #7b8290 75%, #4b5563 100%);
+  border-color: #e5e7eb;
+  color: #111318;
 }
+.silver .tier-tag { color:#1f2937; border-color:#1f2937; }
+.silver .stat { background: rgba(0,0,0,.14); border-color: rgba(0,0,0,.12); color:#111318; }
+.silver .expand-text { color:#7f1d1d; }
+.silver .player-img { border-color: rgba(17,19,24,.7); }
 
-.silver{
-  background:linear-gradient(135deg,#d1d5db,#4b5563);
+.gold {
+  background:
+    linear-gradient(160deg, rgba(255,255,255,.4) 0%, transparent 35%),
+    linear-gradient(135deg, #fde68a 0%, #facc15 40%, #ca9a06 75%, #a16207 100%);
+  border-color: #fde68a;
+  color: #1c1503;
 }
+.gold .tier-tag { color:#422006; border-color:#422006; }
+.gold .stat { background: rgba(0,0,0,.16); border-color: rgba(0,0,0,.12); color:#1c1503; }
+.gold .expand-text { color:#7f1d1d; }
+.gold .player-img { border-color: rgba(28,21,3,.7); }
 
-.gold{
-  background:linear-gradient(135deg,#facc15,#a16207);
-  color:black;
+.special {
+  background:
+    linear-gradient(160deg, rgba(255,255,255,.2) 0%, transparent 35%),
+    linear-gradient(135deg, #ff2d2d 0%, #b91c1c 45%, #7f0000 100%);
+  border: 2px solid #fde68a;
+  box-shadow: 0 0 25px rgba(220,38,38,.45);
+  color: #fff;
 }
-
-.special{
-  background:linear-gradient(135deg,#ff2d2d,#7f0000);
-  border:2px solid gold;
-  box-shadow:0 0 25px rgba(255,0,0,.45);
-  position:relative;
-  overflow:hidden;
-}
-
-.special::before{
+.special .tier-tag { color:#fde68a; border-color:#fde68a; }
+.special .stat { background: rgba(0,0,0,.3); border-color: rgba(0,0,0,.2); }
+.special .expand-text { color:#fde68a; }
+.player-card.special::after {
   content:"";
   position:absolute;
-  top:-50%;
-  left:-50%;
-  width:200%;
-  height:200%;
-  background:
-    linear-gradient(
-      120deg,
-      transparent,
-      rgba(255,255,255,0.3),
-      transparent
-    );
+  inset:auto;
+  top:-50%; left:-50%;
+  width:200%; height:200%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.25), transparent);
   animation: shimmer 3s infinite;
+  pointer-events:none;
 }
-
-@keyframes shimmer{
-  0%{
-    transform:rotate(25deg) translateX(-100%);
-  }
-  100%{
-    transform:rotate(25deg) translateX(100%);
-  }
+@keyframes shimmer {
+  0%   { transform: rotate(25deg) translateX(-100%); }
+  100% { transform: rotate(25deg) translateX(100%); }
 }
-
-/* PLAYER CARD */
-
-.player-card{
-  position:relative;
-  overflow:hidden;
-  border-radius:24px;
-  transition:.35s ease;
-  cursor:pointer;
-  min-height:420px;
-}
-
-.player-card:hover{
-  transform:translateY(-8px) scale(1.03);
-  box-shadow:0 0 35px rgba(255,0,0,.4);
-}
-
-.player-card::after{
+/* metallic sheen sweep on hover for all tiers */
+.player-card::after {
   content:"";
   position:absolute;
   inset:0;
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255,255,255,0.15),
-      transparent 40%
-    );
+  background: linear-gradient(135deg, rgba(255,255,255,0.18), transparent 45%);
   pointer-events:none;
 }
 
-.player-img{
-  width:110px;
-  height:110px;
-  object-fit:cover;
-  border-radius:9999px;
-  border:4px solid rgba(255,255,255,.8);
+/* ---- PLAYER CARD ---- */
+.player-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(127,29,29,.5);
+  cursor: pointer;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+/* touchline trim slides in, same as homepage cards */
+.player-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--mi-red);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.3s ease;
+  z-index: 2;
+}
+.player-card:hover::before,
+.player-card.active::before {
+  transform: scaleY(1);
+}
+.player-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(0,0,0,.5);
 }
 
-.rating{
-  position:absolute;
-  top:14px;
-  left:14px;
-  background:#020617;
-  color:white;
-  width:52px;
-  height:52px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:800;
-  font-size:18px;
-  border:2px solid white;
+.player-img {
+  width: 110px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 9999px;
+  border: 3px solid rgba(245,242,237,.85);
 }
 
-.position-badge{
-  position:absolute;
-  top:14px;
-  right:14px;
-  background:#b91c1c;
-  color:white;
-  padding:4px 10px;
-  border-radius:999px;
-  font-size:12px;
-  font-weight:700;
+.rating {
+  position: absolute;
+  top: 14px; left: 14px;
+  background: var(--mi-black);
+  color: white;
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  border: 2px solid var(--mi-red);
 }
 
-.stat-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:8px;
-  margin-top:16px;
+.position-badge {
+  position: absolute;
+  top: 14px; right: 14px;
+  background: var(--mi-red);
+  color: white;
+  padding: 3px 12px;
+  font-family: 'Barlow Condensed', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  font-size: 12px;
+  font-weight: 700;
 }
 
-.stat{
-  background:rgba(255,255,255,0.12);
-  padding:7px;
-  border-radius:12px;
-  font-size:12px;
-  font-weight:700;
-  backdrop-filter:blur(4px);
+.tier-tag {
+  display: inline-block;
+  border: 1px solid;
+  padding: 1px 10px;
+  font-family: 'Barlow Condensed', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: .2em;
+  font-size: 11px;
+  font-weight: 700;
+  margin-top: 10px;
 }
 
-/* COLLAPSIBLE CARD */
-
-.card-preview{
-  transition:0.3s ease;
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-top: 16px;
 }
 
-.card-details{
-  max-height:0;
-  overflow:hidden;
-  opacity:0;
-  transition:all .45s ease;
+.stat {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 7px;
+  font-family: 'Barlow Condensed', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-size: 13px;
+  font-weight: 700;
 }
 
-.player-card.active .card-details{
-  max-height:500px;
-  opacity:1;
-  margin-top:18px;
+/* ---- COLLAPSIBLE ---- */
+.card-details {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: all .45s ease;
+}
+.player-card.active .card-details {
+  max-height: 500px;
+  opacity: 1;
+  margin-top: 18px;
+}
+.player-card.active .expand-text { opacity: 0; }
+
+.expand-text {
+  margin-top: 14px;
+  font-family: 'Barlow Condensed', sans-serif;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .3em;
+  color: var(--mi-red);
+  opacity: .9;
+  transition: .3s ease;
 }
 
-.player-card.active .expand-text{
-  opacity:0;
+/* ---- FILTER PILLS ---- */
+.filter-btn {
+  font-family: 'Barlow Condensed', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: .15em;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 8px 18px;
+  border: 1px solid rgba(127,29,29,.6);
+  color: #9ca3af;
+  transition: .2s ease;
+}
+.filter-btn:hover { color: white; border-color: var(--mi-red); }
+.filter-btn.active {
+  background: var(--mi-red);
+  color: white;
+  border-color: var(--mi-red);
 }
 
-.expand-text{
-  margin-top:14px;
-  font-size:13px;
-  font-weight:700;
-  letter-spacing:1px;
-  opacity:.8;
-  transition:.3s ease;
+/* ---- OVERLAY ---- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 1rem;
+}
+.overlay-box {
+  background: var(--mi-panel);
+  border: 1px solid var(--mi-red);
+  padding: 40px;
+  text-align: center;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: 0 0 45px rgba(220,38,38,.25);
 }
 
-/* NAV */
-
-.glow{
-  text-shadow:
-    0 0 10px rgba(255,0,0,.7),
-    0 0 20px rgba(220,38,38,.5);
-}
-
-.mobile-menu{
-  display:none;
-}
-
-.mobile-menu.active{
-  display:flex;
-}
-
-/* UNDER CONSTRUCTION OVERLAY */
-
-.overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.55);
-  backdrop-filter:blur(3px);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
-}
-
-.overlay-box{
-  background:rgba(20,20,20,0.92);
-  border:2px solid #dc2626;
-  padding:40px;
-  border-radius:24px;
-  text-align:center;
-  max-width:420px;
-  width:90%;
-  box-shadow:0 0 35px rgba(255,0,0,.35);
-}
-
-.overlay-box h2{
-  font-size:2rem;
-  font-weight:800;
-  margin-bottom:12px;
-  color:#ef4444;
-}
-
-.overlay-box p{
-  color:#d1d5db;
-  margin-bottom:24px;
-  line-height:1.6;
-}
-
-.overlay-box button{
-  background:#dc2626;
-  color:white;
-  padding:12px 24px;
-  border:none;
-  border-radius:12px;
-  font-weight:700;
-  cursor:pointer;
-  transition:.3s ease;
-}
-
-.overlay-box button:hover{
-  background:#ef4444;
-  transform:translateY(-2px);
-}
-
+.mobile-menu { display: none; }
+.mobile-menu.active { display: flex; }
 </style>
 </head>
 
-<body class="text-white font-sans">
+<body class="antialiased">
 
 <!-- UNDER CONSTRUCTION OVERLAY -->
-
 <div class="overlay" id="overlay">
-
   <div class="overlay-box">
-
-    <h2>🚧 Under Construction</h2>
-
-    <p>
+    <p class="eyebrow mb-3">Work in progress</p>
+    <h2 class="display font-extrabold text-4xl mb-3">Under Construction</h2>
+    <p class="text-gray-400 mb-8 leading-relaxed">
       The new interactive squad experience is currently being developed.
       Some features may still be in progress.
     </p>
-
-    <button onclick="closeOverlay()">
+    <button onclick="closeOverlay()"
+      class="display font-bold tracking-widest bg-red-600 hover:bg-red-500 transition-colors px-8 py-3 text-lg">
       Enter Page
     </button>
-
   </div>
+</div>
 
+<!-- Top ticker -->
+<div class="bg-red-700 text-black overflow-hidden py-1.5 border-b border-red-900">
+  <div class="ticker-track display font-bold text-sm">
+    <span class="px-6 whitespace-nowrap">Medway Invicta FC &nbsp;•&nbsp; Pride of Medway &nbsp;•&nbsp; 3rd Place — 25/26 Season &nbsp;•&nbsp; Follow us on Instagram &nbsp;•&nbsp; Medway Invicta FC &nbsp;•&nbsp; Pride of Medway &nbsp;•&nbsp; 3rd Place — 25/26 Season &nbsp;•&nbsp; Follow us on Instagram &nbsp;•&nbsp;</span>
+    <span class="px-6 whitespace-nowrap" aria-hidden="true">Medway Invicta FC &nbsp;•&nbsp; Pride of Medway &nbsp;•&nbsp; 3rd Place — 25/26 Season &nbsp;•&nbsp; Follow us on Instagram &nbsp;•&nbsp; Medway Invicta FC &nbsp;•&nbsp; Pride of Medway &nbsp;•&nbsp; 3rd Place — 25/26 Season &nbsp;•&nbsp; Follow us on Instagram &nbsp;•&nbsp;</span>
+  </div>
 </div>
 
 <!-- HEADER -->
+<header class="sticky top-0 z-50 bg-black/85 backdrop-blur border-b border-red-900/60">
+  <div class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4 relative">
+    <a href="index.html" class="flex items-center gap-3">
+      <img src="MI logo.jpg" alt="Medway Invicta FC crest" class="h-12 w-12 object-contain"/>
+      <span class="display font-extrabold text-2xl leading-none">
+        Medway <span class="text-red-500">Invicta</span> FC
+      </span>
+    </a>
 
-<header class="border-b border-red-600 bg-black/30 backdrop-blur-lg sticky top-0 z-50">
-
-  <div class="flex justify-between items-center px-6 py-4">
-
-    <!-- LOGO -->
-
-    <h1 class="flex items-center space-x-3 text-2xl md:text-3xl font-bold glow">
-
-      <img src="MI logo.jpg" class="h-12 w-12 rounded-full object-cover"/>
-
-      <span>Medway Invicta FC</span>
-
-    </h1>
-
-    <!-- DESKTOP NAV -->
-
-    <nav class="hidden md:flex space-x-6 font-semibold">
-
-      <a href="index.html" class="hover:text-red-400 transition">
-        Home
-      </a>
-
-      <a href="Team.html" class="text-red-400">
-        Team
-      </a>
-
-      <a href="Fixtures.html" class="hover:text-red-400 transition">
-        Fixtures
-      </a>
-
-      <a href="Standings.html" class="hover:text-red-400 transition">
-        Standings
-      </a>
-
-      <a href="Gallery.html" class="hover:text-red-400 transition">
-        Gallery
-      </a>
-
-      <a href="GA.html" class="hover:text-red-400 transition">
-        Goals
-      </a>
-
-      <a href="assist-tracker.html" class="hover:text-red-400 transition">
-        Assists
-      </a>
-
-      <a href="Contact.html" class="hover:text-red-400 transition">
-        Contact
-      </a>
-
+    <nav class="hidden md:flex items-center gap-7 display font-semibold text-sm tracking-widest">
+      <a href="index.html" class="hover:text-red-400 transition-colors">Home</a>
+      <a href="Team.html" class="text-red-500">Team</a>
+      <a href="Fixtures.html" class="hover:text-red-400 transition-colors">Fixtures</a>
+      <a href="Standings.html" class="hover:text-red-400 transition-colors">Standings</a>
+      <a href="GA.html" class="hover:text-red-400 transition-colors">Goals</a>
+      <a href="assist-tracker.html" class="hover:text-red-400 transition-colors">Assists</a>
+      <a href="Gallery.html" class="hover:text-red-400 transition-colors">Gallery</a>
+      <a href="Contact.html" class="hover:text-red-400 transition-colors">Contact</a>
     </nav>
 
-    <!-- BURGER -->
-
-    <button
-      id="menuBtn"
-      class="md:hidden text-3xl"
-    >
-      ☰
-    </button>
-
+    <button id="menuBtn" class="md:hidden text-2xl px-2" aria-label="Open menu" aria-expanded="false">☰</button>
   </div>
 
   <!-- MOBILE MENU -->
-
-  <div
-    id="mobileMenu"
-    class="mobile-menu flex-col px-6 pb-6 space-y-4 md:hidden bg-black"
-  >
-
-    <a href="index.html" class="hover:text-red-400">
-      Home
-    </a>
-
-    <a href="Team.html" class="text-red-400">
-      Team
-    </a>
-
-    <a href="Fixtures.html" class="hover:text-red-400">
-      Fixtures
-    </a>
-
-    <a href="Standings.html" class="hover:text-red-400">
-      Standings
-    </a>
-
-    <a href="Gallery.html" class="hover:text-red-400">
-      Gallery
-    </a>
-
-    <a href="GA.html" class="hover:text-red-400">
-      Goals
-    </a>
-
-    <a href="assist-tracker.html" class="hover:text-red-400">
-      Assists
-    </a>
-
-    <a href="Contact.html" class="hover:text-red-400">
-      Contact
-    </a>
-
+  <div id="mobileMenu" class="mobile-menu flex-col px-6 pb-6 gap-3 md:hidden bg-[#141216] border-t border-red-900/60 display font-semibold tracking-widest text-sm pt-4">
+    <a href="index.html" class="hover:text-red-400">Home</a>
+    <a href="Team.html" class="text-red-500">Team</a>
+    <a href="Fixtures.html" class="hover:text-red-400">Fixtures</a>
+    <a href="Standings.html" class="hover:text-red-400">Standings</a>
+    <a href="GA.html" class="hover:text-red-400">Goals</a>
+    <a href="assist-tracker.html" class="hover:text-red-400">Assists</a>
+    <a href="Gallery.html" class="hover:text-red-400">Gallery</a>
+    <a href="Contact.html" class="hover:text-red-400">Contact</a>
   </div>
-
 </header>
 
+<!-- PAGE HERO -->
+<section class="relative overflow-hidden border-b border-red-900/40">
+  <div class="sash absolute inset-0 opacity-50 pointer-events-none"></div>
+  <div class="relative z-10 max-w-6xl mx-auto px-6 pt-16 pb-12">
+    <p class="eyebrow mb-3">First Team &nbsp;·&nbsp; 25/26</p>
+    <h1 class="display font-extrabold text-6xl md:text-8xl leading-[0.9]">
+      Our <span class="text-red-500">Squad</span>
+    </h1>
+    <p class="text-gray-400 mt-4 max-w-md">Tap a player card to reveal their stats.</p>
+  </div>
+</section>
+
 <!-- MANAGER -->
+<section class="max-w-6xl mx-auto px-6 pt-14">
+  <p class="eyebrow mb-2">The Gaffer</p>
+  <h2 class="display font-extrabold text-4xl mb-6">Manager</h2>
 
-<section class="p-8 text-center">
+  <div class="max-w-xs bg-[#141216] border border-red-900/50 p-6 relative overflow-hidden">
+    <div class="absolute left-0 top-0 bottom-0 w-1 bg-red-600"></div>
+    <img src="placeholder.jpg" alt="Toby Ogundemuren"
+      class="h-28 w-28 rounded-full mb-4 object-cover border-3 border-red-500" style="border-width:3px;">
+    <h3 class="display font-bold text-3xl">Toby Ogundemuren</h3>
+    <p class="eyebrow mt-2" style="letter-spacing:.2em;">First Team Manager</p>
+  </div>
+</section>
 
-  <h2 class="text-3xl font-bold mb-6 text-red-400 glow">
-    Manager
-  </h2>
+<!-- SQUAD -->
+<section class="max-w-6xl mx-auto px-6 pt-14 pb-20">
+  <p class="eyebrow mb-2">The Players</p>
+  <h2 class="display font-extrabold text-4xl mb-8">Squad List</h2>
 
-  <div class="max-w-xs mx-auto bg-black/40 p-6 rounded-3xl shadow-2xl border border-yellow-400">
-
-    <img
-      src="placeholder.jpg"
-      class="h-28 w-28 mx-auto rounded-full mb-4 object-cover border-4 border-red-400"
-    >
-
-    <h3 class="text-2xl font-bold">
-      Toby Ogundemuren
-    </h3>
-
-    <p class="text-red-400 mt-1">
-      First Team Manager
-    </p>
-
+  <!-- FILTER -->
+  <div id="filterBar" class="flex flex-wrap gap-2 mb-10">
+    <button class="filter-btn active" data-pos="All">All</button>
+    <button class="filter-btn" data-pos="Goalkeeper">Goalkeepers</button>
+    <button class="filter-btn" data-pos="Defender">Defenders</button>
+    <button class="filter-btn" data-pos="Midfielder">Midfielders</button>
+    <button class="filter-btn" data-pos="Winger">Wingers</button>
+    <button class="filter-btn" data-pos="Striker">Strikers</button>
   </div>
 
+  <!-- PLAYERS -->
+  <div id="playersContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
 </section>
 
-<!-- TITLE -->
-
-<section class="text-center pb-8">
-
-  <h2 class="text-5xl font-extrabold glow">
-    OUR SQUAD
-  </h2>
-
-  <p class="text-slate-300 mt-3">
-    Click a player card to reveal stats
-  </p>
-
-</section>
-
-<!-- FILTER -->
-
-<div class="text-center mb-8">
-
-  <select
-    id="filter"
-    class="bg-black/40 border border-red-600 px-5 py-3 rounded-xl outline-none"
-  >
-
-    <option value="All">All Positions</option>
-    <option value="Defender">Defenders</option>
-    <option value="Midfielder">Midfielders</option>
-    <option value="Winger">Wingers</option>
-    <option value="Striker">Strikers</option>
-    <option value="Goalkeeper">Goalkeepers</option>
-
-  </select>
-
-</div>
-
-<!-- PLAYERS -->
-
-<section
-  id="playersContainer"
-  class="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
-></section>
+<!-- Footer -->
+<footer class="border-t border-red-900/60">
+  <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <img src="MI logo.jpg" alt="" class="h-8 w-8 object-contain"/>
+      <span class="display font-bold tracking-widest text-sm">Medway Invicta FC</span>
+    </div>
+    <p class="text-xs text-gray-500">&copy; 2026 Medway Invicta FC. Pride of Medway.</p>
+  </div>
+</footer>
 
 <script>
-
 /* MOBILE MENU */
-
 const menuBtn = document.getElementById("menuBtn");
 const mobileMenu = document.getElementById("mobileMenu");
 
 menuBtn.addEventListener("click", () => {
-  mobileMenu.classList.toggle("active");
+  const open = mobileMenu.classList.toggle("active");
+  menuBtn.setAttribute("aria-expanded", String(open));
 });
 
 /* OVERLAY */
-
 function closeOverlay(){
   document.getElementById("overlay").style.display = "none";
 }
 
 /* PLAYERS */
-
 const players = [
 
   {name:"Emmanuel Akinso", pos:"Defender", img:"MANNY.jpeg", overall:50, type:"bronze",
@@ -542,7 +520,7 @@ const players = [
 ];
 
 const container = document.getElementById("playersContainer");
-const filter = document.getElementById("filter");
+const filterBar = document.getElementById("filterBar");
 
 function renderPlayers(filterValue = "All") {
 
@@ -554,8 +532,7 @@ function renderPlayers(filterValue = "All") {
 
       let statsHTML = "";
 
-      if(p.pos === "Goalkeeper"){
-
+      if (p.pos === "Goalkeeper") {
         statsHTML = `
           <div class="stat">DIV ${p.stats.div}</div>
           <div class="stat">HAN ${p.stats.han}</div>
@@ -564,9 +541,7 @@ function renderPlayers(filterValue = "All") {
           <div class="stat">SPE ${p.stats.spe}</div>
           <div class="stat">POS ${p.stats.pos}</div>
         `;
-
       } else {
-
         statsHTML = `
           <div class="stat">PAC ${p.stats.pac}</div>
           <div class="stat">SHO ${p.stats.sho}</div>
@@ -578,44 +553,27 @@ function renderPlayers(filterValue = "All") {
       }
 
       container.innerHTML += `
-
-        <div class="player-card ${p.type} p-6 text-center">
+        <div class="player-card ${p.type} p-6 pt-8 text-center">
 
           <div class="card-preview">
+            <div class="rating">${p.overall}</div>
+            <div class="position-badge">${p.pos}</div>
 
-            <div class="rating">
-              ${p.overall}
-            </div>
+            <img src="${p.img}" alt="${p.name}" class="player-img mx-auto mb-4 mt-6">
 
-            <div class="position-badge">
-              ${p.pos}
-            </div>
+            <h3 class="display font-bold text-2xl leading-tight">${p.name}</h3>
+            <span class="tier-tag">${p.type}</span>
 
-            <img
-              src="${p.img}"
-              class="player-img mx-auto mb-4"
-            >
-
-            <h3 class="text-xl font-bold mt-2">
-              ${p.name}
-            </h3>
-
-            <p class="expand-text">
-              CLICK TO VIEW STATS
-            </p>
-
+            <p class="expand-text">Tap for stats</p>
           </div>
 
           <div class="card-details">
-
             <div class="stat-grid">
               ${statsHTML}
             </div>
-
           </div>
 
         </div>
-
       `;
     });
 
@@ -623,27 +581,20 @@ function renderPlayers(filterValue = "All") {
 }
 
 function attachCardEvents(){
-
-  const cards = document.querySelectorAll(".player-card");
-
-  cards.forEach(card => {
-
-    card.addEventListener("click", () => {
-
-      card.classList.toggle("active");
-
-    });
-
+  document.querySelectorAll(".player-card").forEach(card => {
+    card.addEventListener("click", () => card.classList.toggle("active"));
   });
-
 }
 
 renderPlayers();
 
-filter.addEventListener("change", (e) => {
-  renderPlayers(e.target.value);
+filterBar.addEventListener("click", (e) => {
+  const btn = e.target.closest(".filter-btn");
+  if (!btn) return;
+  filterBar.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  renderPlayers(btn.dataset.pos);
 });
-
 </script>
 
 </body>
