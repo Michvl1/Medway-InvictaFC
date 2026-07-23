@@ -3,113 +3,176 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Medway Invicta FC</title>
+  <title>Standings — Medway Invicta FC</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <script>
-    function toggleMenu() {
-      document.getElementById('mobileMenu').classList.toggle('hidden');
-    }
-  </script>
+  <!-- Fonts: same pairing as the rest of the site -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;1,700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
-    body{
-      background:
-      radial-gradient(circle at top, #450a0a, #000000 75%);
+    :root {
+      --mi-red: #DC2626;
+      --mi-red-deep: #7F1D1D;
+      --mi-black: #0B0B0D;
+      --mi-panel: #141216;
+      --mi-cream: #F5F2ED;
     }
 
-    .table-glow{
-      box-shadow:
-      0 0 30px rgba(220,38,38,.15);
+    body {
+      background-color: var(--mi-black);
+      color: var(--mi-cream);
+      font-family: 'Barlow', sans-serif;
     }
 
-    .highlight-row{
-      background:linear-gradient(
-        90deg,
-        rgba(239,68,68,.25),
-        rgba(250,204,21,.2)
+    .display {
+      font-family: 'Barlow Condensed', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.35em;
+      font-size: 0.75rem;
+      color: var(--mi-red);
+      font-weight: 700;
+    }
+
+    /* Kit-sash motif */
+    .sash {
+      background: linear-gradient(
+        115deg,
+        transparent 0 46%,
+        var(--mi-red-deep) 46% 49%,
+        transparent 49% 52%,
+        var(--mi-red) 52% 55%,
+        transparent 55%
       );
     }
 
-    .highlight-row:hover{
-      background:linear-gradient(
-        90deg,
-        rgba(239,68,68,.4),
-        rgba(250,204,21,.35)
-      );
+    /* Stadium-hoarding ticker */
+    .ticker-track {
+      display: flex;
+      width: max-content;
+      animation: ticker 28s linear infinite;
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .ticker-track { animation: none; }
     }
 
-    .glow{
-      text-shadow:
-      0 0 12px rgba(255,0,0,.5);
+    /* Table */
+    thead th {
+      font-family: 'Barlow Condensed', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      font-size: 0.8rem;
+      color: #ef4444;
+      font-weight: 700;
+    }
+    tbody tr { transition: background 0.15s ease; }
+    tbody tr:hover { background: rgba(220,38,38,0.08); }
+
+    .pos {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: #9ca3af;
+    }
+
+    /* Our row */
+    .invicta-row {
+      background: linear-gradient(90deg, rgba(220,38,38,.22), rgba(220,38,38,.06));
+      position: relative;
+    }
+    .invicta-row:hover {
+      background: linear-gradient(90deg, rgba(220,38,38,.32), rgba(220,38,38,.1));
+    }
+    .invicta-row td:first-child {
+      border-left: 4px solid var(--mi-red);
+    }
+
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--mi-red);
+      outline-offset: 3px;
     }
   </style>
 </head>
 
-<body class="text-white font-sans min-h-screen">
+<body class="antialiased min-h-screen flex flex-col">
+
+  <!-- Top ticker -->
+  <div class="bg-red-700 text-black overflow-hidden py-1.5 border-b border-red-900">
+    <div class="ticker-track display font-bold text-sm">
+      <span class="px-6 whitespace-nowrap">Medway Invicta FC &nbsp;•&nbsp; Pride of Medway &nbsp;•&nbsp; 3rd Place — 25/26 Season &nbsp;•&nbsp; Follow us on Instagram &nbsp;•&nbsp; Medway Invicta FC &nbsp;•&nbsp; Pride of Medway &nbsp;•&nbsp; 3rd Place — 25/26 Season &nbsp;•&nbsp; Follow us on Instagram &nbsp;•&nbsp;</span>
+      <span class="px-6 whitespace-nowrap" aria-hidden="true">Medway Invicta FC &nbsp;•&nbsp; Pride of Medway &nbsp;•&nbsp; 3rd Place — 25/26 Season &nbsp;•&nbsp; Follow us on Instagram &nbsp;•&nbsp; Medway Invicta FC &nbsp;•&nbsp; Pride of Medway &nbsp;•&nbsp; 3rd Place — 25/26 Season &nbsp;•&nbsp; Follow us on Instagram &nbsp;•&nbsp;</span>
+    </div>
+  </div>
 
   <!-- Header -->
-  <header class="relative flex justify-between items-center p-6 border-b border-red-600 bg-black/30 backdrop-blur-lg sticky top-0 z-50">
+  <header class="sticky top-0 z-50 bg-black/85 backdrop-blur border-b border-red-900/60">
+    <div class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4 relative">
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="MI logo.jpg" alt="Medway Invicta FC crest" class="h-12 w-12 object-contain"/>
+        <span class="display font-extrabold text-2xl leading-none">
+          Medway <span class="text-red-500">Invicta</span> FC
+        </span>
+      </a>
 
-    <h1 class="flex items-center space-x-3 text-2xl sm:text-3xl font-bold tracking-wide glow">
-      <img src="MI logo.jpg" alt="Medway Invicta FC" class="h-10 w-10 object-contain rounded-full" />
-      <span>Medway Invicta FC</span>
-    </h1>
+      <nav class="hidden md:flex items-center gap-7 display font-semibold text-sm tracking-widest">
+        <a href="index.html" class="hover:text-red-400 transition-colors">Home</a>
+        <a href="Team.html" class="hover:text-red-400 transition-colors">Team</a>
+        <a href="Fixtures.html" class="hover:text-red-400 transition-colors">Fixtures</a>
+        <a href="Standings.html" class="text-red-500">Standings</a>
+        <a href="GA.html" class="hover:text-red-400 transition-colors">Goals</a>
+        <a href="assist-tracker.html" class="hover:text-red-400 transition-colors">Assists</a>
+        <a href="Gallery.html" class="hover:text-red-400 transition-colors">Gallery</a>
+        <a href="Contact.html" class="hover:text-red-400 transition-colors">Contact</a>
+      </nav>
 
-    <!-- Desktop Menu -->
-    <nav class="hidden md:flex space-x-6 font-semibold">
-      <a href="index.html" class="hover:text-red-400 transition">Home</a>
-      <a href="Team.html" class="hover:text-red-400 transition">Team</a>
-      <a href="Fixtures.html" class="hover:text-red-400 transition">Fixtures</a>
-      <a href="Standings.html" class="text-red-400">Standings</a>
-      <a href="Contact.html" class="hover:text-red-400 transition">Contact</a>
-      <a href="Gallery.html" class="hover:text-red-400 transition">Gallery</a>
-      <a href="GA.html" class="hover:text-red-400 transition">Goals</a>
-      <a href="assist-tracker.html" class="hover:text-red-400 transition">Assists</a>
-    </nav>
+      <button id="burger" class="md:hidden text-2xl px-2" aria-label="Open menu" aria-expanded="false">☰</button>
 
-    <!-- Mobile Button -->
-    <button class="md:hidden focus:outline-none" onclick="toggleMenu()" aria-label="Toggle menu">
-      <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16"/>
-      </svg>
-    </button>
-
-    <!-- Mobile Menu -->
-    <div id="mobileMenu"
-         class="absolute top-full right-6 mt-2 bg-red-950 border border-red-600 rounded-lg shadow-lg w-44 flex-col items-start p-4 space-y-2 hidden z-50">
-
-      <a href="index.html" class="hover:text-red-400">Home</a>
-      <a href="Team.html" class="hover:text-red-400">Team</a>
-      <a href="Fixtures.html" class="hover:text-red-400">Fixtures</a>
-      <a href="Standings.html" class="text-red-400">Standings</a>
-      <a href="Contact.html" class="hover:text-red-400">Contact</a>
-      <a href="Gallery.html" class="hover:text-red-400">Gallery</a>
-      <a href="GA.html" class="hover:text-red-400">Goals</a>
-      <a href="assist-tracker.html" class="hover:text-red-400">Assists</a>
-
+      <div id="mobileMenu" class="absolute top-full right-6 mt-2 bg-[#141216] border border-red-800 rounded-xl w-48 p-4 hidden z-50 shadow-2xl shadow-black/60">
+        <nav class="flex flex-col gap-3 display font-semibold tracking-widest text-sm">
+          <a href="index.html" class="hover:text-red-400">Home</a>
+          <a href="Team.html" class="hover:text-red-400">Team</a>
+          <a href="Fixtures.html" class="hover:text-red-400">Fixtures</a>
+          <a href="Standings.html" class="text-red-500">Standings</a>
+          <a href="GA.html" class="hover:text-red-400">Goals</a>
+          <a href="assist-tracker.html" class="hover:text-red-400">Assists</a>
+          <a href="Gallery.html" class="hover:text-red-400">Gallery</a>
+          <a href="Contact.html" class="hover:text-red-400">Contact</a>
+        </nav>
+      </div>
     </div>
   </header>
 
+  <!-- Page hero -->
+  <section class="relative overflow-hidden border-b border-red-900/40">
+    <div class="sash absolute inset-0 opacity-50 pointer-events-none"></div>
+    <div class="relative z-10 max-w-6xl mx-auto px-6 pt-16 pb-12">
+      <p class="eyebrow mb-3">MASFL Premier &nbsp;·&nbsp; 25/26</p>
+      <h1 class="display font-extrabold text-6xl md:text-8xl leading-[0.9]">
+        League <span class="text-red-500">Table</span>
+      </h1>
+      <p class="text-gray-400 mt-4 max-w-md">Current standings for the 2025/26 season. Our row is marked in red.</p>
+    </div>
+  </section>
+
   <!-- Standings Section -->
-  <section class="text-center py-16 px-4">
+  <section class="max-w-6xl mx-auto px-6 pt-12 pb-20 flex-1 w-full">
 
-    <h2 class="text-4xl sm:text-6xl font-extrabold mb-6 glow">
-      MASFL - Premier
-    </h2>
+    <div class="overflow-x-auto bg-[#141216] border border-red-900/50 rounded-xl relative">
+      <table class="w-full text-left border-collapse text-sm sm:text-base min-w-[700px]">
 
-    <p class="text-base sm:text-lg max-w-2xl mx-auto text-gray-300 mb-12">
-      Current league standings for the 2025/26 season.
-    </p>
-
-    <div class="overflow-x-auto max-w-6xl mx-auto rounded-3xl border border-red-800 bg-black/40 backdrop-blur-md table-glow">
-
-      <table class="w-full text-left border-collapse text-sm sm:text-base">
-
-        <thead class="bg-red-800 text-white">
-
+        <thead class="border-b-2 border-red-600">
           <tr>
             <th class="px-4 py-4">Pos</th>
             <th class="px-4 py-4">Team</th>
@@ -122,172 +185,168 @@
             <th class="px-3 py-4">GD</th>
             <th class="px-3 py-4">Pts</th>
           </tr>
-
         </thead>
 
-<tbody>
+        <tbody>
 
-<tr class="hover:bg-red-950/60 transition">
-  <td class="px-4 py-4 border-b border-red-900">1</td>
-  <td class="px-4 py-4 border-b border-red-900 font-semibold">
-    Quested First
-  </td>
-  <td class="px-3 py-4 border-b border-red-900">17</td>
-  <td class="px-3 py-4 border-b border-red-900">17</td>
-  <td class="px-3 py-4 border-b border-red-900">0</td>
-  <td class="px-3 py-4 border-b border-red-900">0</td>
-  <td class="px-3 py-4 border-b border-red-900">72</td>
-  <td class="px-3 py-4 border-b border-red-900">12</td>
-  <td class="px-3 py-4 border-b border-red-900 text-green-400">+60</td>
-  <td class="px-3 py-4 border-b border-red-900 font-bold">51</td>
-</tr>
+          <tr>
+            <td class="px-4 py-4 border-b border-white/5"><span class="pos" style="color:#facc15;">1</span></td>
+            <td class="px-4 py-4 border-b border-white/5 display font-bold text-lg">Quested First</td>
+            <td class="px-3 py-4 border-b border-white/5">17</td>
+            <td class="px-3 py-4 border-b border-white/5">17</td>
+            <td class="px-3 py-4 border-b border-white/5">0</td>
+            <td class="px-3 py-4 border-b border-white/5">0</td>
+            <td class="px-3 py-4 border-b border-white/5">72</td>
+            <td class="px-3 py-4 border-b border-white/5">12</td>
+            <td class="px-3 py-4 border-b border-white/5 text-green-400">+60</td>
+            <td class="px-3 py-4 border-b border-white/5 display font-extrabold text-lg">51</td>
+          </tr>
 
-<tr class="hover:bg-red-950/60 transition">
-  <td class="px-4 py-4 border-b border-red-900">2</td>
-  <td class="px-4 py-4 border-b border-red-900 font-semibold">
-    Cliffe Woods Colts First
-  </td>
-  <td class="px-3 py-4 border-b border-red-900">17</td>
-  <td class="px-3 py-4 border-b border-red-900">12</td>
-  <td class="px-3 py-4 border-b border-red-900">2</td>
-  <td class="px-3 py-4 border-b border-red-900">3</td>
-  <td class="px-3 py-4 border-b border-red-900">42</td>
-  <td class="px-3 py-4 border-b border-red-900">24</td>
-  <td class="px-3 py-4 border-b border-red-900 text-green-400">+18</td>
-  <td class="px-3 py-4 border-b border-red-900 font-bold">38</td>
-</tr>
+          <tr>
+            <td class="px-4 py-4 border-b border-white/5"><span class="pos">2</span></td>
+            <td class="px-4 py-4 border-b border-white/5 display font-bold text-lg">Cliffe Woods Colts First</td>
+            <td class="px-3 py-4 border-b border-white/5">17</td>
+            <td class="px-3 py-4 border-b border-white/5">12</td>
+            <td class="px-3 py-4 border-b border-white/5">2</td>
+            <td class="px-3 py-4 border-b border-white/5">3</td>
+            <td class="px-3 py-4 border-b border-white/5">42</td>
+            <td class="px-3 py-4 border-b border-white/5">24</td>
+            <td class="px-3 py-4 border-b border-white/5 text-green-400">+18</td>
+            <td class="px-3 py-4 border-b border-white/5 display font-extrabold text-lg">38</td>
+          </tr>
 
-<tr class="highlight-row font-bold transition">
-  <td class="px-4 py-4 border-b border-red-900">3</td>
-  <td class="px-4 py-4 border-b border-red-900">
-    Medway Invicta FC
-  </td>
-  <td class="px-3 py-4 border-b border-red-900">17</td>
-  <td class="px-3 py-4 border-b border-red-900">12</td>
-  <td class="px-3 py-4 border-b border-red-900">1</td>
-  <td class="px-3 py-4 border-b border-red-900">4</td>
-  <td class="px-3 py-4 border-b border-red-900">42</td>
-  <td class="px-3 py-4 border-b border-red-900">20</td>
-  <td class="px-3 py-4 border-b border-red-900 text-green-400">+22</td>
-  <td class="px-3 py-4 border-b border-red-900 text-yellow-300">37</td>
-</tr>
+          <tr class="invicta-row">
+            <td class="px-4 py-4 border-b border-white/5"><span class="pos text-red-400">3</span></td>
+            <td class="px-4 py-4 border-b border-white/5 display font-extrabold text-lg text-red-400">Medway Invicta FC</td>
+            <td class="px-3 py-4 border-b border-white/5 font-semibold">17</td>
+            <td class="px-3 py-4 border-b border-white/5 font-semibold">12</td>
+            <td class="px-3 py-4 border-b border-white/5 font-semibold">1</td>
+            <td class="px-3 py-4 border-b border-white/5 font-semibold">4</td>
+            <td class="px-3 py-4 border-b border-white/5 font-semibold">42</td>
+            <td class="px-3 py-4 border-b border-white/5 font-semibold">20</td>
+            <td class="px-3 py-4 border-b border-white/5 text-green-400 font-semibold">+22</td>
+            <td class="px-3 py-4 border-b border-white/5 display font-extrabold text-lg text-red-400">37</td>
+          </tr>
 
-<tr class="hover:bg-red-950/60 transition">
-  <td class="px-4 py-4 border-b border-red-900">4</td>
-  <td class="px-4 py-4 border-b border-red-900 font-semibold">
-    Athletic Bilbowls FC
-  </td>
-  <td class="px-3 py-4 border-b border-red-900">18</td>
-  <td class="px-3 py-4 border-b border-red-900">12</td>
-  <td class="px-3 py-4 border-b border-red-900">1</td>
-  <td class="px-3 py-4 border-b border-red-900">5</td>
-  <td class="px-3 py-4 border-b border-red-900">52</td>
-  <td class="px-3 py-4 border-b border-red-900">37</td>
-  <td class="px-3 py-4 border-b border-red-900 text-green-400">+15</td>
-  <td class="px-3 py-4 border-b border-red-900 font-bold">37</td>
-</tr>
+          <tr>
+            <td class="px-4 py-4 border-b border-white/5"><span class="pos">4</span></td>
+            <td class="px-4 py-4 border-b border-white/5 display font-bold text-lg">Athletic Bilbowls FC</td>
+            <td class="px-3 py-4 border-b border-white/5">18</td>
+            <td class="px-3 py-4 border-b border-white/5">12</td>
+            <td class="px-3 py-4 border-b border-white/5">1</td>
+            <td class="px-3 py-4 border-b border-white/5">5</td>
+            <td class="px-3 py-4 border-b border-white/5">52</td>
+            <td class="px-3 py-4 border-b border-white/5">37</td>
+            <td class="px-3 py-4 border-b border-white/5 text-green-400">+15</td>
+            <td class="px-3 py-4 border-b border-white/5 display font-extrabold text-lg">37</td>
+          </tr>
 
-<tr class="hover:bg-red-950/60 transition">
-  <td class="px-4 py-4 border-b border-red-900">5</td>
-  <td class="px-4 py-4 border-b border-red-900 font-semibold">
-    Cuxton 91
-  </td>
-  <td class="px-3 py-4 border-b border-red-900">17</td>
-  <td class="px-3 py-4 border-b border-red-900">9</td>
-  <td class="px-3 py-4 border-b border-red-900">1</td>
-  <td class="px-3 py-4 border-b border-red-900">7</td>
-  <td class="px-3 py-4 border-b border-red-900">50</td>
-  <td class="px-3 py-4 border-b border-red-900">31</td>
-  <td class="px-3 py-4 border-b border-red-900 text-green-400">+19</td>
-  <td class="px-3 py-4 border-b border-red-900 font-bold">28</td>
-</tr>
+          <tr>
+            <td class="px-4 py-4 border-b border-white/5"><span class="pos">5</span></td>
+            <td class="px-4 py-4 border-b border-white/5 display font-bold text-lg">Cuxton 91</td>
+            <td class="px-3 py-4 border-b border-white/5">17</td>
+            <td class="px-3 py-4 border-b border-white/5">9</td>
+            <td class="px-3 py-4 border-b border-white/5">1</td>
+            <td class="px-3 py-4 border-b border-white/5">7</td>
+            <td class="px-3 py-4 border-b border-white/5">50</td>
+            <td class="px-3 py-4 border-b border-white/5">31</td>
+            <td class="px-3 py-4 border-b border-white/5 text-green-400">+19</td>
+            <td class="px-3 py-4 border-b border-white/5 display font-extrabold text-lg">28</td>
+          </tr>
 
-<tr class="hover:bg-red-950/60 transition">
-  <td class="px-4 py-4 border-b border-red-900">6</td>
-  <td class="px-4 py-4 border-b border-red-900 font-semibold">
-    Strood Firsts
-  </td>
-  <td class="px-3 py-4 border-b border-red-900">18</td>
-  <td class="px-3 py-4 border-b border-red-900">6</td>
-  <td class="px-3 py-4 border-b border-red-900">1</td>
-  <td class="px-3 py-4 border-b border-red-900">11</td>
-  <td class="px-3 py-4 border-b border-red-900">37</td>
-  <td class="px-3 py-4 border-b border-red-900">34</td>
-  <td class="px-3 py-4 border-b border-red-900 text-green-400">+3</td>
-  <td class="px-3 py-4 border-b border-red-900 font-bold">19</td>
-</tr>
+          <tr>
+            <td class="px-4 py-4 border-b border-white/5"><span class="pos">6</span></td>
+            <td class="px-4 py-4 border-b border-white/5 display font-bold text-lg">Strood Firsts</td>
+            <td class="px-3 py-4 border-b border-white/5">18</td>
+            <td class="px-3 py-4 border-b border-white/5">6</td>
+            <td class="px-3 py-4 border-b border-white/5">1</td>
+            <td class="px-3 py-4 border-b border-white/5">11</td>
+            <td class="px-3 py-4 border-b border-white/5">37</td>
+            <td class="px-3 py-4 border-b border-white/5">34</td>
+            <td class="px-3 py-4 border-b border-white/5 text-green-400">+3</td>
+            <td class="px-3 py-4 border-b border-white/5 display font-extrabold text-lg">19</td>
+          </tr>
 
-<tr class="hover:bg-red-950/60 transition">
-  <td class="px-4 py-4 border-b border-red-900">7</td>
-  <td class="px-4 py-4 border-b border-red-900 font-semibold">
-    Wigmore 1st
-  </td>
-  <td class="px-3 py-4 border-b border-red-900">17</td>
-  <td class="px-3 py-4 border-b border-red-900">5</td>
-  <td class="px-3 py-4 border-b border-red-900">1</td>
-  <td class="px-3 py-4 border-b border-red-900">11</td>
-  <td class="px-3 py-4 border-b border-red-900">14</td>
-  <td class="px-3 py-4 border-b border-red-900">31</td>
-  <td class="px-3 py-4 border-b border-red-900 text-red-400">-17</td>
-  <td class="px-3 py-4 border-b border-red-900 font-bold">16</td>
-</tr>
+          <tr>
+            <td class="px-4 py-4 border-b border-white/5"><span class="pos">7</span></td>
+            <td class="px-4 py-4 border-b border-white/5 display font-bold text-lg">Wigmore 1st</td>
+            <td class="px-3 py-4 border-b border-white/5">17</td>
+            <td class="px-3 py-4 border-b border-white/5">5</td>
+            <td class="px-3 py-4 border-b border-white/5">1</td>
+            <td class="px-3 py-4 border-b border-white/5">11</td>
+            <td class="px-3 py-4 border-b border-white/5">14</td>
+            <td class="px-3 py-4 border-b border-white/5">31</td>
+            <td class="px-3 py-4 border-b border-white/5 text-red-400">-17</td>
+            <td class="px-3 py-4 border-b border-white/5 display font-extrabold text-lg">16</td>
+          </tr>
 
-<tr class="hover:bg-red-950/60 transition">
-  <td class="px-4 py-4 border-b border-red-900">8</td>
-  <td class="px-4 py-4 border-b border-red-900 font-semibold">
-    Riverside Academy First
-  </td>
-  <td class="px-3 py-4 border-b border-red-900">18</td>
-  <td class="px-3 py-4 border-b border-red-900">5</td>
-  <td class="px-3 py-4 border-b border-red-900">0</td>
-  <td class="px-3 py-4 border-b border-red-900">13</td>
-  <td class="px-3 py-4 border-b border-red-900">22</td>
-  <td class="px-3 py-4 border-b border-red-900">31</td>
-  <td class="px-3 py-4 border-b border-red-900 text-red-400">-9</td>
-  <td class="px-3 py-4 border-b border-red-900 font-bold">15</td>
-</tr>
+          <tr>
+            <td class="px-4 py-4 border-b border-white/5"><span class="pos">8</span></td>
+            <td class="px-4 py-4 border-b border-white/5 display font-bold text-lg">Riverside Academy First</td>
+            <td class="px-3 py-4 border-b border-white/5">18</td>
+            <td class="px-3 py-4 border-b border-white/5">5</td>
+            <td class="px-3 py-4 border-b border-white/5">0</td>
+            <td class="px-3 py-4 border-b border-white/5">13</td>
+            <td class="px-3 py-4 border-b border-white/5">22</td>
+            <td class="px-3 py-4 border-b border-white/5">31</td>
+            <td class="px-3 py-4 border-b border-white/5 text-red-400">-9</td>
+            <td class="px-3 py-4 border-b border-white/5 display font-extrabold text-lg">15</td>
+          </tr>
 
-<tr class="hover:bg-red-950/60 transition">
-  <td class="px-4 py-4 border-b border-red-900">9</td>
-  <td class="px-4 py-4 border-b border-red-900 font-semibold">
-    Grain FC First
-  </td>
-  <td class="px-3 py-4 border-b border-red-900">18</td>
-  <td class="px-3 py-4 border-b border-red-900">3</td>
-  <td class="px-3 py-4 border-b border-red-900">2</td>
-  <td class="px-3 py-4 border-b border-red-900">13</td>
-  <td class="px-3 py-4 border-b border-red-900">22</td>
-  <td class="px-3 py-4 border-b border-red-900">63</td>
-  <td class="px-3 py-4 border-b border-red-900 text-red-400">-41</td>
-  <td class="px-3 py-4 border-b border-red-900 font-bold">11</td>
-</tr>
+          <tr>
+            <td class="px-4 py-4 border-b border-white/5"><span class="pos">9</span></td>
+            <td class="px-4 py-4 border-b border-white/5 display font-bold text-lg">Grain FC First</td>
+            <td class="px-3 py-4 border-b border-white/5">18</td>
+            <td class="px-3 py-4 border-b border-white/5">3</td>
+            <td class="px-3 py-4 border-b border-white/5">2</td>
+            <td class="px-3 py-4 border-b border-white/5">13</td>
+            <td class="px-3 py-4 border-b border-white/5">22</td>
+            <td class="px-3 py-4 border-b border-white/5">63</td>
+            <td class="px-3 py-4 border-b border-white/5 text-red-400">-41</td>
+            <td class="px-3 py-4 border-b border-white/5 display font-extrabold text-lg">11</td>
+          </tr>
 
-<tr class="hover:bg-red-950/60 transition">
-  <td class="px-4 py-4">10</td>
-  <td class="px-4 py-4 font-semibold">
-    Eagles
-  </td>
-  <td class="px-3 py-4">17</td>
-  <td class="px-3 py-4">1</td>
-  <td class="px-3 py-4">1</td>
-  <td class="px-3 py-4">15</td>
-  <td class="px-3 py-4">14</td>
-  <td class="px-3 py-4">84</td>
-  <td class="px-3 py-4 text-red-400">-70</td>
-  <td class="px-3 py-4 font-bold">4</td>
-</tr>
+          <tr>
+            <td class="px-4 py-4"><span class="pos">10</span></td>
+            <td class="px-4 py-4 display font-bold text-lg">Eagles</td>
+            <td class="px-3 py-4">17</td>
+            <td class="px-3 py-4">1</td>
+            <td class="px-3 py-4">1</td>
+            <td class="px-3 py-4">15</td>
+            <td class="px-3 py-4">14</td>
+            <td class="px-3 py-4">84</td>
+            <td class="px-3 py-4 text-red-400">-70</td>
+            <td class="px-3 py-4 display font-extrabold text-lg">4</td>
+          </tr>
 
-</tbody>
+        </tbody>
       </table>
-
     </div>
 
+    <p class="text-xs text-gray-500 mt-4">
+      <span class="text-yellow-400 font-bold">1</span> Champions &nbsp;·&nbsp; <span class="text-red-400 font-bold">■</span> Medway Invicta FC
+    </p>
   </section>
 
   <!-- Footer -->
-  <footer class="text-center border-t border-red-600 py-6 text-sm text-gray-300">
-    &copy; 2025 Medway Invicta FC. All rights reserved.
+  <footer class="border-t border-red-900/60">
+    <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <img src="MI logo.jpg" alt="" class="h-8 w-8 object-contain"/>
+        <span class="display font-bold tracking-widest text-sm">Medway Invicta FC</span>
+      </div>
+      <p class="text-xs text-gray-500">&copy; 2026 Medway Invicta FC. Pride of Medway.</p>
+    </div>
   </footer>
+
+  <script>
+    const burger = document.getElementById('burger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    burger.addEventListener('click', () => {
+      const hidden = mobileMenu.classList.toggle('hidden');
+      burger.setAttribute('aria-expanded', String(!hidden));
+    });
+  </script>
 
 </body>
 </html>
