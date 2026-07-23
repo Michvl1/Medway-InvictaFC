@@ -3,63 +3,225 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Stats | Medway Invicta FC</title>
+  <title>Goals — Medway Invicta FC</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <!-- Fonts: same pairing as the rest of the site -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;1,700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --mi-red: #DC2626;
+      --mi-red-deep: #7F1D1D;
+      --mi-black: #0B0B0D;
+      --mi-panel: #141216;
+      --mi-cream: #F5F2ED;
+    }
+
+    body {
+      background-color: var(--mi-black);
+      color: var(--mi-cream);
+      font-family: 'Barlow', sans-serif;
+    }
+
+    .display {
+      font-family: 'Barlow Condensed', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.35em;
+      font-size: 0.75rem;
+      color: var(--mi-red);
+      font-weight: 700;
+    }
+
+    /* Kit-sash motif */
+    .sash {
+      background: linear-gradient(
+        115deg,
+        transparent 0 46%,
+        var(--mi-red-deep) 46% 49%,
+        transparent 49% 52%,
+        var(--mi-red) 52% 55%,
+        transparent 55%
+      );
+    }
+
+    /* Stadium-hoarding ticker */
+    .ticker-track {
+      display: flex;
+      width: max-content;
+      animation: ticker 28s linear infinite;
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .ticker-track { animation: none; }
+      .podium-card { transition: none; }
+    }
+
+    /* Podium cards for top 3 — metallic faces matching the Team page tiers */
+    .podium-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 0.75rem;
+      border: 1px solid;
+      padding: 1.75rem;
+      transition: transform 0.25s ease;
+    }
+    .podium-card:hover { transform: translateY(-4px); }
+    .podium-card::after {
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.18), transparent 45%);
+      pointer-events:none;
+    }
+
+    .podium-gold {
+      background:
+        linear-gradient(160deg, rgba(255,255,255,.4) 0%, transparent 35%),
+        linear-gradient(135deg, #fde68a 0%, #facc15 40%, #ca9a06 75%, #a16207 100%);
+      border-color: #fde68a;
+      color: #1c1503;
+    }
+    .podium-silver {
+      background:
+        linear-gradient(160deg, rgba(255,255,255,.45) 0%, transparent 35%),
+        linear-gradient(135deg, #e5e7eb 0%, #b6bcc6 40%, #7b8290 75%, #4b5563 100%);
+      border-color: #e5e7eb;
+      color: #111318;
+    }
+    .podium-bronze {
+      background:
+        linear-gradient(160deg, rgba(255,255,255,.14) 0%, transparent 35%),
+        linear-gradient(135deg, #b07f4a 0%, #8a5c2e 40%, #5b3a1a 75%, #3f2a18 100%);
+      border-color: #c08a52;
+      color: #fdf6ee;
+    }
+
+    .podium-rank {
+      font-family: 'Barlow Condensed', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .25em;
+      font-weight: 700;
+      font-size: 0.75rem;
+      opacity: .8;
+    }
+
+    /* Table */
+    thead th {
+      font-family: 'Barlow Condensed', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      font-size: 0.8rem;
+      color: #ef4444;
+      font-weight: 700;
+    }
+    tbody tr { transition: background 0.15s ease; }
+    tbody tr:hover { background: rgba(220,38,38,0.08); }
+
+    .rank-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: #9ca3af;
+    }
+    .rank-1 .rank-num { color: #facc15; }
+    .rank-2 .rank-num { color: #d1d5db; }
+    .rank-3 .rank-num { color: #c08a52; }
+
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--mi-red);
+      outline-offset: 3px;
+    }
+  </style>
 </head>
 
-<body class="bg-gradient-to-br from-red-950 via-black to-red-900 text-white font-sans">
+<body class="antialiased min-h-screen flex flex-col">
+
+  <!-- Top ticker -->
+  <div class="bg-red-700 text-black overflow-hidden py-1.5 border-b border-red-900">
+    <div class="ticker-track display font-bold text-sm">
+      <span class="px-6 whitespace-nowrap">Medway Invicta FC &nbsp;•&nbsp; Pride of Medway &nbsp;•&nbsp; 3rd Place — 25/26 Season &nbsp;•&nbsp; Follow us on Instagram &nbsp;•&nbsp; Medway Invicta FC &nbsp;•&nbsp; Pride of Medway &nbsp;•&nbsp; 3rd Place — 25/26 Season &nbsp;•&nbsp; Follow us on Instagram &nbsp;•&nbsp;</span>
+      <span class="px-6 whitespace-nowrap" aria-hidden="true">Medway Invicta FC &nbsp;•&nbsp; Pride of Medway &nbsp;•&nbsp; 3rd Place — 25/26 Season &nbsp;•&nbsp; Follow us on Instagram &nbsp;•&nbsp; Medway Invicta FC &nbsp;•&nbsp; Pride of Medway &nbsp;•&nbsp; 3rd Place — 25/26 Season &nbsp;•&nbsp; Follow us on Instagram &nbsp;•&nbsp;</span>
+    </div>
+  </div>
 
   <!-- Header -->
-  <header class="relative flex justify-between items-center px-6 py-5 border-b border-red-700 backdrop-blur-md bg-black/30 sticky top-0 z-50">
-    <h1 class="flex items-center space-x-3 text-2xl md:text-3xl font-bold tracking-wide">
-      <img src="MI logo.jpg" class="h-10 w-10 object-contain" />
-      <span>Medway Invicta FC</span>
-    </h1>
+  <header class="sticky top-0 z-50 bg-black/85 backdrop-blur border-b border-red-900/60">
+    <div class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4 relative">
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="MI logo.jpg" alt="Medway Invicta FC crest" class="h-12 w-12 object-contain"/>
+        <span class="display font-extrabold text-2xl leading-none">
+          Medway <span class="text-red-500">Invicta</span> FC
+        </span>
+      </a>
 
-    <nav class="hidden md:flex space-x-6 text-sm">
-      <a href="index.html" class="hover:text-red-400">Home</a>
-      <a href="Team.html" class="hover:text-red-400">Team</a>
-      <a href="Fixtures.html" class="hover:text-red-400">Fixtures</a>
-      <a href="Standings.html" class="hover:text-red-400">Standings</a>
-      <a href="Contact.html" class="hover:text-red-400">Contact</a>
-      <a href="Gallery.html" class="hover:text-red-400">Gallery</a>
-      <a href="GA.html" class="text-red-400 font-semibold">Goals</a>
-      <a href="assist-tracker.html" class="text-red-400 font-semibold">Assists</a>
-    </nav>
+      <nav class="hidden md:flex items-center gap-7 display font-semibold text-sm tracking-widest">
+        <a href="index.html" class="hover:text-red-400 transition-colors">Home</a>
+        <a href="Team.html" class="hover:text-red-400 transition-colors">Team</a>
+        <a href="Fixtures.html" class="hover:text-red-400 transition-colors">Fixtures</a>
+        <a href="Standings.html" class="hover:text-red-400 transition-colors">Standings</a>
+        <a href="GA.html" class="text-red-500">Goals</a>
+        <a href="assist-tracker.html" class="hover:text-red-400 transition-colors">Assists</a>
+        <a href="Gallery.html" class="hover:text-red-400 transition-colors">Gallery</a>
+        <a href="Contact.html" class="hover:text-red-400 transition-colors">Contact</a>
+      </nav>
 
-    <!-- Burger -->
-    <button id="burger" class="md:hidden">
-      <i data-lucide="menu" class="w-8 h-8"></i>
-    </button>
+      <button id="burger" class="md:hidden text-2xl px-2" aria-label="Open menu" aria-expanded="false">☰</button>
 
-    <!-- Mobile Menu -->
-    <div id="mobileMenu" class="absolute top-full right-6 mt-2 bg-red-950 border border-red-600 rounded-lg shadow-lg w-40 flex-col items-start p-4 space-y-2 hidden z-50">
-      <a href="index.html">Home</a>
-      <a href="Team.html">Team</a>
-      <a href="Fixtures.html">Fixtures</a>
-      <a href="Standings.html">Standings</a>
-      <a href="Contact.html">Contact</a>
-      <a href="Gallery.html">Gallery</a>
-      <a href="GA.html">Goals</a>
-      <a href="assist-tracker.html">Assists</a>
+      <div id="mobileMenu" class="absolute top-full right-6 mt-2 bg-[#141216] border border-red-800 rounded-xl w-48 p-4 hidden z-50 shadow-2xl shadow-black/60">
+        <nav class="flex flex-col gap-3 display font-semibold tracking-widest text-sm">
+          <a href="index.html" class="hover:text-red-400">Home</a>
+          <a href="Team.html" class="hover:text-red-400">Team</a>
+          <a href="Fixtures.html" class="hover:text-red-400">Fixtures</a>
+          <a href="Standings.html" class="hover:text-red-400">Standings</a>
+          <a href="GA.html" class="text-red-500">Goals</a>
+          <a href="assist-tracker.html" class="hover:text-red-400">Assists</a>
+          <a href="Gallery.html" class="hover:text-red-400">Gallery</a>
+          <a href="Contact.html" class="hover:text-red-400">Contact</a>
+        </nav>
+      </div>
     </div>
   </header>
 
-  <!-- Hero -->
-  <section class="text-center py-12">
-    <h2 class="text-4xl md:text-5xl font-extrabold mb-3">Player Stats</h2>
-    <p class="text-gray-400">Top scorers this season - All Competitions</p>
+  <!-- Page hero -->
+  <section class="relative overflow-hidden border-b border-red-900/40">
+    <div class="sash absolute inset-0 opacity-50 pointer-events-none"></div>
+    <div class="relative z-10 max-w-6xl mx-auto px-6 pt-16 pb-12">
+      <p class="eyebrow mb-3">Golden Boot Race &nbsp;·&nbsp; 25/26</p>
+      <h1 class="display font-extrabold text-6xl md:text-8xl leading-[0.9]">
+        Top <span class="text-red-500">Scorers</span>
+      </h1>
+      <p class="text-gray-400 mt-4 max-w-md">Every goal counted, all competitions.</p>
+    </div>
   </section>
 
-  <!-- Stats Cards -->
-  <section class="max-w-6xl mx-auto px-4 grid md:grid-cols-3 gap-6 mb-10" id="topCards"></section>
+  <!-- Podium: top 3 -->
+  <section class="max-w-6xl mx-auto px-6 pt-12 w-full">
+    <p class="eyebrow mb-2">The Podium</p>
+    <h2 class="display font-extrabold text-4xl mb-8">Leading the Race</h2>
+    <div id="topCards" class="grid md:grid-cols-3 gap-5 mb-4"></div>
+  </section>
 
   <!-- Table -->
-  <section class="max-w-6xl mx-auto px-4 pb-16">
-    <div class="bg-black/40 border border-red-800 rounded-2xl overflow-hidden shadow-xl">
-      <table class="w-full text-left">
-        <thead class="bg-red-800/80 text-white text-sm uppercase tracking-wider">
+  <section class="max-w-6xl mx-auto px-6 pt-10 pb-20 flex-1 w-full">
+    <p class="eyebrow mb-2">All Competitions</p>
+    <h2 class="display font-extrabold text-4xl mb-8">Full Standings</h2>
+
+    <div class="overflow-x-auto bg-[#141216] border border-red-900/50 rounded-xl relative">
+      <div class="absolute left-0 top-0 bottom-0 w-1 bg-red-600"></div>
+      <table class="w-full text-left min-w-[500px]">
+        <thead class="border-b-2 border-red-600">
           <tr>
             <th class="p-4">#</th>
             <th class="p-4">Player</th>
@@ -67,24 +229,30 @@
             <th class="p-4">Goals</th>
           </tr>
         </thead>
-        <tbody id="statsBody" class="divide-y divide-red-900 text-gray-300"></tbody>
+        <tbody id="statsBody"></tbody>
       </table>
     </div>
   </section>
 
-  <footer class="text-center border-t border-red-700 py-6 text-sm text-gray-400">
-    &copy; 2026 Medway Invicta FC
+  <!-- Footer -->
+  <footer class="border-t border-red-900/60">
+    <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <img src="MI logo.jpg" alt="" class="h-8 w-8 object-contain"/>
+        <span class="display font-bold tracking-widest text-sm">Medway Invicta FC</span>
+      </div>
+      <p class="text-xs text-gray-500">&copy; 2026 Medway Invicta FC. Pride of Medway.</p>
+    </div>
   </footer>
 
 <script>
-lucide.createIcons();
-
 // Burger
 const burger = document.getElementById("burger");
 const mobileMenu = document.getElementById("mobileMenu");
 
 burger.addEventListener("click", () => {
-  mobileMenu.classList.toggle("hidden");
+  const hidden = mobileMenu.classList.toggle("hidden");
+  burger.setAttribute("aria-expanded", String(!hidden));
 });
 
 // DATA
@@ -115,16 +283,19 @@ players.sort((a,b)=>b.goals-a.goals);
 const tbody = document.getElementById("statsBody");
 const topCards = document.getElementById("topCards");
 
-// Top 3 cards
+// Top 3 podium cards — gold, silver, bronze
+const tiers = ["podium-gold", "podium-silver", "podium-bronze"];
+const tierNames = ["Golden Boot Leader", "#2 Top Scorer", "#3 Top Scorer"];
+
 players.slice(0,3).forEach((p,i)=>{
   const card = document.createElement("div");
-  card.className = "bg-gradient-to-br from-red-800 to-red-950 p-6 rounded-2xl shadow-lg hover:scale-105 transition";
+  card.className = `podium-card ${tiers[i]}`;
 
   card.innerHTML = `
-    <div class="text-sm text-gray-300 mb-2">#${i+1} Top Scorer</div>
-    <div class="text-2xl font-bold">${p.name}</div>
-    <div class="text-gray-400">${p.pos}</div>
-    <div class="mt-4 text-4xl font-extrabold text-yellow-400">${p.goals}</div>
+    <div class="podium-rank">${tierNames[i]}</div>
+    <div class="display font-extrabold text-3xl mt-2 leading-tight">${p.name}</div>
+    <div class="text-sm opacity-75 mt-1">${p.pos}</div>
+    <div class="display font-extrabold text-6xl mt-4">${p.goals}<span class="text-lg align-top ml-1">goals</span></div>
   `;
 
   topCards.appendChild(card);
@@ -133,18 +304,13 @@ players.slice(0,3).forEach((p,i)=>{
 // Table
 players.forEach((p,i)=>{
   const tr = document.createElement("tr");
-
-  tr.className = "hover:bg-red-900/40 transition";
-
-  if(i < 3){
-    tr.classList.add("bg-yellow-400/10","text-yellow-300","font-semibold");
-  }
+  if (i < 3) tr.classList.add(`rank-${i+1}`);
 
   tr.innerHTML = `
-    <td class="p-4">${i+1}</td>
-    <td class="p-4">${p.name}</td>
-    <td class="p-4">${p.pos}</td>
-    <td class="p-4 font-bold">${p.goals}</td>
+    <td class="p-4 border-b border-white/5"><span class="rank-num">${i+1}</span></td>
+    <td class="p-4 border-b border-white/5 display font-bold text-lg">${p.name}</td>
+    <td class="p-4 border-b border-white/5 text-gray-400">${p.pos}</td>
+    <td class="p-4 border-b border-white/5 display font-extrabold text-lg ${i<3 ? 'text-red-400' : ''}">${p.goals}</td>
   `;
 
   tbody.appendChild(tr);
