@@ -6,124 +6,249 @@
   <title>Medway Invicta FC</title>
   <script src="https://cdn.tailwindcss.com"></script>
 
+  <!-- Fonts: condensed display for that matchday-programme feel, clean body face -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;1,700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+
   <style>
+    :root {
+      --mi-red: #DC2626;
+      --mi-red-deep: #7F1D1D;
+      --mi-black: #0B0B0D;
+      --mi-panel: #141216;
+      --mi-line: rgba(220, 38, 38, 0.35);
+      --mi-cream: #F5F2ED;
+    }
+
     body {
-      background-image: linear-gradient(to bottom right, #7f1d1d, #000000);
-      color: #ffffff;
+      background-color: var(--mi-black);
+      color: var(--mi-cream);
+      font-family: 'Barlow', sans-serif;
+    }
+
+    .display {
+      font-family: 'Barlow Condensed', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    /* Kit-stripe motif — the signature. A pair of red sashes like a kit trim. */
+    .sash {
+      background: linear-gradient(
+        115deg,
+        transparent 0 46%,
+        var(--mi-red-deep) 46% 49%,
+        transparent 49% 52%,
+        var(--mi-red) 52% 55%,
+        transparent 55%
+      );
+    }
+
+    /* Stadium-hoarding ticker */
+    .ticker-track {
+      display: flex;
+      width: max-content;
+      animation: ticker 28s linear infinite;
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .ticker-track { animation: none; }
+    }
+
+    /* Card hover: red trim slides in from the left like a touchline */
+    .pitch-card {
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+    .pitch-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      background: var(--mi-red);
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 0.3s ease;
+    }
+    .pitch-card:hover::before,
+    .pitch-card:focus-visible::before {
+      transform: scaleY(1);
+    }
+    .pitch-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--mi-red);
+    }
+
+    .eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.35em;
+      font-size: 0.75rem;
+      color: var(--mi-red);
+      font-weight: 700;
+    }
+
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--mi-red);
+      outline-offset: 3px;
+    }
+
+    .hero-img {
+      -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+      mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
     }
   </style>
 </head>
 
-<body class="bg-gradient-to-br from-red-900 to-black text-white font-sans">
+<body class="antialiased">
+
+  <!-- Top ticker: stadium hoarding -->
+  <div class="bg-red-700 text-black overflow-hidden py-1.5 border-b border-red-900">
+    <div class="ticker-track display font-bold text-sm">
+      <span class="px-6 whitespace-nowrap">Medway Invicta FC &nbsp;•&nbsp; Pride of Medway &nbsp;•&nbsp; 3rd Place — 25/26 Season &nbsp;•&nbsp; Follow us on Instagram &nbsp;•&nbsp; Medway Invicta FC &nbsp;•&nbsp; Pride of Medway &nbsp;•&nbsp; 3rd Place — 25/26 Season &nbsp;•&nbsp; Follow us on Instagram &nbsp;•&nbsp;</span>
+      <span class="px-6 whitespace-nowrap" aria-hidden="true">Medway Invicta FC &nbsp;•&nbsp; Pride of Medway &nbsp;•&nbsp; 3rd Place — 25/26 Season &nbsp;•&nbsp; Follow us on Instagram &nbsp;•&nbsp; Medway Invicta FC &nbsp;•&nbsp; Pride of Medway &nbsp;•&nbsp; 3rd Place — 25/26 Season &nbsp;•&nbsp; Follow us on Instagram &nbsp;•&nbsp;</span>
+    </div>
+  </div>
 
   <!-- Header -->
-  <header class="flex justify-between items-center p-6 border-b border-red-600 relative">
-    <h1 class="flex items-center space-x-3 text-3xl font-bold tracking-wide">
-      <img src="MI logo.jpg" class="h-12 w-12 object-contain"/>
-      <span>Medway Invicta FC</span>
-    </h1>
+  <header class="sticky top-0 z-50 bg-black/85 backdrop-blur border-b border-red-900/60">
+    <div class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4 relative">
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="MI logo.jpg" alt="Medway Invicta FC crest" class="h-12 w-12 object-contain"/>
+        <span class="display font-extrabold text-2xl leading-none">
+          Medway <span class="text-red-500">Invicta</span> FC
+        </span>
+      </a>
 
-    <nav class="hidden md:flex space-x-6">
-      <a href="index.html" class="hover:text-red-400">Home</a>
-      <a href="Team.html" class="hover:text-red-400">Team</a>
-      <a href="Fixtures.html" class="hover:text-red-400">Fixtures</a>
-      <a href="Standings.html" class="hover:text-red-400">Standings</a>
-      <a href="Contact.html" class="hover:text-red-400">Contact</a>
-      <a href="Gallery.html" class="hover:text-red-400">Gallery</a>
-      <a href="GA.html" class="hover:text-red-400">Goals</a>
-      <a href="assist-tracker.html" class="hover:text-red-400">Assists</a>
-    </nav>
+      <nav class="hidden md:flex items-center gap-7 display font-semibold text-sm tracking-widest">
+        <a href="index.html" class="text-red-500">Home</a>
+        <a href="Team.html" class="hover:text-red-400 transition-colors">Team</a>
+        <a href="Fixtures.html" class="hover:text-red-400 transition-colors">Fixtures</a>
+        <a href="Standings.html" class="hover:text-red-400 transition-colors">Standings</a>
+        <a href="GA.html" class="hover:text-red-400 transition-colors">Goals</a>
+        <a href="assist-tracker.html" class="hover:text-red-400 transition-colors">Assists</a>
+        <a href="Gallery.html" class="hover:text-red-400 transition-colors">Gallery</a>
+        <a href="Contact.html" class="hover:text-red-400 transition-colors">Contact</a>
+      </nav>
 
-    <button id="burger" class="md:hidden">☰</button>
+      <button id="burger" class="md:hidden text-2xl px-2" aria-label="Open menu" aria-expanded="false">☰</button>
 
-    <div id="mobileMenu" class="absolute top-full right-6 mt-2 bg-red-950 border border-red-600 rounded-lg w-40 p-4 space-y-2 hidden z-50">
-      <a href="index.html">Home</a>
-      <a href="Team.html">Team</a>
-      <a href="Fixtures.html">Fixtures</a>
-      <a href="Standings.html">Standings</a>
-      <a href="Contact.html">Contact</a>
-      <a href="Gallery.html">Gallery</a>
-      <a href="GA.html">Goals</a>
-      <a href="assist-tracker.html">Assists</a>
+      <div id="mobileMenu" class="absolute top-full right-6 mt-2 bg-[#141216] border border-red-800 rounded-xl w-48 p-4 hidden z-50 shadow-2xl shadow-black/60">
+        <nav class="flex flex-col gap-3 display font-semibold tracking-widest text-sm">
+          <a href="index.html" class="text-red-500">Home</a>
+          <a href="Team.html" class="hover:text-red-400">Team</a>
+          <a href="Fixtures.html" class="hover:text-red-400">Fixtures</a>
+          <a href="Standings.html" class="hover:text-red-400">Standings</a>
+          <a href="GA.html" class="hover:text-red-400">Goals</a>
+          <a href="assist-tracker.html" class="hover:text-red-400">Assists</a>
+          <a href="Gallery.html" class="hover:text-red-400">Gallery</a>
+          <a href="Contact.html" class="hover:text-red-400">Contact</a>
+        </nav>
+      </div>
     </div>
   </header>
 
   <!-- Hero -->
-  <section class="relative h-[90vh] flex items-center justify-center text-center">
-    <img src="IMG_3421.jpeg" class="absolute inset-0 w-full h-full object-cover opacity-20" />
-    <div class="relative z-10 max-w-2xl mx-auto px-4">
-      <h2 class="text-5xl font-extrabold mb-4">
-        Welcome to Medway Invicta FC
-      </h2>
-      <p class="text-gray-200 mb-8">
-        Home of champions. Follow the passion, pride, and performance of Medway Invicta FC.
+  <section class="relative overflow-hidden">
+    <img src="IMG_3421.jpeg" alt="" class="hero-img absolute inset-0 w-full h-full object-cover opacity-25" />
+    <!-- kit sash cutting across the hero -->
+    <div class="sash absolute inset-0 opacity-60 pointer-events-none"></div>
+
+    <div class="relative z-10 max-w-6xl mx-auto px-6 py-28 md:py-40">
+      <p class="eyebrow mb-4">Est. Medway &nbsp;·&nbsp; Kent</p>
+      <h1 class="display font-extrabold text-6xl md:text-8xl leading-[0.9] mb-6">
+        Passion.<br/>
+        Pride.<br/>
+        <span class="text-red-500">Performance.</span>
+      </h1>
+      <p class="max-w-md text-gray-300 text-lg mb-10">
+        The home of Medway Invicta FC — follow the squad, the fixtures, and every goal along the way.
       </p>
-      <a href="https://www.instagram.com/medwayinvictafc/?hl=en">
-        <button class="bg-red-600 hover:bg-red-500 px-6 py-2 rounded-full">
+      <div class="flex flex-wrap gap-4">
+        <a href="Fixtures.html"
+           class="display font-bold tracking-widest bg-red-600 hover:bg-red-500 transition-colors px-8 py-3 text-lg">
+          Next Match
+        </a>
+        <a href="https://www.instagram.com/medwayinvictafc/?hl=en"
+           class="display font-bold tracking-widest border border-red-600 hover:bg-red-600/15 transition-colors px-8 py-3 text-lg">
           Our Instagram
-        </button>
-      </a>
+        </a>
+      </div>
     </div>
   </section>
 
   <!-- Info Cards -->
-  <section class="grid grid-cols-1 md:grid-cols-3 gap-6 px-6 py-12">
-
-    <!-- Squad -->
-    <a href="Team.html" class="bg-red-950 rounded-2xl p-6 text-center hover:bg-red-900">
-      <div class="flex justify-center mb-4">
-        <img src="squad.png" class="w-10 h-10 object-contain"/>
+  <section class="max-w-6xl mx-auto px-6 py-16">
+    <div class="flex items-end justify-between mb-8">
+      <div>
+        <p class="eyebrow mb-2">The Club</p>
+        <h2 class="display font-extrabold text-4xl">Inside Invicta</h2>
       </div>
-      <h3 class="text-xl font-semibold">Our Squad</h3>
-      <p class="text-sm text-gray-300 mt-2">Meet the players driving our success.</p>
-    </a>
+    </div>
 
-    <!-- Fixtures -->
-    <a href="Fixtures.html" class="bg-red-950 rounded-2xl p-6 text-center hover:bg-red-900">
-      <div class="flex justify-center mb-4">
-        <img src="fixtures PNG.png" class="w-10 h-10 object-contain"/>
-      </div>
-      <h3 class="text-xl font-semibold">Fixtures</h3>
-      <p class="text-sm text-gray-300 mt-2">Never miss an upcoming match.</p>
-    </a>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
 
-    <!-- Standings -->
-    <a href="Standings.html" class="bg-red-950 rounded-2xl p-6 text-center hover:bg-red-900">
-      <div class="flex justify-center mb-4">
-        <img src="trophy.png" class="w-10 h-10 object-contain"/>
-      </div>
-      <h3 class="text-xl font-semibold">Standings</h3>
-      <p class="text-sm text-gray-300 mt-2">Track our position in the league.</p>
-    </a>
+      <a href="Team.html" class="pitch-card bg-[#141216] border border-red-900/50 rounded-xl p-6">
+        <img src="squad.png" alt="" class="w-10 h-10 object-contain mb-5"/>
+        <h3 class="display font-bold text-2xl mb-1">Our Squad</h3>
+        <p class="text-sm text-gray-400">Meet the players driving our success.</p>
+      </a>
 
-    <!-- Goals -->
-    <a href="GA.html" class="bg-red-950 rounded-2xl p-6 text-center hover:bg-red-900">
-      <div class="flex justify-center mb-4">
-        <img src="chart-no-axes-combined.png" class="w-10 h-10 object-contain"/>
-      </div>
-      <h3 class="text-xl font-semibold">Goals</h3>
-      <p class="text-sm text-gray-300 mt-2">Keep up with the stats.</p>
-    </a>
+      <a href="Fixtures.html" class="pitch-card bg-[#141216] border border-red-900/50 rounded-xl p-6">
+        <img src="fixtures PNG.png" alt="" class="w-10 h-10 object-contain mb-5"/>
+        <h3 class="display font-bold text-2xl mb-1">Fixtures</h3>
+        <p class="text-sm text-gray-400">Never miss an upcoming match.</p>
+      </a>
 
-     <!-- Assists -->
-    <a href="assist-tracker.html" class="bg-red-950 rounded-2xl p-6 text-center hover:bg-red-900">
-      <div class="flex justify-center mb-4">
-        <img src="chart-no-axes-combined.png" class="w-10 h-10 object-contain"/>
-      </div>
-      <h3 class="text-xl font-semibold">Assists</h3>
-      <p class="text-sm text-gray-300 mt-2">Keep track of our playmakers here.</p>
-    </a>
+      <a href="Standings.html" class="pitch-card bg-[#141216] border border-red-900/50 rounded-xl p-6">
+        <img src="trophy.png" alt="" class="w-10 h-10 object-contain mb-5"/>
+        <h3 class="display font-bold text-2xl mb-1">Standings</h3>
+        <p class="text-sm text-gray-400">Track our position in the league.</p>
+      </a>
+
+      <a href="GA.html" class="pitch-card bg-[#141216] border border-red-900/50 rounded-xl p-6">
+        <img src="chart-no-axes-combined.png" alt="" class="w-10 h-10 object-contain mb-5"/>
+        <h3 class="display font-bold text-2xl mb-1">Goals</h3>
+        <p class="text-sm text-gray-400">Keep up with the stats.</p>
+      </a>
+
+      <a href="assist-tracker.html" class="pitch-card bg-[#141216] border border-red-900/50 rounded-xl p-6">
+        <img src="chart-no-axes-combined.png" alt="" class="w-10 h-10 object-contain mb-5"/>
+        <h3 class="display font-bold text-2xl mb-1">Assists</h3>
+        <p class="text-sm text-gray-400">Keep track of our playmakers here.</p>
+      </a>
+
+      <a href="Gallery.html" class="pitch-card bg-[#141216] border border-red-900/50 rounded-xl p-6">
+        <img src="MI logo.jpg" alt="" class="w-10 h-10 object-contain mb-5"/>
+        <h3 class="display font-bold text-2xl mb-1">Gallery</h3>
+        <p class="text-sm text-gray-400">Matchday moments, captured.</p>
+      </a>
+    </div>
   </section>
 
   <!-- News -->
-  <section class="px-6 py-12 bg-gradient-to-b from-black to-red-950 border-t border-red-600">
-    <h2 class="text-3xl font-bold text-center mb-8">Latest News</h2>
-    <div id="newsGrid" class="grid md:grid-cols-3 gap-6"></div>
+  <section class="border-t border-red-900/50 bg-gradient-to-b from-transparent to-[#160b0b]">
+    <div class="max-w-6xl mx-auto px-6 py-16">
+      <p class="eyebrow mb-2">From the Club</p>
+      <h2 class="display font-extrabold text-4xl mb-8">Latest News</h2>
+      <div id="newsGrid" class="grid md:grid-cols-3 gap-5"></div>
+    </div>
   </section>
 
   <!-- Footer -->
-  <footer class="text-center border-t border-red-600 py-6 text-sm">
-    &copy; 2026 Medway Invicta FC
+  <footer class="border-t border-red-900/60">
+    <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <img src="MI logo.jpg" alt="" class="h-8 w-8 object-contain"/>
+        <span class="display font-bold tracking-widest text-sm">Medway Invicta FC</span>
+      </div>
+      <p class="text-xs text-gray-500">&copy; 2026 Medway Invicta FC. Pride of Medway.</p>
+    </div>
   </footer>
 
   <script>
@@ -131,23 +256,24 @@
     const mobileMenu = document.getElementById('mobileMenu');
 
     burger.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
+      const open = mobileMenu.classList.toggle('hidden');
+      burger.setAttribute('aria-expanded', String(!open));
     });
 
     const ARTICLES = [
-      {title:'Season over',excerpt:'Medway Invicta finish 3rd place in the 25/26 season. ',image:'MI logo.jpg'},
-         ];
+      {title:'Season over', excerpt:'Medway Invicta finish 3rd place in the 25/26 season.', image:'MI logo.jpg'},
+    ];
 
     const grid = document.getElementById('newsGrid');
 
     ARTICLES.forEach(a => {
-      const el = document.createElement('div');
-      el.className = 'bg-red-950 rounded-2xl overflow-hidden';
+      const el = document.createElement('article');
+      el.className = 'pitch-card bg-[#141216] border border-red-900/50 rounded-xl overflow-hidden';
       el.innerHTML = `
-        <img src="${a.image}" class="w-full h-48 object-contain bg-black">
-        <div class="p-4">
-          <h3 class="font-semibold">${a.title}</h3>
-          <p class="text-sm text-gray-300">${a.excerpt}</p>
+        <img src="${a.image}" alt="" class="w-full h-48 object-contain bg-black">
+        <div class="p-5">
+          <h3 class="display font-bold text-2xl mb-1">${a.title}</h3>
+          <p class="text-sm text-gray-400">${a.excerpt}</p>
         </div>
       `;
       grid.appendChild(el);
