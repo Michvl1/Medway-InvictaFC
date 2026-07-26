@@ -68,13 +68,13 @@
       .podium-card { transition: none; }
     }
 
-    /* Podium cards for top 3 — metallic faces matching the Team page tiers */
+    /* Podium cards — metallic faces matching the Team page tiers */
     .podium-card {
       position: relative;
       overflow: hidden;
       border-radius: 0.75rem;
       border: 1px solid;
-      padding: 1.75rem;
+      padding: 1.5rem;
       transition: transform 0.25s ease;
     }
     .podium-card:hover { transform: translateY(-4px); }
@@ -135,9 +135,6 @@
       font-size: 1.05rem;
       color: #9ca3af;
     }
-    .rank-1 .rank-num { color: #facc15; }
-    .rank-2 .rank-num { color: #d1d5db; }
-    .rank-3 .rank-num { color: #c08a52; }
 
     a:focus-visible, button:focus-visible {
       outline: 2px solid var(--mi-red);
@@ -198,39 +195,46 @@
   <section class="relative overflow-hidden border-b border-red-900/40">
     <div class="sash absolute inset-0 opacity-50 pointer-events-none"></div>
     <div class="relative z-10 max-w-6xl mx-auto px-6 pt-16 pb-12">
-      <p class="eyebrow mb-3">Golden Boot Race &nbsp;·&nbsp; 25/26</p>
+      <p class="eyebrow mb-3">Golden Boot Race &nbsp;·&nbsp; 26/27</p>
       <h1 class="display font-extrabold text-6xl md:text-8xl leading-[0.9]">
         Top <span class="text-red-500">Scorers</span>
       </h1>
-      <p class="text-gray-400 mt-4 max-w-md">Every goal counted, all competitions.</p>
+      <p class="text-gray-400 mt-4 max-w-md">A new season, a clean slate. Every goal counted, all competitions.</p>
     </div>
   </section>
 
-  <!-- Podium: top 3 -->
-  <section class="max-w-6xl mx-auto px-6 pt-12 w-full">
-    <p class="eyebrow mb-2">The Podium</p>
-    <h2 class="display font-extrabold text-4xl mb-8">Leading the Race</h2>
-    <div id="topCards" class="grid md:grid-cols-3 gap-5 mb-4"></div>
-  </section>
+  <!-- Table + last season sidebar -->
+  <section class="max-w-6xl mx-auto px-6 pt-12 pb-20 flex-1 w-full">
+    <div class="grid lg:grid-cols-3 gap-10 items-start">
 
-  <!-- Table -->
-  <section class="max-w-6xl mx-auto px-6 pt-10 pb-20 flex-1 w-full">
-    <p class="eyebrow mb-2">All Competitions</p>
-    <h2 class="display font-extrabold text-4xl mb-8">Full Standings</h2>
+      <!-- Full standings -->
+      <div class="lg:col-span-2">
+        <p class="eyebrow mb-2">All Competitions</p>
+        <h2 class="display font-extrabold text-4xl mb-8">Full Standings</h2>
 
-    <div class="overflow-x-auto bg-[#141216] border border-red-900/50 rounded-xl relative">
-      <div class="absolute left-0 top-0 bottom-0 w-1 bg-red-600"></div>
-      <table class="w-full text-left min-w-[500px]">
-        <thead class="border-b-2 border-red-600">
-          <tr>
-            <th class="p-4">#</th>
-            <th class="p-4">Player</th>
-            <th class="p-4">Position</th>
-            <th class="p-4">Goals</th>
-          </tr>
-        </thead>
-        <tbody id="statsBody"></tbody>
-      </table>
+        <div class="overflow-x-auto bg-[#141216] border border-red-900/50 rounded-xl relative">
+          <div class="absolute left-0 top-0 bottom-0 w-1 bg-red-600"></div>
+          <table class="w-full text-left min-w-[420px]">
+            <thead class="border-b-2 border-red-600">
+              <tr>
+                <th class="p-4">#</th>
+                <th class="p-4">Player</th>
+                <th class="p-4">Position</th>
+                <th class="p-4">Goals</th>
+              </tr>
+            </thead>
+            <tbody id="statsBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Last season's top 3 -->
+      <aside>
+        <p class="eyebrow mb-2">25/26 Season</p>
+        <h2 class="display font-extrabold text-4xl mb-8">Last Season's Podium</h2>
+        <div id="lastSeasonCards" class="flex flex-col gap-5"></div>
+      </aside>
+
     </div>
   </section>
 
@@ -255,62 +259,67 @@ burger.addEventListener("click", () => {
   burger.setAttribute("aria-expanded", String(!hidden));
 });
 
-// DATA
+// DATA — new season, everyone starts on 0
 const players = [
-  {name:"Thomas Ngegba", pos:"Striker", goals:8},
-  {name:"Temi Ayetigbo", pos:"Winger", goals:9},
-  {name:"Samuel Shobande", pos:"Winger", goals:12},
-  {name:"Ayo Jimoh", pos:"Striker", goals:9},
-  {name:"Owen Longman", pos:"Defender", goals:10},
-  {name:"Jamie Blackham", pos:"Midfielder", goals:5},
-  {name:"Matthew Thomas", pos:"Winger", goals:7},
-  {name:"Manny Akinso", pos:"Defender", goals:4},
-  {name:"Michael Shobande", pos:"Winger", goals:15},
-  {name:"Michael Hurcomb", pos:"Striker", goals:1},
-  {name:"Abdul-Raheem Sunmonu", pos:"Defender", goals:1},
+  {name:"Thomas Ngegba", pos:"Striker", goals:0},
+  {name:"Temi Ayetigbo", pos:"Winger", goals:0},
+  {name:"Samuel Shobande", pos:"Winger", goals:0},
+  {name:"Ayo Jimoh", pos:"Striker", goals:0},
+  {name:"Owen Longman", pos:"Defender", goals:0},
+  {name:"Jamie Blackham", pos:"Midfielder", goals:0},
+  {name:"Matthew Thomas", pos:"Winger", goals:0},
+  {name:"Manny Akinso", pos:"Defender", goals:0},
+  {name:"Michael Shobande", pos:"Winger", goals:0},
+  {name:"Michael Hurcomb", pos:"Striker", goals:0},
   {name:"Toby Ogundemuren", pos:"Mgr/Midfielder", goals:0},
   {name:"Jordan Buckfield-Waller", pos:"Defender", goals:0},
-  {name:"Adriano Anglin", pos:"Winger", goals:2},
-  {name:"Yeni Yusuph", pos:"Striker", goals:3},
-  {name:"James Rocha", pos:"Defender", goals:2},
-  {name:"Connor Mudima", pos:"Midfielder", goals:1},
-  {name:"Evan Longman", pos:"Goalkeeper", goals:2}
+  {name:"Adriano Anglin", pos:"Winger", goals:0},
+  {name:"Yeni Yusuph", pos:"Striker", goals:0},
+  {name:"James Rocha", pos:"Defender", goals:0},
+  {name:"Connor Mudima", pos:"Midfielder", goals:0},
+  {name:"Evan Longman", pos:"Goalkeeper", goals:0}
 ];
 
-// Sort
-players.sort((a,b)=>b.goals-a.goals);
+// Last season's final top 3 (25/26)
+const lastSeasonTop3 = [
+  {name:"Michael Shobande", pos:"Winger", goals:15},
+  {name:"Samuel Shobande", pos:"Winger", goals:12},
+  {name:"Owen Longman", pos:"Defender", goals:10}
+];
+
+// Sort current season (by goals, then alphabetically while everyone's level)
+players.sort((a,b)=> b.goals - a.goals || a.name.localeCompare(b.name));
 
 const tbody = document.getElementById("statsBody");
-const topCards = document.getElementById("topCards");
+const lastSeasonCards = document.getElementById("lastSeasonCards");
 
-// Top 3 podium cards — gold, silver, bronze
+// Last season podium cards — gold, silver, bronze
 const tiers = ["podium-gold", "podium-silver", "podium-bronze"];
-const tierNames = ["Golden Boot Leader", "#2 Top Scorer", "#3 Top Scorer"];
+const tierNames = ["25/26 Golden Boot", "#2 Top Scorer", "#3 Top Scorer"];
 
-players.slice(0,3).forEach((p,i)=>{
+lastSeasonTop3.forEach((p,i)=>{
   const card = document.createElement("div");
   card.className = `podium-card ${tiers[i]}`;
 
   card.innerHTML = `
     <div class="podium-rank">${tierNames[i]}</div>
-    <div class="display font-extrabold text-3xl mt-2 leading-tight">${p.name}</div>
+    <div class="display font-extrabold text-2xl mt-2 leading-tight">${p.name}</div>
     <div class="text-sm opacity-75 mt-1">${p.pos}</div>
-    <div class="display font-extrabold text-6xl mt-4">${p.goals}<span class="text-lg align-top ml-1">goals</span></div>
+    <div class="display font-extrabold text-5xl mt-3">${p.goals}<span class="text-base align-top ml-1">goals</span></div>
   `;
 
-  topCards.appendChild(card);
+  lastSeasonCards.appendChild(card);
 });
 
 // Table
 players.forEach((p,i)=>{
   const tr = document.createElement("tr");
-  if (i < 3) tr.classList.add(`rank-${i+1}`);
 
   tr.innerHTML = `
     <td class="p-4 border-b border-white/5"><span class="rank-num">${i+1}</span></td>
     <td class="p-4 border-b border-white/5 display font-bold text-lg">${p.name}</td>
     <td class="p-4 border-b border-white/5 text-gray-400">${p.pos}</td>
-    <td class="p-4 border-b border-white/5 display font-extrabold text-lg ${i<3 ? 'text-red-400' : ''}">${p.goals}</td>
+    <td class="p-4 border-b border-white/5 display font-extrabold text-lg">${p.goals}</td>
   `;
 
   tbody.appendChild(tr);
