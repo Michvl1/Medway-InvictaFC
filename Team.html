@@ -287,50 +287,12 @@ a:focus-visible, button:focus-visible {
   border-color: var(--mi-red);
 }
 
-/* ---- OVERLAY ---- */
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.65);
-  backdrop-filter: blur(4px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  padding: 1rem;
-}
-.overlay-box {
-  background: var(--mi-panel);
-  border: 1px solid var(--mi-red);
-  padding: 40px;
-  text-align: center;
-  max-width: 420px;
-  width: 100%;
-  box-shadow: 0 0 45px rgba(220,38,38,.25);
-}
-
 .mobile-menu { display: none; }
 .mobile-menu.active { display: flex; }
 </style>
 </head>
 
 <body class="antialiased">
-
-<!-- UNDER CONSTRUCTION OVERLAY -->
-<div class="overlay" id="overlay">
-  <div class="overlay-box">
-    <p class="eyebrow mb-3">Work in progress</p>
-    <h2 class="display font-extrabold text-4xl mb-3">Under Construction</h2>
-    <p class="text-gray-400 mb-8 leading-relaxed">
-      The new interactive squad experience is currently being developed.
-      Some features may still be in progress.
-    </p>
-    <button onclick="closeOverlay()"
-      class="display font-bold tracking-widest bg-red-600 hover:bg-red-500 transition-colors px-8 py-3 text-lg">
-      Enter Page
-    </button>
-  </div>
-</div>
 
 <!-- Top ticker -->
 <div class="bg-red-700 text-black overflow-hidden py-1.5 border-b border-red-900">
@@ -393,14 +355,7 @@ a:focus-visible, button:focus-visible {
 <section class="max-w-6xl mx-auto px-6 pt-14">
   <p class="eyebrow mb-2">The Gaffer</p>
   <h2 class="display font-extrabold text-4xl mb-6">Manager</h2>
-
-  <div class="max-w-xs bg-[#141216] border border-red-900/50 p-6 relative overflow-hidden">
-    <div class="absolute left-0 top-0 bottom-0 w-1 bg-red-600"></div>
-    <img src="placeholder.jpg" alt="Toby Ogundemuren"
-      class="h-28 w-28 rounded-full mb-4 object-cover border-3 border-red-500" style="border-width:3px;">
-    <h3 class="display font-bold text-3xl">Toby Ogundemuren</h3>
-    <p class="eyebrow mt-2" style="letter-spacing:.2em;">First Team Manager</p>
-  </div>
+  <div id="managerContainer" class="max-w-xs"></div>
 </section>
 
 <!-- SQUAD -->
@@ -434,142 +389,192 @@ a:focus-visible, button:focus-visible {
 </footer>
 
 <script>
-/* MOBILE MENU */
-const menuBtn = document.getElementById("menuBtn");
-const mobileMenu = document.getElementById("mobileMenu");
+/* =====================================================================
+   RATING ENGINE  —  cumulative, resets to 50 / bronze each season
+   ---------------------------------------------------------------------
+   You only ever edit the raw numbers (goals, apps, motm, etc.) below.
+   The overall rating and the card tier are worked out from them here,
+   so nothing needs to be set by hand.
 
-menuBtn.addEventListener("click", () => {
-  const open = mobileMenu.classList.toggle("active");
-  menuBtn.setAttribute("aria-expanded", String(open));
-});
+   Tune any of these point values to taste:
+   ===================================================================== */
+const POINTS = {
+  appearance : 1,   // showing up always pays
+  goalAtt    : 3,   // goal by Midfielder / Winger / Striker
+  goalDef    : 5,   // goal by Defender / Goalkeeper (rarer, worth more)
+  assist     : 2,
+  motm       : 5,
+  cleanSheet : 3,   // Defender / Goalkeeper only
+  yellow     : -1,  // per yellow card
+  red        : -5,  // per red card
+  // Missed 5 games in a row = -5, then -1 for every further game missed.
+  // (set stats.missedStreak on a player to use this)
+};
 
-/* OVERLAY */
-function closeOverlay(){
-  document.getElementById("overlay").style.display = "none";
+const SEASON_BASE = 50;   // everyone starts here
+const RATING_FLOOR = 40;  // a bad run can't sink below this
+const RATING_CAP   = 100;
+const SOFT_CAP     = 90;   // gains above 90 count for half — the top tier is a grind
+
+// Tier bands (floor 40 sits inside bronze)
+//   Bronze 40–64  |  Silver 65–79  |  Gold 80–94  |  Legend 95+
+function tierFor(o){
+  if (o >= 95) return "special";   // "Legend" — uses the glowing red card
+  if (o >= 80) return "gold";
+  if (o >= 65) return "silver";
+  return "bronze";
+}
+function tierLabel(t){
+  return t === "special" ? "Legend" : t.charAt(0).toUpperCase() + t.slice(1);
 }
 
-/* PLAYERS */
+const isDefensive = pos => pos === "Defender" || pos === "Goalkeeper";
+
+function computeOverall(p){
+  const s = p.stats, def = isDefensive(p.pos);
+  let pts = 0;
+  pts += (s.apps         || 0) * POINTS.appearance;
+  pts += (s.goals        || 0) * (def ? POINTS.goalDef : POINTS.goalAtt);
+  pts += (s.assists      || 0) * POINTS.assist;
+  pts += (s.motm         || 0) * POINTS.motm;
+  if (def) pts += (s.cleansheets || 0) * POINTS.cleanSheet;
+  pts += (s.yellows      || 0) * POINTS.yellow;   // negative value
+  pts += (s.reds         || 0) * POINTS.red;      // negative value
+
+  const missed = s.missedStreak || 0;
+  if (missed >= 5) pts += -(5 + (missed - 5));
+
+  let overall = SEASON_BASE + pts;
+  if (overall > SOFT_CAP) overall = SOFT_CAP + (overall - SOFT_CAP) * 0.5;
+  return Math.max(RATING_FLOOR, Math.min(RATING_CAP, Math.round(overall)));
+}
+
+/* =====================================================================
+   MANAGER  —  rating from results (win / draw / loss)
+   ===================================================================== */
+const MGR_POINTS = { win: 3, draw: 1, loss: -2 };
+
+const manager = {
+  name: "Toby Ogundemuren",
+  img: "placeholder.jpg",
+  record: { won: 0, drawn: 0, lost: 0 }   // <-- update these after each game
+};
+
+function computeManager(r){
+  let pts = (r.won||0)*MGR_POINTS.win + (r.drawn||0)*MGR_POINTS.draw + (r.lost||0)*MGR_POINTS.loss;
+  let overall = SEASON_BASE + pts;
+  if (overall > SOFT_CAP) overall = SOFT_CAP + (overall - SOFT_CAP) * 0.5;
+  return Math.max(RATING_FLOOR, Math.min(RATING_CAP, Math.round(overall)));
+}
+
+/* =====================================================================
+   SQUAD DATA  —  edit the raw stats, everything else is automatic.
+   Every player has: apps, goals, assists, motm, cleansheets, yellows, reds
+   (cleansheets is only shown/counted for Defenders & Goalkeepers)
+   ===================================================================== */
+const blank = () => ({ apps:0, goals:0, assists:0, motm:0, cleansheets:0, yellows:0, reds:0 });
+
 const players = [
 
-  {name:"Emmanuel Akinso", pos:"Defender", img:"MANNY.jpeg", overall:50, type:"bronze",
-   stats:{pac:"-",sho:"-",pas:"-",dri:"-",def:"-",phy:"-"}},
+  {name:"Emmanuel Akinso",        pos:"Defender",   img:"MANNY.jpeg",        stats:blank()},
+  {name:"Adriano Anglin",         pos:"Defender",   img:"IMG_5047.jpeg",     stats:blank()},
+  {name:"Jordan Buckfield-Waller",pos:"Defender",   img:"placeholder.jpg",   stats:blank()},
+  {name:"Shaun Keen",             pos:"Defender",   img:"placeholder.jpg",   stats:blank()},
+  {name:"Owen Longman",           pos:"Defender",   img:"OWEN.jpeg",         stats:blank()},
+  {name:"Caleb Luckhurst",        pos:"Defender",   img:"Caleb Luckhurst.jpg",stats:blank()},
+  {name:"Adeboye Oloyede",        pos:"Defender",   img:"Boye signed.png",   stats:blank()},
+  {name:"James Rocha",            pos:"Defender",   img:"James.jpg",         stats:blank()},
+  {name:"Ben Van-de-Peer",        pos:"Defender",   img:"BEN.jpeg",          stats:blank()},
 
-  {name:"Adriano Anglin", pos:"Defender", img:"IMG_5047.jpeg", overall:50, type:"bronze",
-   stats:{pac:"-",sho:"-",pas:"-",dri:"-",def:"-",phy:"-"}},
+  {name:"Jamie Blackham",         pos:"Midfielder", img:"JAMIE.jpeg",        stats:blank()},
+  {name:"Tom Mercer",             pos:"Midfielder", img:"MERCER.jpeg",       stats:blank()},
+  {name:"Connor Mudima",          pos:"Midfielder", img:"CONNOR.jpeg",       stats:blank()},
+  {name:"William Sims",           pos:"Midfielder", img:"placeholder.jpg",   stats:blank()},
 
-  {name:"Jordan Buckfield-Waller", pos:"Defender", img:"placeholder.jpg", overall:50, type:"bronze",
-   stats:{pac:"-",sho:"-",pas:"-",dri:"-",def:"-",phy:"-"}},
+  {name:"Temi Ayetigbo",          pos:"Winger",     img:"Temi.jpg",          stats:blank()},
+  {name:"Victor Okunowo",         pos:"Winger",     img:"placeholder.jpg",   stats:blank()},
+  {name:"Michael Shobande",       pos:"Winger",     img:"IMG_5046.jpeg",     stats:blank()},
+  {name:"Samuel Shobande",        pos:"Winger",     img:"IMG_5044.jpeg",     stats:blank()},
+  {name:"Matthew Thomas",         pos:"Winger",     img:"NASH.jpeg",         stats:blank()},
 
-  {name:"Shaun Keen", pos:"Defender", img:"placeholder.jpg", overall:50, type:"bronze",
-   stats:{pac:"-",sho:"-",pas:"-",dri:"-",def:"-",phy:"-"}},
+  {name:"Ayo Jimoh",              pos:"Striker",    img:"AJ.jpeg",           stats:blank()},
+  {name:"Thomas Ngegba",          pos:"Striker",    img:"placeholder.jpg",   stats:blank()},
 
-  {name:"Owen Longman", pos:"Defender", img:"OWEN.jpeg", overall:50, type:"bronze",
-   stats:{pac:"-",sho:"-",pas:"-",dri:"-",def:"-",phy:"-"}},
-
-  {name:"Caleb Luckhurst", pos:"Defender", img:"Caleb Luckhurst.jpg", overall:50, type:"bronze",
-   stats:{pac:"-",sho:"-",pas:"-",dri:"-",def:"-",phy:"-"}},
-
-  {name:"Adeboye Oloyede", pos:"Defender", img:"Boye signed.png", overall:50, type:"bronze",
-   stats:{pac:"-",sho:"-",pas:"-",dri:"-",def:"-",phy:"-"}},
-
-  {name:"James Rocha", pos:"Defender", img:"James.jpg", overall:50, type:"bronze",
-   stats:{pac:"-",sho:"-",pas:"-",dri:"-",def:"-",phy:"-"}},
-
-  {name:"Ben Van-de-Peer", pos:"Defender", img:"BEN.jpeg", overall:50, type:"bronze",
-   stats:{pac:"-",sho:"-",pas:"-",dri:"-",def:"-",phy:"-"}},
-
-  {name:"Jamie Blackham", pos:"Midfielder", img:"JAMIE.jpeg", overall:50, type:"bronze",
-   stats:{pac:"-",sho:"-",pas:"-",dri:"-",def:"-",phy:"-"}},
-
-  {name:"Tom Mercer", pos:"Midfielder", img:"MERCER.jpeg", overall:50, type:"bronze",
-   stats:{pac:"-",sho:"-",pas:"-",dri:"-",def:"-",phy:"-"}},
-
-  {name:"Connor Mudima", pos:"Midfielder", img:"CONNOR.jpeg", overall:50, type:"bronze",
-   stats:{pac:"-",sho:"-",pas:"-",dri:"-",def:"-",phy:"-"}},
-
-  {name:"William Sims", pos:"Midfielder", img:"placeholder.jpg", overall:50, type:"bronze",
-   stats:{pac:"-",sho:"-",pas:"-",dri:"-",def:"-",phy:"-"}},
-
-  {name:"Temi Ayetigbo", pos:"Winger", img:"Temi.jpg", overall:50, type:"bronze",
-   stats:{pac:"-",sho:"-",pas:"-",dri:"-",def:"-",phy:"-"}},
-
-  {name:"Victor Okunowo", pos:"Winger", img:"placeholder.jpg", overall:50, type:"bronze",
-   stats:{pac:"-",sho:"-",pas:"-",dri:"-",def:"-",phy:"-"}},
-
-  {name:"Michael Shobande", pos:"Winger", img:"IMG_5046.jpeg", overall:50, type:"bronze",
-   stats:{pac:"-",sho:"-",pas:"-",dri:"-",def:"-",phy:"-"}},
-
-  {name:"Samuel Shobande", pos:"Winger", img:"IMG_5044.jpeg", overall:50, type:"bronze",
-   stats:{pac:"-",sho:"-",pas:"-",dri:"-",def:"-",phy:"-"}},
-
-  {name:"Matthew Thomas", pos:"Winger", img:"NASH.jpeg", overall:50, type:"bronze",
-   stats:{pac:"-",sho:"-",pas:"-",dri:"-",def:"-",phy:"-"}},
-
-  {name:"Ayo Jimoh", pos:"Striker", img:"AJ.jpeg", overall:50, type:"bronze",
-   stats:{pac:"-",sho:"-",pas:"-",dri:"-",def:"-",phy:"-"}},
-
-  {name:"Thomas Ngegba", pos:"Striker", img:"placeholder.jpg", overall:50, type:"bronze",
-   stats:{pac:"-",sho:"-",pas:"-",dri:"-",def:"-",phy:"-"}},
-
-  {name:"Evan Longman", pos:"Goalkeeper", img:"EVAN.jpg", overall:50, type:"bronze",
-   stats:{div:"-",han:"-",kic:"-",ref:"-",spe:"-",pos:"-"}},
-
-  {name:"Liam Riley", pos:"Goalkeeper", img:"placeholder.jpg", overall:50, type:"bronze",
-   stats:{div:"-",han:"-",kic:"-",ref:"-",spe:"-",pos:"-"}},
+  {name:"Evan Longman",           pos:"Goalkeeper", img:"EVAN.jpg",          stats:blank()},
+  {name:"Liam Riley",             pos:"Goalkeeper", img:"placeholder.jpg",   stats:blank()},
 
 ];
 
-const container = document.getElementById("playersContainer");
-const filterBar = document.getElementById("filterBar");
+/* =====================================================================
+   RENDER
+   ===================================================================== */
+const container  = document.getElementById("playersContainer");
+const filterBar  = document.getElementById("filterBar");
+const managerBox = document.getElementById("managerContainer");
 
-function renderPlayers(filterValue = "All") {
+function statCells(p){
+  const s = p.stats, def = isDefensive(p.pos);
+  return `
+    <div class="stat">APPS ${s.apps}</div>
+    <div class="stat">GOALS ${s.goals}</div>
+    <div class="stat">ASSISTS ${s.assists}</div>
+    <div class="stat">MOTM ${s.motm}</div>
+    ${def ? `<div class="stat">CLN SHT ${s.cleansheets}</div>` : ``}
+    <div class="stat">YEL ${s.yellows}</div>
+    <div class="stat">RED ${s.reds}</div>
+  `;
+}
 
+function renderManager(){
+  const overall = computeManager(manager.record);
+  const type    = tierFor(overall);
+  const r       = manager.record;
+  const played  = (r.won||0)+(r.drawn||0)+(r.lost||0);
+
+  managerBox.innerHTML = `
+    <div class="player-card ${type} p-6 pt-8 text-center">
+      <div class="rating">${overall}</div>
+      <div class="position-badge">Gaffer</div>
+      <img src="${manager.img}" alt="${manager.name}" class="player-img mx-auto mb-4 mt-6">
+      <h3 class="display font-bold text-2xl leading-tight">${manager.name}</h3>
+      <span class="tier-tag">${tierLabel(type)}</span>
+      <div class="stat-grid">
+        <div class="stat">WON ${r.won}</div>
+        <div class="stat">DRAWN ${r.drawn}</div>
+        <div class="stat">LOST ${r.lost}</div>
+        <div class="stat">PLAYED ${played}</div>
+      </div>
+    </div>
+  `;
+}
+
+function renderPlayers(filterValue = "All"){
   container.innerHTML = "";
 
   players
     .filter(p => filterValue === "All" || p.pos === filterValue)
     .forEach((p) => {
-
-      let statsHTML = "";
-
-      if (p.pos === "Goalkeeper") {
-        statsHTML = `
-          <div class="stat">DIV ${p.stats.div}</div>
-          <div class="stat">HAN ${p.stats.han}</div>
-          <div class="stat">KIC ${p.stats.kic}</div>
-          <div class="stat">REF ${p.stats.ref}</div>
-          <div class="stat">SPE ${p.stats.spe}</div>
-          <div class="stat">POS ${p.stats.pos}</div>
-        `;
-      } else {
-        statsHTML = `
-          <div class="stat">PAC ${p.stats.pac}</div>
-          <div class="stat">SHO ${p.stats.sho}</div>
-          <div class="stat">PAS ${p.stats.pas}</div>
-          <div class="stat">DRI ${p.stats.dri}</div>
-          <div class="stat">DEF ${p.stats.def}</div>
-          <div class="stat">PHY ${p.stats.phy}</div>
-        `;
-      }
+      const overall = computeOverall(p);
+      const type    = tierFor(overall);
 
       container.innerHTML += `
-        <div class="player-card ${p.type} p-6 pt-8 text-center">
+        <div class="player-card ${type} p-6 pt-8 text-center">
 
           <div class="card-preview">
-            <div class="rating">${p.overall}</div>
+            <div class="rating">${overall}</div>
             <div class="position-badge">${p.pos}</div>
 
             <img src="${p.img}" alt="${p.name}" class="player-img mx-auto mb-4 mt-6">
 
             <h3 class="display font-bold text-2xl leading-tight">${p.name}</h3>
-            <span class="tier-tag">${p.type}</span>
+            <span class="tier-tag">${tierLabel(type)}</span>
 
             <p class="expand-text">Tap for stats</p>
           </div>
 
           <div class="card-details">
             <div class="stat-grid">
-              ${statsHTML}
+              ${statCells(p)}
             </div>
           </div>
 
@@ -581,13 +586,20 @@ function renderPlayers(filterValue = "All") {
 }
 
 function attachCardEvents(){
-  document.querySelectorAll(".player-card").forEach(card => {
+  container.querySelectorAll(".player-card").forEach(card => {
     card.addEventListener("click", () => card.classList.toggle("active"));
   });
 }
 
-renderPlayers();
+/* MOBILE MENU */
+const menuBtn = document.getElementById("menuBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+menuBtn.addEventListener("click", () => {
+  const open = mobileMenu.classList.toggle("active");
+  menuBtn.setAttribute("aria-expanded", String(open));
+});
 
+/* FILTER */
 filterBar.addEventListener("click", (e) => {
   const btn = e.target.closest(".filter-btn");
   if (!btn) return;
@@ -595,6 +607,10 @@ filterBar.addEventListener("click", (e) => {
   btn.classList.add("active");
   renderPlayers(btn.dataset.pos);
 });
+
+/* INIT */
+renderManager();
+renderPlayers();
 </script>
 
 </body>
