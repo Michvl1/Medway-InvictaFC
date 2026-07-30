@@ -476,32 +476,31 @@ const blank = () => ({ apps:0, goals:0, assists:0, motm:0, cleansheets:0, yellow
 
 const players = [
 
-  {name:"Emmanuel Akinso",        pos:"Defender",   img:"MANNY.jpeg",        stats:blank()},
-  {name:"Adriano Anglin",         pos:"Defender",   img:"IMG_5047.jpeg",     stats:blank()},
-  {name:"Jordan Buckfield-Waller",pos:"Defender",   img:"placeholder.jpg",   stats:blank()},
-  {name:"Shaun Keen",             pos:"Defender",   img:"placeholder.jpg",   stats:blank()},
-  {name:"Owen Longman",           pos:"Defender",   img:"OWEN.jpeg",         stats:blank()},
-  {name:"Caleb Luckhurst",        pos:"Defender",   img:"Caleb Luckhurst.jpg",stats:blank()},
-  {name:"Adeboye Oloyede",        pos:"Defender",   img:"Boye signed.png",   stats:blank()},
-  {name:"James Rocha",            pos:"Defender",   img:"James.jpg",         stats:blank()},
-  {name:"Ben Van-de-Peer",        pos:"Defender",   img:"BEN.jpeg",          stats:blank()},
+  {name:"Emmanuel Akinso",        pos:"Defender",   img:"MANNY.jpeg",        stats:{ apps:0, goals:0, assists:0, motm:0, cleansheets:0, yellows:0, reds:0 }},
+  {name:"Adriano Anglin",         pos:"Defender",   img:"IMG_5047.jpeg",     stats:{ apps:1, goals:0, assists:0, motm:0, cleansheets:0, yellows:0, reds:0 }},
+  {name:"Jordan Buckfield-Waller",pos:"Defender",   img:"placeholder.jpg",   stats:{ apps:0, goals:0, assists:0, motm:0, cleansheets:0, yellows:0, reds:0 }},
+  {name:"Shaun Keen",             pos:"Defender",   img:"placeholder.jpg",   stats:{ apps:0, goals:0, assists:0, motm:0, cleansheets:0, yellows:0, reds:0 }},
+  {name:"Owen Longman",           pos:"Defender",   img:"OWEN.jpeg",         stats:{ apps:1, goals:0, assists:0, motm:0, cleansheets:0, yellows:0, reds:0 }},
+  {name:"Adeboye Oloyede",        pos:"Defender",   img:"Boye signed.png",   stats:{ apps:1, goals:1, assists:0, motm:0, cleansheets:0, yellows:0, reds:0 }},
+  {name:"James Rocha",            pos:"Defender",   img:"James.jpg",         stats:{ apps:1, goals:1, assists:0, motm:0, cleansheets:0, yellows:0, reds:0 }},
+  {name:"Ben Van-de-Peer",        pos:"Defender",   img:"BEN.jpeg",          stats:{ apps:1, goals:0, assists:0, motm:0, cleansheets:0, yellows:0, reds:0 }},
 
-  {name:"Jamie Blackham",         pos:"Midfielder", img:"JAMIE.jpeg",        stats:blank()},
-  {name:"Tom Mercer",             pos:"Midfielder", img:"MERCER.jpeg",       stats:blank()},
-  {name:"Connor Mudima",          pos:"Midfielder", img:"CONNOR.jpeg",       stats:blank()},
-  {name:"William Sims",           pos:"Midfielder", img:"placeholder.jpg",   stats:blank()},
+  {name:"Jamie Blackham",         pos:"Midfielder", img:"JAMIE.jpeg",        stats:{ apps:0, goals:0, assists:0, motm:0, cleansheets:0, yellows:0, reds:0 }},
+  {name:"Tom Mercer",             pos:"Midfielder", img:"MERCER.jpeg",       stats:{ apps:0, goals:0, assists:0, motm:0, cleansheets:0, yellows:0, reds:0 }},
+  {name:"Connor Mudima",          pos:"Midfielder", img:"CONNOR.jpeg",       stats:{ apps:0, goals:0, assists:0, motm:0, cleansheets:0, yellows:0, reds:0 }},
+  {name:"William Sims",           pos:"Midfielder", img:"placeholder.jpg",   stats:{ apps:0, goals:0, assists:0, motm:0, cleansheets:0, yellows:0, reds:0 }},
 
-  {name:"Temi Ayetigbo",          pos:"Winger",     img:"Temi.jpg",          stats:blank()},
-  {name:"Victor Okunowo",         pos:"Winger",     img:"placeholder.jpg",   stats:blank()},
+  {name:"Temi Ayetigbo",          pos:"Winger",     img:"Temi.jpg",          stats:{ apps:1, goals:1, assists:0, motm:1, cleansheets:0, yellows:0, reds:0 }},
+  {name:"Victor Okunowo",         pos:"Winger",     img:"placeholder.jpg",   stats:{ apps:1, goals:0, assists:0, motm:0, cleansheets:0, yellows:0, reds:0 }},
   {name:"Michael Shobande",       pos:"Winger",     img:"IMG_5046.jpeg",     stats:{ apps:1, goals:1, assists:1, motm:0, cleansheets:0, yellows:0, reds:0 }},
-  {name:"Samuel Shobande",        pos:"Winger",     img:"IMG_5044.jpeg",     stats:blank()},
-  {name:"Matthew Thomas",         pos:"Winger",     img:"NASH.jpeg",         stats:blank()},
+  {name:"Samuel Shobande",        pos:"Winger",     img:"IMG_5044.jpeg",     stats:{ apps:1, goals:0, assists:1, motm:0, cleansheets:0, yellows:0, reds:0 }},
+  {name:"Matthew Thomas",         pos:"Winger",     img:"NASH.jpeg",         stats:{ apps:1, goals:0, assists:0, motm:0, cleansheets:0, yellows:0, reds:0 }},
 
-  {name:"Ayo Jimoh",              pos:"Striker",    img:"AJ.jpeg",           stats:blank()},
-  {name:"Thomas Ngegba",          pos:"Striker",    img:"placeholder.jpg",   stats:blank()},
+  {name:"Ayo Jimoh",              pos:"Striker",    img:"AJ.jpeg",           stats:{ apps:1, goals:0, assists:0, motm:0, cleansheets:0, yellows:0, reds:0 }},
+  {name:"Thomas Ngegba",          pos:"Striker",    img:"placeholder.jpg",   stats:{ apps:0, goals:0, assists:0, motm:0, cleansheets:0, yellows:0, reds:0 }},
 
-  {name:"Evan Longman",           pos:"Goalkeeper", img:"EVAN.jpg",          stats:blank()},
-  {name:"Liam Riley",             pos:"Goalkeeper", img:"placeholder.jpg",   stats:blank()},
+  {name:"Evan Longman",           pos:"Goalkeeper", img:"EVAN.jpg",          stats:{ apps:1, goals:0, assists:0, motm:0, cleansheets:0, yellows:0, reds:0 }},
+  {name:"Liam Riley",             pos:"Goalkeeper", img:"placeholder.jpg",   stats:{ apps:0, goals:0, assists:0, motm:0, cleansheets:0, yellows:0, reds:0 }},
 
 ];
 
