@@ -83,6 +83,23 @@
       border-color: var(--mi-red);
     }
 
+    /* Manage toggle */
+    .manage-btn {
+      font-family: 'Barlow Condensed', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .15em;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 8px 18px;
+      border: 1px solid rgba(127,29,29,.6);
+      color: #f5f2ed;
+      transition: .2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .manage-btn:hover { border-color: var(--mi-red); background: rgba(220,38,38,.12); }
+
     /* Table */
     thead th {
       font-family: 'Barlow Condensed', sans-serif;
@@ -139,6 +156,67 @@
       .upcoming { animation: none; background-color: rgba(220,38,38,0.1); }
     }
 
+    /* Form controls */
+    .field-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-weight: 700;
+      font-size: 0.7rem;
+      color: #ef4444;
+      margin-bottom: 4px;
+      display: block;
+    }
+    .field {
+      width: 100%;
+      background: #0B0B0D;
+      border: 1px solid rgba(127,29,29,.5);
+      color: var(--mi-cream);
+      padding: 9px 12px;
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.95rem;
+      border-radius: 2px;
+    }
+    .field::placeholder { color: #6b7280; }
+    .field:focus { outline: 2px solid var(--mi-red); outline-offset: 1px; border-color: var(--mi-red); }
+    select.field { appearance: none; background-image: none; }
+
+    .btn-primary {
+      font-family: 'Barlow Condensed', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-weight: 800;
+      background: var(--mi-red);
+      color: white;
+      padding: 10px 22px;
+      border-radius: 2px;
+      transition: .15s ease;
+    }
+    .btn-primary:hover { background: #b91c1c; }
+    .btn-ghost {
+      font-family: 'Barlow Condensed', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-weight: 700;
+      color: #9ca3af;
+      border: 1px solid rgba(127,29,29,.5);
+      padding: 10px 18px;
+      border-radius: 2px;
+      transition: .15s ease;
+    }
+    .btn-ghost:hover { color: #fff; border-color: var(--mi-red); }
+
+    .del-btn {
+      color: #9ca3af;
+      border: 1px solid rgba(127,29,29,.5);
+      width: 30px; height: 30px;
+      border-radius: 2px;
+      line-height: 1;
+      transition: .15s ease;
+      flex: none;
+    }
+    .del-btn:hover { color: #fff; background: var(--mi-red); border-color: var(--mi-red); }
+
     a:focus-visible, button:focus-visible {
       outline: 2px solid var(--mi-red);
       outline-offset: 3px;
@@ -151,8 +229,8 @@
   <!-- Top ticker -->
   <div class="bg-red-700 text-black overflow-hidden py-1.5 border-b border-red-900">
     <div class="ticker-track display font-bold text-sm">
-      <span class="px-6 whitespace-nowrap">Medway Invicta FC &nbsp;•&nbsp; Pride of Medway &nbsp;•&nbsp; 3rd Place — 25/26 Season &nbsp;•&nbsp; Follow us on Instagram &nbsp;•&nbsp; Medway Invicta FC &nbsp;•&nbsp; Pride of Medway &nbsp;•&nbsp; 3rd Place — 25/26 Season &nbsp;•&nbsp; Follow us on Instagram &nbsp;•&nbsp;</span>
-      <span class="px-6 whitespace-nowrap" aria-hidden="true">Medway Invicta FC &nbsp;•&nbsp; Pride of Medway &nbsp;•&nbsp; 3rd Place — 25/26 Season &nbsp;•&nbsp; Follow us on Instagram &nbsp;•&nbsp; Medway Invicta FC &nbsp;•&nbsp; Pride of Medway &nbsp;•&nbsp; 3rd Place — 25/26 Season &nbsp;•&nbsp; Follow us on Instagram &nbsp;•&nbsp;</span>
+      <span class="px-6 whitespace-nowrap">Medway Invicta FC &nbsp;•&nbsp; Pride of Medway &nbsp;•&nbsp; New Season Underway — 25/26 &nbsp;•&nbsp; Follow us on Instagram &nbsp;•&nbsp; Medway Invicta FC &nbsp;•&nbsp; Pride of Medway &nbsp;•&nbsp; New Season Underway — 25/26 &nbsp;•&nbsp; Follow us on Instagram &nbsp;•&nbsp;</span>
+      <span class="px-6 whitespace-nowrap" aria-hidden="true">Medway Invicta FC &nbsp;•&nbsp; Pride of Medway &nbsp;•&nbsp; New Season Underway — 25/26 &nbsp;•&nbsp; Follow us on Instagram &nbsp;•&nbsp; Medway Invicta FC &nbsp;•&nbsp; Pride of Medway &nbsp;•&nbsp; New Season Underway — 25/26 &nbsp;•&nbsp; Follow us on Instagram &nbsp;•&nbsp;</span>
     </div>
   </div>
 
@@ -209,12 +287,81 @@
   <!-- Fixtures Section -->
   <section class="max-w-6xl mx-auto px-6 pt-12 pb-20 flex-1 w-full">
 
-    <!-- Filter Buttons -->
-    <div class="flex flex-wrap gap-2 mb-10">
-      <button class="filter-btn active" data-type="all">All</button>
-      <button class="filter-btn" data-type="PRM">League</button>
-      <button class="filter-btn" data-type="CUP">Cup</button>
-      <button class="filter-btn" data-type="FRIENDLY">Friendlies</button>
+    <!-- Controls row: filters + manage toggle -->
+    <div class="flex flex-wrap items-center justify-between gap-4 mb-10">
+      <div class="flex flex-wrap gap-2">
+        <button class="filter-btn active" data-type="all">All</button>
+        <button class="filter-btn" data-type="PRM">League</button>
+        <button class="filter-btn" data-type="CUP">Cup</button>
+        <button class="filter-btn" data-type="FRIENDLY">Friendlies</button>
+      </div>
+      <button id="manageToggle" class="manage-btn" aria-expanded="false" aria-controls="managePanel">
+        <span>＋</span> Manage Fixtures
+      </button>
+    </div>
+
+    <!-- Manage panel (hidden by default) -->
+    <div id="managePanel" class="hidden mb-10 bg-[#141216] border border-red-900/50 rounded-xl overflow-hidden">
+      <div class="px-6 py-5 border-b border-red-900/40 flex items-center justify-between gap-4">
+        <div>
+          <h2 class="display font-extrabold text-2xl">Manage <span class="text-red-500">Fixtures</span></h2>
+          <p class="text-xs text-gray-500 mt-1">Added fixtures save in this browser. Use <span class="text-red-400 font-semibold">Export for website</span> to publish them for everyone.</p>
+        </div>
+      </div>
+
+      <!-- Add form -->
+      <div class="px-6 py-6 border-b border-red-900/40">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div>
+            <label class="field-label" for="f-type">Competition</label>
+            <select id="f-type" class="field">
+              <option value="PRM">League (PRM)</option>
+              <option value="CUP">Cup (CUP)</option>
+              <option value="FRIENDLY">Friendly</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label" for="f-date">Date</label>
+            <input id="f-date" type="date" class="field"/>
+          </div>
+          <div>
+            <label class="field-label" for="f-opponent">Opponent</label>
+            <input id="f-opponent" type="text" class="field" placeholder="e.g. Caspian Tigers"/>
+          </div>
+          <div>
+            <label class="field-label" for="f-location">Location</label>
+            <input id="f-location" type="text" class="field" placeholder="e.g. Snodhurst Bottom"/>
+          </div>
+          <div>
+            <label class="field-label" for="f-status">Outcome</label>
+            <select id="f-status" class="field">
+              <option value="upcoming">Upcoming</option>
+              <option value="win">Win</option>
+              <option value="loss">Loss</option>
+              <option value="draw">Draw</option>
+              <option value="postponed">Postponed</option>
+            </select>
+          </div>
+          <div id="scoreWrap">
+            <label class="field-label" for="f-score">Score</label>
+            <input id="f-score" type="text" class="field" placeholder="e.g. 2-3"/>
+          </div>
+        </div>
+
+        <p id="formError" class="text-red-400 text-sm mt-4 hidden"></p>
+
+        <div class="flex flex-wrap gap-3 mt-5">
+          <button id="addBtn" class="btn-primary">Add fixture</button>
+          <button id="exportBtn" class="btn-ghost">Export for website</button>
+          <button id="clearBtn" class="btn-ghost">Clear my local changes</button>
+        </div>
+      </div>
+
+      <!-- Current fixtures list -->
+      <div class="px-6 py-5">
+        <p class="field-label">Current fixtures</p>
+        <div id="fixtureList" class="flex flex-col gap-2"></div>
+      </div>
     </div>
 
     <!-- Fixtures Table -->
@@ -230,19 +377,9 @@
             <th class="px-5 py-4">Result</th>
           </tr>
         </thead>
-        <tbody id="fixtures-body" class="text-sm md:text-base">
-
-          <tr>
-            <th class="px-5 py-4 border-b border-white/5 font-normal"><span class="comp-tag">PRM</span></th>
-            <td class="px-5 py-4 border-b border-white/5 whitespace-nowrap">July 26, 2026</td>
-            <td class="px-5 py-4 border-b border-white/5 display font-bold text-lg">Caspian Tigers</td>
-            <td class="px-5 py-4 border-b border-white/5 text-gray-400">Snodhurst Bottom</td>
-            <td class="px-5 py-4 border-b border-white/5">2-3 WIN</td>
-          </tr>
-
-         
-        </tbody>
+        <tbody id="fixtures-body" class="text-sm md:text-base"></tbody>
       </table>
+      <p id="emptyNote" class="hidden px-5 py-8 text-center text-gray-500">No fixtures yet. Open <span class="text-red-400">Manage Fixtures</span> to add one.</p>
     </div>
   </section>
 
@@ -257,8 +394,260 @@
     </div>
   </footer>
 
+  <!-- Export dialog -->
+  <div id="exportDialog" class="hidden fixed inset-0 z-[60] items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+    <div class="bg-[#141216] border border-red-800 rounded-xl w-full max-w-2xl max-h-[85vh] overflow-y-auto shadow-2xl shadow-black/60">
+      <div class="px-6 py-5 border-b border-red-900/40 flex items-center justify-between">
+        <h3 class="display font-extrabold text-xl">Publish to the website</h3>
+        <button id="exportClose" class="text-2xl px-2 text-gray-400 hover:text-white" aria-label="Close">×</button>
+      </div>
+      <div class="px-6 py-5">
+        <ol class="text-sm text-gray-300 space-y-2 mb-4 list-decimal list-inside">
+          <li>Copy the block below.</li>
+          <li>Open <span class="text-red-400 font-mono">Fixtures.html</span> and find the line marked <span class="text-red-400 font-mono">FIXTURES DATA</span>.</li>
+          <li>Replace the whole block between the two marker comments with this, then re-upload the file.</li>
+        </ol>
+        <textarea id="exportText" class="w-full h-64 bg-black border border-red-900/50 rounded p-3 text-xs font-mono text-green-300" readonly></textarea>
+        <div class="flex gap-3 mt-4">
+          <button id="copyExport" class="btn-primary">Copy to clipboard</button>
+          <span id="copyMsg" class="text-green-400 text-sm self-center hidden">Copied.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // Mobile menu
+    /* ====================================================================
+       FIXTURES DATA — to publish new fixtures for all visitors, replace the
+       whole array between these two markers with the block from
+       "Manage Fixtures → Export for website", then re-upload this file.
+       date must be YYYY-MM-DD. result examples: "2-3 WIN", "1-0 LOSS",
+       "2-2 DRAW", "PP" (postponed), "VS" (upcoming).
+    ==================================================================== */
+    const DEFAULT_FIXTURES = [
+      { "type": "PRM", "date": "2026-07-26", "opponent": "Caspian Tigers", "location": "Snodhurst Bottom", "result": "2-3 WIN" }
+    ];
+    /* ==================== END FIXTURES DATA ==================== */
+
+    const STORAGE_KEY = 'mi_fixtures_v1';
+
+    // Load: prefer this browser's saved copy, else the published defaults.
+    let fixtures = loadFixtures();
+
+    function loadFixtures() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed)) return parsed;
+        }
+      } catch (e) { /* storage blocked — fall back to defaults for this session */ }
+      return DEFAULT_FIXTURES.slice();
+    }
+
+    function saveFixtures() {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(fixtures)); }
+      catch (e) { /* storage blocked — changes stay for this session only */ }
+    }
+
+    // ---- Helpers ----
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, c => (
+        { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]
+      ));
+    }
+
+    function fmtDate(iso) {
+      const d = new Date(iso + 'T00:00:00');
+      if (isNaN(d)) return iso;
+      return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    }
+
+    function resultClass(text) {
+      const t = (text || '').toUpperCase();
+      if (t.includes('WIN')) return 'result-win';
+      if (t.includes('LOSS') || t.includes('LOSE')) return 'result-loss';
+      if (t.includes('DRAW')) return 'result-draw';
+      if (t === 'PP') return 'result-pp';
+      return 'result-vs';
+    }
+
+    function isUpcoming(iso) {
+      const d = new Date(iso + 'T00:00:00');
+      const today = new Date(); today.setHours(0,0,0,0);
+      return !isNaN(d) && d >= today;
+    }
+
+    function sortFixtures(list) {
+      return list.slice().sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
+    }
+
+    // ---- Render the public table ----
+    let currentFilter = 'all';
+
+    function render() {
+      const body = document.getElementById('fixtures-body');
+      const sorted = sortFixtures(fixtures);
+      body.innerHTML = sorted.map(f => {
+        const res = (f.result && f.result.trim()) ? f.result.trim() : 'VS';
+        const cls = resultClass(res);
+        const up = isUpcoming(f.date) ? ' upcoming' : '';
+        return `
+          <tr class="${up.trim()}">
+            <th class="px-5 py-4 border-b border-white/5 font-normal"><span class="comp-tag">${escapeHtml(f.type)}</span></th>
+            <td class="px-5 py-4 border-b border-white/5 whitespace-nowrap">${escapeHtml(fmtDate(f.date))}</td>
+            <td class="px-5 py-4 border-b border-white/5 display font-bold text-lg">${escapeHtml(f.opponent)}</td>
+            <td class="px-5 py-4 border-b border-white/5 text-gray-400">${escapeHtml(f.location || '')}</td>
+            <td class="px-5 py-4 border-b border-white/5"><span class="result ${cls}">${escapeHtml(res)}</span></td>
+          </tr>`;
+      }).join('');
+
+      document.getElementById('emptyNote').classList.toggle('hidden', sorted.length !== 0);
+      applyFilter();
+      renderList();
+    }
+
+    // ---- Render the manage list ----
+    function renderList() {
+      const wrap = document.getElementById('fixtureList');
+      const sorted = sortFixtures(fixtures);
+      if (!sorted.length) {
+        wrap.innerHTML = '<p class="text-gray-500 text-sm">No fixtures yet.</p>';
+        return;
+      }
+      wrap.innerHTML = sorted.map(f => {
+        const idx = fixtures.indexOf(f);
+        const res = (f.result && f.result.trim()) ? f.result.trim() : 'VS';
+        return `
+          <div class="flex items-center gap-3 bg-black/40 border border-white/5 rounded px-3 py-2">
+            <span class="comp-tag">${escapeHtml(f.type)}</span>
+            <span class="text-gray-400 text-sm whitespace-nowrap">${escapeHtml(fmtDate(f.date))}</span>
+            <span class="display font-bold flex-1 truncate">${escapeHtml(f.opponent)}</span>
+            <span class="text-gray-500 text-xs hidden sm:inline">${escapeHtml(res)}</span>
+            <button class="del-btn" data-del="${idx}" aria-label="Delete fixture">✕</button>
+          </div>`;
+      }).join('');
+
+      wrap.querySelectorAll('[data-del]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const i = parseInt(btn.dataset.del, 10);
+          fixtures.splice(i, 1);
+          saveFixtures();
+          render();
+        });
+      });
+    }
+
+    // ---- Filters ----
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentFilter = btn.dataset.type;
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        applyFilter();
+      });
+    });
+
+    function applyFilter() {
+      document.querySelectorAll('#fixtures-body tr').forEach(row => {
+        const rowType = row.children[0].innerText.trim();
+        row.style.display = (currentFilter === 'all' || rowType === currentFilter) ? '' : 'none';
+      });
+    }
+
+    // ---- Add fixture ----
+    const statusSel = document.getElementById('f-status');
+    const scoreWrap = document.getElementById('scoreWrap');
+    function toggleScore() {
+      const s = statusSel.value;
+      scoreWrap.style.display = (s === 'upcoming' || s === 'postponed') ? 'none' : '';
+    }
+    statusSel.addEventListener('change', toggleScore);
+    toggleScore();
+
+    function buildResult(status, score) {
+      const s = (score || '').trim();
+      if (status === 'upcoming') return 'VS';
+      if (status === 'postponed') return 'PP';
+      const word = status.toUpperCase(); // WIN / LOSS / DRAW
+      return s ? `${s} ${word}` : word;
+    }
+
+    document.getElementById('addBtn').addEventListener('click', () => {
+      const type = document.getElementById('f-type').value;
+      const date = document.getElementById('f-date').value;
+      const opponent = document.getElementById('f-opponent').value.trim();
+      const location = document.getElementById('f-location').value.trim();
+      const status = statusSel.value;
+      const score = document.getElementById('f-score').value.trim();
+      const err = document.getElementById('formError');
+
+      if (!date || !opponent) {
+        err.textContent = 'Add at least a date and an opponent.';
+        err.classList.remove('hidden');
+        return;
+      }
+      err.classList.add('hidden');
+
+      fixtures.push({ type, date, opponent, location, result: buildResult(status, score) });
+      saveFixtures();
+      render();
+
+      // reset the entry fields, keep competition + status for fast repeat entry
+      document.getElementById('f-date').value = '';
+      document.getElementById('f-opponent').value = '';
+      document.getElementById('f-location').value = '';
+      document.getElementById('f-score').value = '';
+      document.getElementById('f-opponent').focus();
+    });
+
+    // ---- Clear local changes ----
+    document.getElementById('clearBtn').addEventListener('click', () => {
+      if (!confirm('Reset this browser back to the published fixtures? Your unsaved local additions will be lost.')) return;
+      try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+      fixtures = DEFAULT_FIXTURES.slice();
+      render();
+    });
+
+    // ---- Export ----
+    const exportDialog = document.getElementById('exportDialog');
+    document.getElementById('exportBtn').addEventListener('click', () => {
+      const literal = 'const DEFAULT_FIXTURES = ' + JSON.stringify(sortFixtures(fixtures), null, 2) + ';';
+      document.getElementById('exportText').value = literal;
+      document.getElementById('copyMsg').classList.add('hidden');
+      exportDialog.classList.remove('hidden');
+      exportDialog.classList.add('flex');
+    });
+    function closeExport() {
+      exportDialog.classList.add('hidden');
+      exportDialog.classList.remove('flex');
+    }
+    document.getElementById('exportClose').addEventListener('click', closeExport);
+    exportDialog.addEventListener('click', (e) => { if (e.target === exportDialog) closeExport(); });
+
+    document.getElementById('copyExport').addEventListener('click', async () => {
+      const text = document.getElementById('exportText').value;
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (e) {
+        const ta = document.getElementById('exportText');
+        ta.focus(); ta.select();
+        document.execCommand('copy');
+      }
+      document.getElementById('copyMsg').classList.remove('hidden');
+    });
+
+    // ---- Manage panel toggle ----
+    const manageToggle = document.getElementById('manageToggle');
+    const managePanel = document.getElementById('managePanel');
+    manageToggle.addEventListener('click', () => {
+      const hidden = managePanel.classList.toggle('hidden');
+      manageToggle.setAttribute('aria-expanded', String(!hidden));
+      if (!hidden) managePanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+
+    // ---- Mobile menu ----
     const burger = document.getElementById('burger');
     const mobileMenu = document.getElementById('mobileMenu');
     burger.addEventListener('click', () => {
@@ -266,47 +655,11 @@
       burger.setAttribute('aria-expanded', String(!hidden));
     });
 
-    const rows = document.querySelectorAll('#fixtures-body tr');
+    // ---- Footer date ----
+    document.getElementById('lastUpdated').innerText = 'Last updated: ' + new Date().toLocaleString();
 
-    // Style result cells as badges
-    rows.forEach(row => {
-      const cell = row.children[4];
-      const text = cell.innerText.trim();
-      let cls = 'result-vs';
-      if (text.includes('WIN')) cls = 'result-win';
-      else if (text.includes('LOSS') || text.includes('LOSE')) cls = 'result-loss';
-      else if (text.includes('DRAW')) cls = 'result-draw';
-      else if (text === 'PP') cls = 'result-pp';
-      cell.innerHTML = `<span class="result ${cls}">${text}</span>`;
-    });
-
-    // Filter system
-    const buttons = document.querySelectorAll('.filter-btn');
-    buttons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const type = btn.dataset.type;
-        rows.forEach(row => {
-          const rowType = row.children[0].innerText.trim();
-          row.style.display = (type === 'all' || rowType === type) ? '' : 'none';
-        });
-        buttons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-      });
-    });
-
-    // Highlight upcoming matches
-    const today = new Date();
-    rows.forEach(row => {
-      const dateText = row.children[1].innerText;
-      const matchDate = new Date(dateText);
-      if (matchDate > today && !isNaN(matchDate)) {
-        row.classList.add('upcoming');
-      }
-    });
-
-    // Footer date
-    document.getElementById('lastUpdated').innerText =
-      'Last updated: ' + new Date().toLocaleString();
+    // ---- Go ----
+    render();
   </script>
 </body>
 </html>
