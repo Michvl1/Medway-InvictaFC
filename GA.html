@@ -140,6 +140,76 @@
       outline: 2px solid var(--mi-red);
       outline-offset: 3px;
     }
+
+    /* --- Add-goal form --- */
+    .field-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      font-size: 0.7rem;
+      color: #9ca3af;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+      display: block;
+    }
+    .mi-input {
+      background: var(--mi-black);
+      border: 1px solid rgba(220,38,38,0.30);
+      border-radius: 0.5rem;
+      padding: 0.6rem 0.7rem;
+      color: var(--mi-cream);
+      width: 100%;
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.95rem;
+    }
+    .mi-input:focus {
+      outline: 2px solid var(--mi-red);
+      outline-offset: 1px;
+      border-color: transparent;
+    }
+    /* Native date picker icon tint for the dark theme */
+    .mi-input::-webkit-calendar-picker-indicator { filter: invert(1) opacity(0.6); }
+
+    .add-btn {
+      background: var(--mi-red);
+      color: #fff;
+      font-family: 'Barlow Condensed', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 0.65rem 1.5rem;
+      border-radius: 0.5rem;
+      transition: background 0.15s ease;
+    }
+    .add-btn:hover { background: #b91c1c; }
+
+    /* --- Goal log --- */
+    .goal-row {
+      display: grid;
+      grid-template-columns: 84px 1fr auto;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .goal-row:hover { background: rgba(220,38,38,0.06); }
+    .goal-date {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: #ef4444;
+      font-size: 0.95rem;
+    }
+    .del-btn {
+      color: #6b7280;
+      font-size: 1.25rem;
+      line-height: 1;
+      padding: 0.15rem 0.5rem;
+      border-radius: 0.4rem;
+      transition: color 0.15s ease, background 0.15s ease;
+    }
+    .del-btn:hover { color: #fff; background: rgba(220,38,38,0.5); }
   </style>
 </head>
 
@@ -207,8 +277,37 @@
   <section class="max-w-6xl mx-auto px-6 pt-12 pb-20 flex-1 w-full">
     <div class="grid lg:grid-cols-3 gap-10 items-start">
 
-      <!-- Full standings -->
+      <!-- Left column: add form + standings + goal log -->
       <div class="lg:col-span-2">
+
+        <!-- Add a goal -->
+        <div class="bg-[#141216] border border-red-900/50 rounded-xl p-6 mb-12 relative overflow-hidden">
+          <div class="absolute left-0 top-0 bottom-0 w-1 bg-red-600"></div>
+          <p class="eyebrow mb-2">Match Day</p>
+          <h2 class="display font-extrabold text-3xl mb-6">Log a Goal</h2>
+
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="field-label" for="playerSelect">Scorer</label>
+              <select id="playerSelect" class="mi-input"></select>
+            </div>
+            <div>
+              <label class="field-label" for="dateInput">Date</label>
+              <input type="date" id="dateInput" class="mi-input"/>
+            </div>
+            <div class="sm:col-span-2">
+              <label class="field-label" for="opponentInput">Opponent</label>
+              <input type="text" id="opponentInput" class="mi-input" placeholder="e.g. Gillingham Res." autocomplete="off"/>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-4 mt-6">
+            <button id="addBtn" class="add-btn">Add Goal</button>
+            <span id="formHint" class="text-sm text-gray-500"></span>
+          </div>
+        </div>
+
+        <!-- Full standings -->
         <p class="eyebrow mb-2">All Competitions</p>
         <h2 class="display font-extrabold text-4xl mb-8">Full Standings</h2>
 
@@ -225,6 +324,16 @@
             </thead>
             <tbody id="statsBody"></tbody>
           </table>
+        </div>
+
+        <!-- Goal log -->
+        <div class="mt-14">
+          <p class="eyebrow mb-2">Match by Match</p>
+          <h2 class="display font-extrabold text-4xl mb-8">Goal Log</h2>
+          <div class="bg-[#141216] border border-red-900/50 rounded-xl relative overflow-hidden">
+            <div class="absolute left-0 top-0 bottom-0 w-1 bg-red-600"></div>
+            <div id="goalLog"></div>
+          </div>
         </div>
       </div>
 
@@ -259,26 +368,34 @@ burger.addEventListener("click", () => {
   burger.setAttribute("aria-expanded", String(!hidden));
 });
 
-// DATA — new season, everyone starts on 0
-const players = [
-  {name:"Thomas Ngegba", pos:"Striker", goals:0},
-  {name:"Temi Ayetigbo", pos:"Winger", goals:1},
-  {name:"Samuel Shobande", pos:"Winger", goals:0},
-  {name:"Ayo Jimoh", pos:"Striker", goals:0},
-  {name:"Owen Longman", pos:"Defender", goals:0},
-  {name:"Jamie Blackham", pos:"Midfielder", goals:0},
-  {name:"Evan Longman", pos:"Goalkeeper", goals:0},
-  {name:"Matthew Thomas", pos:"Winger", goals:0},
-  {name:"Manny Akinso", pos:"Defender", goals:0},
-  {name:"Michael Shobande", pos:"Winger", goals:1},
-  {name:"Michael Hurcomb", pos:"Striker", goals:0},
-  {name:"Toby Ogundemuren", pos:"Mgr/Midfielder", goals:0},
-  {name:"Jordan Buckfield-Waller", pos:"Defender", goals:0},
-  {name:"Adriano Anglin", pos:"Winger", goals:0},
-  {name:"Yeni Yusuph", pos:"Striker", goals:0},
-  {name:"James Rocha", pos:"Defender", goals:0},
-  {name:"Connor Mudima", pos:"Midfielder", goals:0},
-  {name:"Adeboye Oloyede", pos:"Defender", goals:1}
+// ---- SQUAD (the roster; goals are counted from the log below) ----
+const squad = [
+  {name:"Thomas Ngegba", pos:"Striker"},
+  {name:"Temi Ayetigbo", pos:"Winger"},
+  {name:"Samuel Shobande", pos:"Winger"},
+  {name:"Ayo Jimoh", pos:"Striker"},
+  {name:"Owen Longman", pos:"Defender"},
+  {name:"Jamie Blackham", pos:"Midfielder"},
+  {name:"Evan Longman", pos:"Goalkeeper"},
+  {name:"Matthew Thomas", pos:"Winger"},
+  {name:"Manny Akinso", pos:"Defender"},
+  {name:"Michael Shobande", pos:"Winger"},
+  {name:"Michael Hurcomb", pos:"Striker"},
+  {name:"Toby Ogundemuren", pos:"Mgr/Midfielder"},
+  {name:"Jordan Buckfield-Waller", pos:"Defender"},
+  {name:"Adriano Anglin", pos:"Winger"},
+  {name:"Yeni Yusuph", pos:"Striker"},
+  {name:"James Rocha", pos:"Defender"},
+  {name:"Connor Mudima", pos:"Midfielder"},
+  {name:"Adeboye Oloyede", pos:"Defender"}
+];
+
+// Goals already on the board this season (from your original data).
+// These load once, then the log is whatever's saved in the browser.
+const seedGoals = [
+  {player:"Temi Ayetigbo",    date:"", opponent:""},
+  {player:"Michael Shobande",  date:"", opponent:""},
+  {player:"Adeboye Oloyede",   date:"", opponent:""}
 ];
 
 // Last season's final top 3 (25/26)
@@ -288,43 +405,150 @@ const lastSeasonTop3 = [
   {name:"Owen Longman", pos:"Defender", goals:10}
 ];
 
-// Sort current season (by goals, then alphabetically while everyone's level)
-players.sort((a,b)=> b.goals - a.goals || a.name.localeCompare(b.name));
+const STORAGE_KEY = "mi-fc-goals-26-27";
 
-const tbody = document.getElementById("statsBody");
+// ---- Persistence (saved in this browser). Falls back to memory-only
+//      if storage is blocked, e.g. a preview pane or private mode. ----
+function makeId(){
+  return (crypto && crypto.randomUUID) ? crypto.randomUUID()
+       : String(Date.now()) + "-" + Math.random().toString(16).slice(2);
+}
+function loadLog(){
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch(e) {}
+  return seedGoals.map(g => ({...g}));
+}
+function saveLog(){
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(goalLog)); } catch(e) {}
+}
+
+let goalLog = loadLog().map(g => ({ id: g.id || makeId(), ...g }));
+saveLog();
+
+// ---- Elements ----
+const tbody         = document.getElementById("statsBody");
+const goalLogEl     = document.getElementById("goalLog");
 const lastSeasonCards = document.getElementById("lastSeasonCards");
+const playerSelect  = document.getElementById("playerSelect");
+const dateInput     = document.getElementById("dateInput");
+const opponentInput = document.getElementById("opponentInput");
+const addBtn        = document.getElementById("addBtn");
+const formHint      = document.getElementById("formHint");
 
-// Last season podium cards — gold, silver, bronze
+// ---- Populate player dropdown (alphabetical for quick finding) ----
+squad.slice().sort((a,b)=> a.name.localeCompare(b.name)).forEach(p => {
+  const opt = document.createElement("option");
+  opt.value = p.name;
+  opt.textContent = p.name;
+  playerSelect.appendChild(opt);
+});
+dateInput.value = new Date().toISOString().slice(0,10); // default: today
+
+function posFor(name){
+  const m = squad.find(s => s.name === name);
+  return m ? m.pos : "";
+}
+function countFor(name){
+  return goalLog.filter(g => g.player === name).length;
+}
+function formatDate(iso){
+  if (!iso) return "—";
+  const d = new Date(iso + "T00:00:00");
+  if (isNaN(d)) return iso;
+  return d.toLocaleDateString("en-GB", { day:"numeric", month:"short" });
+}
+
+// ---- Add / remove ----
+function addGoal(){
+  const player = playerSelect.value;
+  if (!player) return;
+  goalLog.push({
+    id: makeId(),
+    player,
+    date: dateInput.value || "",
+    opponent: opponentInput.value.trim()
+  });
+  saveLog();
+  render();
+  // Keep player + date (handy for a brace/hat-trick in the same match), clear opponent
+  opponentInput.value = "";
+  formHint.textContent = "Goal added ✓";
+  setTimeout(()=> formHint.textContent = "", 1600);
+}
+function removeGoal(id){
+  goalLog = goalLog.filter(g => g.id !== id);
+  saveLog();
+  render();
+}
+
+addBtn.addEventListener("click", addGoal);
+opponentInput.addEventListener("keydown", e => { if (e.key === "Enter") addGoal(); });
+goalLogEl.addEventListener("click", e => {
+  const btn = e.target.closest("[data-id]");
+  if (btn) removeGoal(btn.getAttribute("data-id"));
+});
+
+// ---- Renderers ----
+function renderTable(){
+  const rows = squad
+    .map(p => ({ ...p, goals: countFor(p.name) }))
+    .sort((a,b) => b.goals - a.goals || a.name.localeCompare(b.name));
+
+  tbody.innerHTML = rows.map((p,i) => `
+    <tr>
+      <td class="p-4 border-b border-white/5"><span class="rank-num">${i+1}</span></td>
+      <td class="p-4 border-b border-white/5 display font-bold text-lg">${p.name}</td>
+      <td class="p-4 border-b border-white/5 text-gray-400">${p.pos}</td>
+      <td class="p-4 border-b border-white/5 display font-extrabold text-lg">${p.goals}</td>
+    </tr>
+  `).join("");
+}
+
+function renderLog(){
+  if (goalLog.length === 0){
+    goalLogEl.innerHTML = `<p class="p-6 text-gray-500">No goals logged yet — add the first one above.</p>`;
+    return;
+  }
+  // Newest date first; entries with no date sink to the bottom
+  const sorted = [...goalLog].sort((a,b) => (b.date||"").localeCompare(a.date||""));
+
+  goalLogEl.innerHTML = sorted.map(g => `
+    <div class="goal-row">
+      <div class="goal-date">${formatDate(g.date)}</div>
+      <div>
+        <div class="display font-bold text-lg leading-tight">${g.player}</div>
+        <div class="text-sm text-gray-400">${g.opponent ? "vs " + g.opponent : "<span class='text-gray-600'>opponent not set</span>"} &nbsp;·&nbsp; ${posFor(g.player)}</div>
+      </div>
+      <button class="del-btn" data-id="${g.id}" aria-label="Remove this goal" title="Remove">&times;</button>
+    </div>
+  `).join("");
+}
+
+function render(){
+  renderTable();
+  renderLog();
+}
+
+// ---- Last season podium (static) ----
 const tiers = ["podium-gold", "podium-silver", "podium-bronze"];
 const tierNames = ["25/26 Golden Boot", "#2 Top Scorer", "#3 Top Scorer"];
 
-lastSeasonTop3.forEach((p,i)=>{
+lastSeasonTop3.forEach((p,i) => {
   const card = document.createElement("div");
   card.className = `podium-card ${tiers[i]}`;
-
   card.innerHTML = `
     <div class="podium-rank">${tierNames[i]}</div>
     <div class="display font-extrabold text-2xl mt-2 leading-tight">${p.name}</div>
     <div class="text-sm opacity-75 mt-1">${p.pos}</div>
     <div class="display font-extrabold text-5xl mt-3">${p.goals}<span class="text-base align-top ml-1">goals</span></div>
   `;
-
   lastSeasonCards.appendChild(card);
 });
 
-// Table
-players.forEach((p,i)=>{
-  const tr = document.createElement("tr");
-
-  tr.innerHTML = `
-    <td class="p-4 border-b border-white/5"><span class="rank-num">${i+1}</span></td>
-    <td class="p-4 border-b border-white/5 display font-bold text-lg">${p.name}</td>
-    <td class="p-4 border-b border-white/5 text-gray-400">${p.pos}</td>
-    <td class="p-4 border-b border-white/5 display font-extrabold text-lg">${p.goals}</td>
-  `;
-
-  tbody.appendChild(tr);
-});
+// Go
+render();
 </script>
 
 </body>
