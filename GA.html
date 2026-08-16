@@ -183,6 +183,7 @@
       transition: background 0.15s ease;
     }
     .add-btn:hover { background: #b91c1c; }
+    .add-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
     /* --- Goal log --- */
     .goal-row {
@@ -358,17 +359,46 @@
     </div>
   </footer>
 
+<!-- Burger menu (plain script, runs immediately) -->
 <script>
-// Burger
 const burger = document.getElementById("burger");
 const mobileMenu = document.getElementById("mobileMenu");
-
 burger.addEventListener("click", () => {
   const hidden = mobileMenu.classList.toggle("hidden");
   burger.setAttribute("aria-expanded", String(!hidden));
 });
+</script>
 
-// ---- SQUAD (the roster; goals are counted from the log below) ----
+<!-- Goals app (module: Firebase Firestore for cross-device sync) -->
+<script type="module">
+// ============================================================
+//  1) FIREBASE SETUP  — paste YOUR project's config below.
+//     Firebase console → Project settings (gear) → Your apps
+//     → SDK setup and configuration → "Config".
+// ============================================================
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {
+  getFirestore, collection, onSnapshot,
+  addDoc, deleteDoc, doc, getDocs
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCnJUmg-0w-e7RUgY99k11X7JKGfvQc0cM",
+  authDomain: "medway-invicta-fc---assists.firebaseapp.com",
+  projectId: "medway-invicta-fc---assists",
+  storageBucket: "medway-invicta-fc---assists.firebasestorage.app",
+  messagingSenderId: "332175149224",
+  appId: "1:332175149224:web:035d21fc79afbbe8115a9d",
+  measurementId: "G-XTRB0E23F7"
+};
+
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+const goalsCol = collection(db, "goals-26-27"); // one shared collection = one source of truth
+
+// ============================================================
+//  2) STATIC DATA (unchanged from your original)
+// ============================================================
 const squad = [
   {name:"Thomas Ngegba", pos:"Striker"},
   {name:"Temi Ayetigbo", pos:"Winger"},
@@ -390,54 +420,37 @@ const squad = [
   {name:"Adeboye Oloyede", pos:"Defender"}
 ];
 
-// Goals already on the board this season (from your original data).
-// These load once, then the log is whatever's saved in the browser.
+// Seeded ONCE into Firestore only if the collection is empty.
+// After that, the live collection is the single source of truth.
 const seedGoals = [
   {player:"Temi Ayetigbo",    date:"", opponent:""},
   {player:"Michael Shobande",  date:"", opponent:""},
   {player:"Adeboye Oloyede",   date:"", opponent:""}
 ];
 
-// Last season's final top 3 (25/26)
 const lastSeasonTop3 = [
   {name:"Michael Shobande", pos:"Winger", goals:15},
   {name:"Samuel Shobande", pos:"Winger", goals:12},
   {name:"Owen Longman", pos:"Defender", goals:10}
 ];
 
-const STORAGE_KEY = "mi-fc-goals-26-27";
-
-// ---- Persistence (saved in this browser). Falls back to memory-only
-//      if storage is blocked, e.g. a preview pane or private mode. ----
-function makeId(){
-  return (crypto && crypto.randomUUID) ? crypto.randomUUID()
-       : String(Date.now()) + "-" + Math.random().toString(16).slice(2);
-}
-function loadLog(){
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
-  } catch(e) {}
-  return seedGoals.map(g => ({...g}));
-}
-function saveLog(){
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(goalLog)); } catch(e) {}
-}
-
-let goalLog = loadLog().map(g => ({ id: g.id || makeId(), ...g }));
-saveLog();
-
-// ---- Elements ----
-const tbody         = document.getElementById("statsBody");
-const goalLogEl     = document.getElementById("goalLog");
+// ============================================================
+//  3) ELEMENTS
+// ============================================================
+const tbody           = document.getElementById("statsBody");
+const goalLogEl       = document.getElementById("goalLog");
 const lastSeasonCards = document.getElementById("lastSeasonCards");
-const playerSelect  = document.getElementById("playerSelect");
-const dateInput     = document.getElementById("dateInput");
-const opponentInput = document.getElementById("opponentInput");
-const addBtn        = document.getElementById("addBtn");
-const formHint      = document.getElementById("formHint");
+const playerSelect    = document.getElementById("playerSelect");
+const dateInput       = document.getElementById("dateInput");
+const opponentInput   = document.getElementById("opponentInput");
+const addBtn          = document.getElementById("addBtn");
+const formHint        = document.getElementById("formHint");
 
-// ---- Populate player dropdown (alphabetical for quick finding) ----
+let goalLog = []; // filled live by the Firestore listener below
+
+// ============================================================
+//  4) FORM SETUP
+// ============================================================
 squad.slice().sort((a,b)=> a.name.localeCompare(b.name)).forEach(p => {
   const opt = document.createElement("option");
   opt.value = p.name;
@@ -460,27 +473,40 @@ function formatDate(iso){
   return d.toLocaleDateString("en-GB", { day:"numeric", month:"short" });
 }
 
-// ---- Add / remove ----
-function addGoal(){
+// ============================================================
+//  5) ADD / REMOVE  — write to Firestore. The live listener
+//     re-renders every device (including this one) automatically.
+// ============================================================
+async function addGoal(){
   const player = playerSelect.value;
   if (!player) return;
-  goalLog.push({
-    id: makeId(),
-    player,
-    date: dateInput.value || "",
-    opponent: opponentInput.value.trim()
-  });
-  saveLog();
-  render();
-  // Keep player + date (handy for a brace/hat-trick in the same match), clear opponent
-  opponentInput.value = "";
-  formHint.textContent = "Goal added ✓";
-  setTimeout(()=> formHint.textContent = "", 1600);
+  addBtn.disabled = true;
+  try {
+    await addDoc(goalsCol, {
+      player,
+      date: dateInput.value || "",
+      opponent: opponentInput.value.trim(),
+      createdAt: Date.now()
+    });
+    opponentInput.value = "";      // keep player + date for a quick brace/hat-trick
+    formHint.textContent = "Goal added ✓";
+  } catch (e) {
+    console.error(e);
+    formHint.textContent = "Couldn't save — check your connection / Firestore rules";
+  } finally {
+    addBtn.disabled = false;
+    setTimeout(()=> formHint.textContent = "", 2200);
+  }
 }
-function removeGoal(id){
-  goalLog = goalLog.filter(g => g.id !== id);
-  saveLog();
-  render();
+
+async function removeGoal(id){
+  try {
+    await deleteDoc(doc(db, "goals-26-27", id));
+  } catch (e) {
+    console.error(e);
+    formHint.textContent = "Couldn't remove — check your connection";
+    setTimeout(()=> formHint.textContent = "", 2200);
+  }
 }
 
 addBtn.addEventListener("click", addGoal);
@@ -490,7 +516,9 @@ goalLogEl.addEventListener("click", e => {
   if (btn) removeGoal(btn.getAttribute("data-id"));
 });
 
-// ---- Renderers ----
+// ============================================================
+//  6) RENDERERS (unchanged logic, driven by live goalLog)
+// ============================================================
 function renderTable(){
   const rows = squad
     .map(p => ({ ...p, goals: countFor(p.name) }))
@@ -511,7 +539,6 @@ function renderLog(){
     goalLogEl.innerHTML = `<p class="p-6 text-gray-500">No goals logged yet — add the first one above.</p>`;
     return;
   }
-  // Newest date first; entries with no date sink to the bottom
   const sorted = [...goalLog].sort((a,b) => (b.date||"").localeCompare(a.date||""));
 
   goalLogEl.innerHTML = sorted.map(g => `
@@ -531,10 +558,11 @@ function render(){
   renderLog();
 }
 
-// ---- Last season podium (static) ----
+// ============================================================
+//  7) LAST SEASON PODIUM (static)
+// ============================================================
 const tiers = ["podium-gold", "podium-silver", "podium-bronze"];
 const tierNames = ["25/26 Golden Boot", "#2 Top Scorer", "#3 Top Scorer"];
-
 lastSeasonTop3.forEach((p,i) => {
   const card = document.createElement("div");
   card.className = `podium-card ${tiers[i]}`;
@@ -547,8 +575,35 @@ lastSeasonTop3.forEach((p,i) => {
   lastSeasonCards.appendChild(card);
 });
 
-// Go
-render();
+// ============================================================
+//  8) GO LIVE
+//     - onSnapshot keeps every device in sync in real time.
+//     - one-time seed if the collection has never had data.
+// ============================================================
+async function seedIfEmpty(){
+  try {
+    const snap = await getDocs(goalsCol);
+    if (snap.empty){
+      for (const g of seedGoals){
+        await addDoc(goalsCol, { ...g, createdAt: Date.now() });
+      }
+    }
+  } catch (e) {
+    console.error("Seed check failed:", e);
+  }
+}
+
+// Live listener: fires on first load and on every change from any device.
+onSnapshot(goalsCol, (snap) => {
+  goalLog = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  render();
+}, (err) => {
+  console.error("Firestore listener error:", err);
+  goalLogEl.innerHTML = `<p class="p-6 text-gray-500">Couldn't load goals — check the Firebase config and Firestore rules.</p>`;
+});
+
+render();        // paint the empty shell immediately
+seedIfEmpty();   // then seed once if needed (listener will pick it up)
 </script>
 
 </body>
