@@ -174,6 +174,9 @@ a:focus-visible, button:focus-visible {
   transform: translateY(-4px);
   box-shadow: 0 14px 30px rgba(0,0,0,.5);
 }
+/* in edit mode the card is a workspace, not a tappable toggle */
+.player-card.editing { cursor: default; }
+.player-card.editing:hover { transform: none; }
 
 .player-img {
   width: 110px;
@@ -289,10 +292,209 @@ a:focus-visible, button:focus-visible {
 
 .mobile-menu { display: none; }
 .mobile-menu.active { display: flex; }
+
+/* =====================================================================
+   ADMIN / EDIT UI  (added)
+   ===================================================================== */
+
+/* floating "Admin" lock button */
+.admin-fab {
+  position: fixed;
+  right: 20px; bottom: 20px;
+  z-index: 60;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--mi-black);
+  color: var(--mi-cream);
+  border: 1px solid var(--mi-red);
+  border-radius: 9999px;
+  padding: 10px 16px;
+  font-family: 'Barlow Condensed', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  font-weight: 700;
+  font-size: 13px;
+  box-shadow: 0 8px 20px rgba(0,0,0,.5);
+  transition: .2s ease;
+}
+.admin-fab:hover { background: var(--mi-red); border-color: var(--mi-red); }
+
+/* login modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,.72);
+  backdrop-filter: blur(3px);
+  padding: 20px;
+}
+.modal-overlay.show { display: flex; }
+.modal {
+  width: 100%;
+  max-width: 380px;
+  background: var(--mi-panel);
+  border: 1px solid var(--mi-red);
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 20px 50px rgba(0,0,0,.6);
+}
+.modal.shake { animation: shake .4s; }
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  20%,60% { transform: translateX(-8px); }
+  40%,80% { transform: translateX(8px); }
+}
+.pw-input {
+  width: 100%;
+  background: var(--mi-black);
+  border: 1px solid rgba(127,29,29,.7);
+  color: var(--mi-cream);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-family: 'Barlow', sans-serif;
+  font-size: 15px;
+  margin-top: 6px;
+}
+.pw-input:focus { outline: 2px solid var(--mi-red); outline-offset: 1px; }
+.btn-red {
+  background: var(--mi-red);
+  color: white;
+  font-family: 'Barlow Condensed', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: .15em;
+  font-weight: 700;
+  padding: 11px 18px;
+  border-radius: 8px;
+  transition: .2s ease;
+}
+.btn-red:hover { background: #b91c1c; }
+.btn-ghost {
+  background: transparent;
+  color: var(--mi-cream);
+  border: 1px solid rgba(245,242,237,.35);
+  font-family: 'Barlow Condensed', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: .15em;
+  font-weight: 700;
+  padding: 11px 18px;
+  border-radius: 8px;
+  transition: .2s ease;
+}
+.btn-ghost:hover { border-color: var(--mi-cream); }
+
+/* edit-mode banner (fixed at very top) */
+.edit-banner {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 70;
+  display: none;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  background: var(--mi-red);
+  color: white;
+  padding: 10px 18px;
+  box-shadow: 0 4px 14px rgba(0,0,0,.4);
+}
+.edit-banner.show { display: flex; }
+.edit-banner .label {
+  font-family: 'Barlow Condensed', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: .2em;
+  font-weight: 800;
+  font-size: 14px;
+}
+.draft-dot {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Barlow Condensed', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  font-weight: 700;
+  font-size: 12px;
+  background: rgba(0,0,0,.25);
+  padding: 3px 10px;
+  border-radius: 9999px;
+}
+.draft-dot.show { display: inline-flex; }
+.draft-dot::before {
+  content:""; width:8px; height:8px; border-radius:50%;
+  background:#fde68a; box-shadow:0 0 6px #fde68a;
+}
+body.edit-on { padding-top: 52px; } /* make room for the fixed banner */
+
+/* edit inputs inside cards */
+.edit-panel { margin-top: 16px; }
+.edit-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: left;
+}
+.edit-stat span {
+  font-family: 'Barlow Condensed', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-size: 11px;
+  font-weight: 700;
+  opacity: .85;
+}
+.edit-stat input {
+  width: 100%;
+  background: rgba(0,0,0,.35);
+  border: 1px solid rgba(0,0,0,.35);
+  color: inherit;
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+}
+.silver .edit-stat input,
+.gold  .edit-stat input { background: rgba(255,255,255,.35); border-color: rgba(0,0,0,.2); }
+.edit-stat input:focus { outline: 2px solid var(--mi-red); outline-offset: 1px; }
+
+/* toast */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 26px;
+  transform: translateX(-50%) translateY(20px);
+  z-index: 90;
+  max-width: 420px;
+  background: var(--mi-panel);
+  color: var(--mi-cream);
+  border: 1px solid var(--mi-red);
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-size: 14px;
+  line-height: 1.4;
+  box-shadow: 0 14px 34px rgba(0,0,0,.6);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease, transform .3s ease;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
 </style>
 </head>
 
 <body class="antialiased">
+
+<!-- EDIT-MODE BANNER (hidden until you log in) -->
+<div id="editBanner" class="edit-banner">
+  <span class="label">Edit mode</span>
+  <span id="draftDot" class="draft-dot">Unpublished changes</span>
+  <div class="ml-auto flex gap-2">
+    <button id="publishBtn" class="btn-red" style="padding:7px 14px;">Save &amp; publish</button>
+    <button id="discardBtn" class="btn-ghost" style="padding:7px 14px; border-color:rgba(255,255,255,.6); color:#fff;">Discard changes</button>
+    <button id="exitBtn" class="btn-ghost" style="padding:7px 14px; border-color:rgba(255,255,255,.6); color:#fff;">Exit</button>
+  </div>
+</div>
 
 <!-- Top ticker -->
 <div class="bg-red-700 text-black overflow-hidden py-1.5 border-b border-red-900">
@@ -388,15 +590,35 @@ a:focus-visible, button:focus-visible {
   </div>
 </footer>
 
+<!-- ADMIN FLOATING BUTTON -->
+<button id="adminFab" class="admin-fab" aria-label="Admin login">🔒 Admin</button>
+
+<!-- LOGIN MODAL -->
+<div id="loginOverlay" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+  <div id="loginModal" class="modal">
+    <p class="eyebrow mb-1">Staff only</p>
+    <h3 id="loginTitle" class="display font-extrabold text-2xl mb-4">Edit stats</h3>
+    <label for="pwInput" class="text-sm text-gray-400">Enter the admin password to update player stats.</label>
+    <input id="pwInput" type="password" class="pw-input" autocomplete="current-password" placeholder="Password" />
+    <p id="pwError" class="text-red-400 text-sm mt-2" style="display:none;">That password isn't right. Try again.</p>
+    <div class="flex gap-3 mt-5">
+      <button id="loginSubmit" class="btn-red flex-1">Unlock editing</button>
+      <button id="loginCancel" class="btn-ghost">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
 <script>
 /* =====================================================================
    RATING ENGINE  —  cumulative, resets to 50 / bronze each season
    ---------------------------------------------------------------------
-   You only ever edit the raw numbers (goals, apps, motm, etc.) below.
-   The overall rating and the card tier are worked out from them here,
+   You only ever edit the raw numbers (goals, apps, motm, etc.) below,
+   OR now — much easier — log in with the Admin button and edit on-page.
+   The overall rating and the card tier are worked out from the numbers,
    so nothing needs to be set by hand.
-
-   Tune any of these point values to taste:
    ===================================================================== */
 const POINTS = {
   appearance : 1,   // showing up always pays
@@ -468,12 +690,10 @@ function computeManager(r){
 }
 
 /* =====================================================================
-   SQUAD DATA  —  edit the raw stats, everything else is automatic.
-   Every player has: apps, goals, assists, motm, cleansheets, yellows, reds
-   (cleansheets is only shown/counted for Defenders & Goalkeepers)
+   SQUAD DATA  —  the roster lives here. Stats can be edited on-page
+   once you log in; those edits are saved and can be published as a
+   small squad-data.json file (see the ADMIN section further down).
    ===================================================================== */
-const blank = () => ({ apps:0, goals:0, assists:0, motm:0, cleansheets:0, yellows:0, reds:0 });
-
 const players = [
 
   {name:"Emmanuel Akinso",        pos:"Defender",   img:"MANNY.jpeg",        stats:{ apps:0, goals:0, assists:0, motm:0, cleansheets:0, yellows:0, reds:0 }},
@@ -504,12 +724,41 @@ const players = [
 
 ];
 
+/* Make sure every player has all stat keys defined (incl. missedStreak). */
+function normalizeStats(){
+  players.forEach(p=>{
+    p.stats.apps         = p.stats.apps         || 0;
+    p.stats.goals        = p.stats.goals        || 0;
+    p.stats.assists      = p.stats.assists      || 0;
+    p.stats.motm         = p.stats.motm         || 0;
+    p.stats.cleansheets  = p.stats.cleansheets  || 0;
+    p.stats.yellows      = p.stats.yellows      || 0;
+    p.stats.reds         = p.stats.reds         || 0;
+    p.stats.missedStreak = p.stats.missedStreak || 0;
+  });
+}
+
+/* =====================================================================
+   ADMIN CONFIG
+   ---------------------------------------------------------------------
+   CHANGE THIS PASSWORD to whatever you like. Note: because this is a
+   plain website with no server, the password lives in the page and a
+   determined, tech-savvy visitor could find it by viewing the source.
+   It's a lock on the door to keep casual visitors out — not a bank
+   vault. For your squad stats that's normally all you need.
+   ===================================================================== */
+const ADMIN_PASSWORD = "medway2026";
+const LS_KEY = "mi_squad_v1";   // where in-browser edits are stored
+
 /* =====================================================================
    RENDER
    ===================================================================== */
 const container  = document.getElementById("playersContainer");
 const filterBar  = document.getElementById("filterBar");
 const managerBox = document.getElementById("managerContainer");
+
+let editMode = false;
+let currentFilter = "All";
 
 function statCells(p){
   const s = p.stats, def = isDefensive(p.pos);
@@ -524,11 +773,48 @@ function statCells(p){
   `;
 }
 
+function editCells(p, i){
+  const s = p.stats, def = isDefensive(p.pos);
+  const field = (label, key) => `
+    <label class="edit-stat">
+      <span>${label}</span>
+      <input type="number" min="0" step="1" inputmode="numeric"
+             value="${s[key] || 0}" data-i="${i}" data-k="${key}">
+    </label>`;
+  return `
+    ${field('Apps','apps')}
+    ${field('Goals','goals')}
+    ${field('Assists','assists')}
+    ${field('MOTM','motm')}
+    ${def ? field('Clean sheets','cleansheets') : ''}
+    ${field('Yellows','yellows')}
+    ${field('Reds','reds')}
+    ${field('Missed run','missedStreak')}
+  `;
+}
+
 function renderManager(){
   const overall = computeManager(manager.record);
   const type    = tierFor(overall);
   const r       = manager.record;
   const played  = (r.won||0)+(r.drawn||0)+(r.lost||0);
+
+  if (editMode){
+    managerBox.innerHTML = `
+      <div class="player-card ${type} editing p-6 pt-8 text-center" data-mgr="1">
+        <div class="rating">${overall}</div>
+        <div class="position-badge">Gaffer</div>
+        <img src="${manager.img}" alt="${manager.name}" class="player-img mx-auto mb-4 mt-6">
+        <h3 class="display font-bold text-2xl leading-tight">${manager.name}</h3>
+        <span class="tier-tag">${tierLabel(type)}</span>
+        <div class="edit-panel stat-grid">
+          <label class="edit-stat"><span>Won</span><input type="number" min="0" step="1" inputmode="numeric" value="${r.won||0}" data-mk="won"></label>
+          <label class="edit-stat"><span>Drawn</span><input type="number" min="0" step="1" inputmode="numeric" value="${r.drawn||0}" data-mk="drawn"></label>
+          <label class="edit-stat"><span>Lost</span><input type="number" min="0" step="1" inputmode="numeric" value="${r.lost||0}" data-mk="lost"></label>
+        </div>
+      </div>`;
+    return;
+  }
 
   managerBox.innerHTML = `
     <div class="player-card ${type} p-6 pt-8 text-center">
@@ -547,48 +833,246 @@ function renderManager(){
   `;
 }
 
-function renderPlayers(filterValue = "All"){
+function renderPlayers(){
   container.innerHTML = "";
 
-  players
-    .filter(p => filterValue === "All" || p.pos === filterValue)
-    .forEach((p) => {
-      const overall = computeOverall(p);
-      const type    = tierFor(overall);
+  players.forEach((p, gi) => {
+    if (currentFilter !== "All" && p.pos !== currentFilter) return;
 
+    const overall = computeOverall(p);
+    const type    = tierFor(overall);
+
+    if (editMode){
       container.innerHTML += `
-        <div class="player-card ${type} p-6 pt-8 text-center">
-
+        <div class="player-card ${type} editing p-6 pt-8 text-center" data-i="${gi}">
+          <div class="rating">${overall}</div>
+          <div class="position-badge">${p.pos}</div>
+          <img src="${p.img}" alt="${p.name}" class="player-img mx-auto mb-4 mt-6">
+          <h3 class="display font-bold text-2xl leading-tight">${p.name}</h3>
+          <span class="tier-tag">${tierLabel(type)}</span>
+          <div class="edit-panel stat-grid">
+            ${editCells(p, gi)}
+          </div>
+        </div>`;
+    } else {
+      container.innerHTML += `
+        <div class="player-card ${type} p-6 pt-8 text-center" data-i="${gi}">
           <div class="card-preview">
             <div class="rating">${overall}</div>
             <div class="position-badge">${p.pos}</div>
-
             <img src="${p.img}" alt="${p.name}" class="player-img mx-auto mb-4 mt-6">
-
             <h3 class="display font-bold text-2xl leading-tight">${p.name}</h3>
             <span class="tier-tag">${tierLabel(type)}</span>
-
             <p class="expand-text">Tap for stats</p>
           </div>
-
           <div class="card-details">
             <div class="stat-grid">
               ${statCells(p)}
             </div>
           </div>
-
-        </div>
-      `;
-    });
+        </div>`;
+    }
+  });
 
   attachCardEvents();
 }
 
 function attachCardEvents(){
+  if (editMode) return;   // no tap-to-expand while editing
   container.querySelectorAll(".player-card").forEach(card => {
     card.addEventListener("click", () => card.classList.toggle("active"));
   });
 }
+
+/* recompute one player card's rating + tier after an edit */
+function refreshCard(card){
+  const i = +card.dataset.i;
+  const p = players[i];
+  const overall = computeOverall(p);
+  const type = tierFor(overall);
+  card.classList.remove("bronze","silver","gold","special");
+  card.classList.add(type);
+  card.querySelector(".rating").textContent = overall;
+  const tag = card.querySelector(".tier-tag");
+  if (tag) tag.textContent = tierLabel(type);
+}
+
+function refreshManagerCard(card){
+  const overall = computeManager(manager.record);
+  const type = tierFor(overall);
+  card.classList.remove("bronze","silver","gold","special");
+  card.classList.add(type);
+  card.querySelector(".rating").textContent = overall;
+  const tag = card.querySelector(".tier-tag");
+  if (tag) tag.textContent = tierLabel(type);
+}
+
+/* =====================================================================
+   DATA LOAD / SAVE / PUBLISH
+   ---------------------------------------------------------------------
+   Priority when the page loads:
+     1. built-in defaults (above)
+     2. squad-data.json  (the PUBLIC copy everyone sees, if uploaded)
+     3. this browser's saved draft (your unpublished edits)
+   ===================================================================== */
+function currentDataObject(){
+  const out = { players:{}, manager:{ won:manager.record.won, drawn:manager.record.drawn, lost:manager.record.lost } };
+  players.forEach(p => { out.players[p.name] = Object.assign({}, p.stats); });
+  return out;
+}
+
+function applyData(data){
+  if (!data) return;
+  if (data.players){
+    players.forEach(p => {
+      const d = data.players[p.name];
+      if (d) Object.assign(p.stats, d);
+    });
+  }
+  if (data.manager) Object.assign(manager.record, data.manager);
+}
+
+function saveLocal(){
+  try { localStorage.setItem(LS_KEY, JSON.stringify(currentDataObject())); } catch(e){}
+}
+
+async function loadData(){
+  // 2. public JSON (if it has been published/uploaded)
+  try {
+    const res = await fetch("squad-data.json", { cache: "no-store" });
+    if (res.ok) applyData(await res.json());
+  } catch(e){ /* no file yet — that's fine */ }
+
+  // 3. local unpublished draft on this device
+  try {
+    const local = localStorage.getItem(LS_KEY);
+    if (local){ applyData(JSON.parse(local)); markDraft(true); }
+  } catch(e){}
+}
+
+/* download the small data file that makes edits public */
+function download(filename, text){
+  const blob = new Blob([text], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function publish(){
+  saveLocal();
+  download("squad-data.json", JSON.stringify(currentDataObject(), null, 2));
+  showToast("Saved. A file called <b>squad-data.json</b> was downloaded — upload it to the same folder as this page to update the site for everyone.");
+}
+
+function discard(){
+  if (!confirm("Discard your unpublished changes on this device and reload the last published stats?")) return;
+  try { localStorage.removeItem(LS_KEY); } catch(e){}
+  location.reload();
+}
+
+/* =====================================================================
+   ADMIN: login, edit mode, banner
+   ===================================================================== */
+const adminFab    = document.getElementById("adminFab");
+const loginOverlay= document.getElementById("loginOverlay");
+const loginModal  = document.getElementById("loginModal");
+const pwInput     = document.getElementById("pwInput");
+const pwError     = document.getElementById("pwError");
+const editBanner  = document.getElementById("editBanner");
+const draftDot    = document.getElementById("draftDot");
+const toastEl     = document.getElementById("toast");
+
+function openLogin(){
+  loginOverlay.classList.add("show");
+  pwError.style.display = "none";
+  pwInput.value = "";
+  setTimeout(()=> pwInput.focus(), 50);
+}
+function closeLogin(){ loginOverlay.classList.remove("show"); }
+
+function tryLogin(){
+  if (pwInput.value === ADMIN_PASSWORD){
+    closeLogin();
+    enterEditMode();
+  } else {
+    pwError.style.display = "block";
+    loginModal.classList.remove("shake");
+    void loginModal.offsetWidth;      // restart animation
+    loginModal.classList.add("shake");
+    pwInput.select();
+  }
+}
+
+function enterEditMode(){
+  editMode = true;
+  document.body.classList.add("edit-on");
+  editBanner.classList.add("show");
+  adminFab.style.display = "none";
+  renderManager();
+  renderPlayers();
+}
+
+function exitEditMode(){
+  editMode = false;
+  document.body.classList.remove("edit-on");
+  editBanner.classList.remove("show");
+  adminFab.style.display = "";
+  renderManager();
+  renderPlayers();
+}
+
+function markDraft(on){ draftDot.classList.toggle("show", !!on); }
+
+function showToast(html){
+  toastEl.innerHTML = html;
+  toastEl.classList.add("show");
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(()=> toastEl.classList.remove("show"), 6000);
+}
+
+/* ---- wire up admin controls ---- */
+adminFab.addEventListener("click", openLogin);
+document.getElementById("loginSubmit").addEventListener("click", tryLogin);
+document.getElementById("loginCancel").addEventListener("click", closeLogin);
+pwInput.addEventListener("keydown", e => { if (e.key === "Enter") tryLogin(); });
+loginOverlay.addEventListener("click", e => { if (e.target === loginOverlay) closeLogin(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeLogin(); });
+
+document.getElementById("publishBtn").addEventListener("click", publish);
+document.getElementById("discardBtn").addEventListener("click", discard);
+document.getElementById("exitBtn").addEventListener("click", exitEditMode);
+
+/* live edits on player cards */
+container.addEventListener("input", e => {
+  const inp = e.target.closest("input[data-k]");
+  if (!inp) return;
+  const card = inp.closest(".player-card");
+  const i = +card.dataset.i;
+  const k = inp.dataset.k;
+  let v = parseInt(inp.value, 10);
+  if (isNaN(v) || v < 0) v = 0;
+  players[i].stats[k] = v;
+  refreshCard(card);
+  saveLocal();
+  markDraft(true);
+});
+
+/* live edits on the manager card */
+managerBox.addEventListener("input", e => {
+  const inp = e.target.closest("input[data-mk]");
+  if (!inp) return;
+  const card = inp.closest(".player-card");
+  const k = inp.dataset.mk;
+  let v = parseInt(inp.value, 10);
+  if (isNaN(v) || v < 0) v = 0;
+  manager.record[k] = v;
+  refreshManagerCard(card);
+  saveLocal();
+  markDraft(true);
+});
 
 /* MOBILE MENU */
 const menuBtn = document.getElementById("menuBtn");
@@ -604,12 +1088,17 @@ filterBar.addEventListener("click", (e) => {
   if (!btn) return;
   filterBar.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
   btn.classList.add("active");
-  renderPlayers(btn.dataset.pos);
+  currentFilter = btn.dataset.pos;
+  renderPlayers();
 });
 
 /* INIT */
-renderManager();
-renderPlayers();
+(async function boot(){
+  normalizeStats();
+  await loadData();
+  renderManager();
+  renderPlayers();
+})();
 </script>
 
 </body>
