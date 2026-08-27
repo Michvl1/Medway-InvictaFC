@@ -1,0 +1,219 @@
+{
+  "players": {
+    "Emmanuel Akinso": {
+      "apps": 0,
+      "goals": 0,
+      "assists": 0,
+      "motm": 0,
+      "cleansheets": 0,
+      "yellows": 0,
+      "reds": 0,
+      "missedStreak": 0
+    },
+    "Adriano Anglin": {
+      "apps": 2,
+      "goals": 0,
+      "assists": 0,
+      "motm": 0,
+      "cleansheets": 0,
+      "yellows": 0,
+      "reds": 0,
+      "missedStreak": 0
+    },
+    "Jordan Buckfield-Waller": {
+      "apps": 0,
+      "goals": 0,
+      "assists": 0,
+      "motm": 0,
+      "cleansheets": 0,
+      "yellows": 0,
+      "reds": 0,
+      "missedStreak": 0
+    },
+    "Shaun Keen": {
+      "apps": 0,
+      "goals": 0,
+      "assists": 0,
+      "motm": 0,
+      "cleansheets": 0,
+      "yellows": 0,
+      "reds": 0,
+      "missedStreak": 0
+    },
+    "Owen Longman": {
+      "apps": 1,
+      "goals": 0,
+      "assists": 0,
+      "motm": 0,
+      "cleansheets": 0,
+      "yellows": 0,
+      "reds": 0,
+      "missedStreak": 0
+    },
+    "Adeboye Oloyede": {
+      "apps": 1,
+      "goals": 1,
+      "assists": 0,
+      "motm": 0,
+      "cleansheets": 0,
+      "yellows": 0,
+      "reds": 0,
+      "missedStreak": 0
+    },
+    "James Rocha": {
+      "apps": 2,
+      "goals": 0,
+      "assists": 0,
+      "motm": 1,
+      "cleansheets": 0,
+      "yellows": 0,
+      "reds": 0,
+      "missedStreak": 0
+    },
+    "Ben Van-de-Peer": {
+      "apps": 1,
+      "goals": 0,
+      "assists": 0,
+      "motm": 0,
+      "cleansheets": 0,
+      "yellows": 0,
+      "reds": 0,
+      "missedStreak": 0
+    },
+    "Jamie Blackham": {
+      "apps": 1,
+      "goals": 1,
+      "assists": 0,
+      "motm": 0,
+      "cleansheets": 0,
+      "yellows": 1,
+      "reds": 0,
+      "missedStreak": 0
+    },
+    "Tom Mercer": {
+      "apps": 0,
+      "goals": 0,
+      "assists": 0,
+      "motm": 0,
+      "cleansheets": 0,
+      "yellows": 0,
+      "reds": 0,
+      "missedStreak": 0
+    },
+    "Connor Mudima": {
+      "apps": 1,
+      "goals": 0,
+      "assists": 0,
+      "motm": 0,
+      "cleansheets": 0,
+      "yellows": 0,
+      "reds": 0,
+      "missedStreak": 0
+    },
+    "William Sims": {
+      "apps": 0,
+      "goals": 0,
+      "assists": 0,
+      "motm": 0,
+      "cleansheets": 0,
+      "yellows": 0,
+      "reds": 0,
+      "missedStreak": 0
+    },
+    "Temi Ayetigbo": {
+      "apps": 2,
+      "goals": 2,
+      "assists": 0,
+      "motm": 1,
+      "cleansheets": 0,
+      "yellows": 0,
+      "reds": 0,
+      "missedStreak": 0
+    },
+    "Victor Okunowo": {
+      "apps": 2,
+      "goals": 0,
+      "assists": 0,
+      "motm": 0,
+      "cleansheets": 0,
+      "yellows": 0,
+      "reds": 0,
+      "missedStreak": 0
+    },
+    "Michael Shobande": {
+      "apps": 2,
+      "goals": 1,
+      "assists": 1,
+      "motm": 0,
+      "cleansheets": 0,
+      "yellows": 0,
+      "reds": 0,
+      "missedStreak": 0
+    },
+    "Samuel Shobande": {
+      "apps": 2,
+      "goals": 0,
+      "assists": 2,
+      "motm": 0,
+      "cleansheets": 0,
+      "yellows": 0,
+      "reds": 0,
+      "missedStreak": 0
+    },
+    "Matthew Thomas": {
+      "apps": 2,
+      "goals": 0,
+      "assists": 0,
+      "motm": 0,
+      "cleansheets": 0,
+      "yellows": 0,
+      "reds": 0,
+      "missedStreak": 0
+    },
+    "Ayo Jimoh": {
+      "apps": 2,
+      "goals": 1,
+      "assists": 0,
+      "motm": 0,
+      "cleansheets": 0,
+      "yellows": 0,
+      "reds": 0,
+      "missedStreak": 0
+    },
+    "Thomas Ngegba": {
+      "apps": 0,
+      "goals": 0,
+      "assists": 0,
+      "motm": 0,
+      "cleansheets": 0,
+      "yellows": 0,
+      "reds": 0,
+      "missedStreak": 0
+    },
+    "Evan Longman": {
+      "apps": 2,
+      "goals": 0,
+      "assists": 0,
+      "motm": 0,
+      "cleansheets": 0,
+      "yellows": 0,
+      "reds": 0,
+      "missedStreak": 0
+    },
+    "Liam Riley": {
+      "apps": 0,
+      "goals": 0,
+      "assists": 0,
+      "motm": 0,
+      "cleansheets": 0,
+      "yellows": 0,
+      "reds": 0,
+      "missedStreak": 0
+    }
+  },
+  "manager": {
+    "won": 0,
+    "drawn": 0,
+    "lost": 0
+  }
+}
