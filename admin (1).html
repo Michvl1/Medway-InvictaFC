@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Squad Admin — Medway Invicta FC</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --mi-red:#DC2626; --mi-red-deep:#7F1D1D; --mi-black:#0B0B0D;
+  --mi-panel:#141216; --mi-cream:#F5F2ED;
+}
+body{ background:var(--mi-black); color:var(--mi-cream); font-family:'Barlow',sans-serif; min-height:100vh; }
+.display{ font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.02em; }
+.eyebrow{ font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.35em; font-size:.75rem; color:var(--mi-red); font-weight:700; }
+
+.panel{ background:var(--mi-panel); border:1px solid rgba(127,29,29,.4); border-radius:.75rem; }
+label.fld{ font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.12em; font-size:.7rem; font-weight:700; color:#9ca3af; }
+input, select{
+  background:#0e0d10; border:1px solid rgba(127,29,29,.45); color:var(--mi-cream);
+  border-radius:.4rem; padding:.5rem .6rem; width:100%; font-family:'Barlow',sans-serif;
+}
+input:focus, select:focus{ outline:2px solid var(--mi-red); outline-offset:1px; }
+input[type=number]{ text-align:center; }
+
+.btn{ font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; letter-spacing:.12em; font-weight:700;
+  padding:.55rem 1.1rem; border-radius:.4rem; transition:.15s ease; cursor:pointer; }
+.btn-red{ background:var(--mi-red); color:#fff; } .btn-red:hover{ background:#b91c1c; }
+.btn-ghost{ border:1px solid rgba(127,29,29,.6); color:#d1d5db; } .btn-ghost:hover{ border-color:var(--mi-red); color:#fff; }
+.btn-danger{ border:1px solid #7f1d1d; color:#fca5a5; } .btn-danger:hover{ background:#7f1d1d; color:#fff; }
+a:focus-visible,button:focus-visible{ outline:2px solid var(--mi-red); outline-offset:3px; }
+
+.stat-input{ display:flex; flex-direction:column; gap:2px; }
+.saved-flash{ animation:flash 1.4s ease; }
+@keyframes flash{ 0%{ box-shadow:0 0 0 2px #22c55e inset; } 100%{ box-shadow:none; } }
+</style>
+</head>
+<body class="antialiased">
+
+<header class="border-b border-red-900/60">
+  <div class="max-w-5xl mx-auto flex items-center justify-between px-6 py-4">
+    <div class="flex items-center gap-3">
+      <img src="MI logo.jpg" alt="" class="h-10 w-10 object-contain"/>
+      <span class="display font-extrabold text-xl">Squad <span class="text-red-500">Admin</span></span>
+    </div>
+    <div class="flex items-center gap-4">
+      <a href="Team.html" class="display text-sm tracking-widest text-gray-400 hover:text-red-400">View site →</a>
+      <button id="logoutBtn" class="btn btn-ghost hidden">Log out</button>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-6 py-10">
+
+  <!-- LOGIN -->
+  <section id="loginView" class="max-w-sm mx-auto panel p-8 mt-10">
+    <p class="eyebrow mb-2">Staff only</p>
+    <h1 class="display font-extrabold text-3xl mb-6">Log in</h1>
+    <div class="space-y-4">
+      <div><label class="fld">Email</label><input id="email" type="email" autocomplete="username"></div>
+      <div><label class="fld">Password</label><input id="password" type="password" autocomplete="current-password"></div>
+      <button id="loginBtn" class="btn btn-red w-full">Log in</button>
+      <p id="loginError" class="text-red-400 text-sm hidden"></p>
+    </div>
+  </section>
+
+  <!-- EDITOR -->
+  <section id="editorView" class="hidden">
+
+    <!-- Manager -->
+    <div class="panel p-6 mb-8">
+      <p class="eyebrow mb-1">The Gaffer</p>
+      <h2 class="display font-extrabold text-2xl mb-4">Manager</h2>
+      <div class="grid sm:grid-cols-2 gap-4 mb-4">
+        <div><label class="fld">Name</label><input id="mgrName"></div>
+        <div><label class="fld">Image filename</label><input id="mgrImg" placeholder="placeholder.jpg"></div>
+      </div>
+      <div class="grid grid-cols-3 gap-4 max-w-md">
+        <div class="stat-input"><label class="fld">Won</label><input id="mgrWon" type="number" min="0"></div>
+        <div class="stat-input"><label class="fld">Drawn</label><input id="mgrDrawn" type="number" min="0"></div>
+        <div class="stat-input"><label class="fld">Lost</label><input id="mgrLost" type="number" min="0"></div>
+      </div>
+      <button id="mgrSave" class="btn btn-red mt-5">Save manager</button>
+    </div>
+
+    <!-- Players -->
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <p class="eyebrow mb-1">The Players</p>
+        <h2 class="display font-extrabold text-2xl">Squad</h2>
+      </div>
+      <div class="flex gap-3">
+        <button id="seedBtn" class="btn btn-ghost">Import starting roster</button>
+        <button id="addBtn" class="btn btn-red">+ Add player</button>
+      </div>
+    </div>
+    <p class="text-gray-500 text-sm mb-6">Type the new numbers, hit <span class="text-gray-300">Save</span> on that player. Ratings and card tiers on the site update automatically.</p>
+
+    <div id="playerList" class="space-y-4"></div>
+  </section>
+</main>
+
+<script type="module">
+/* =====================================================================
+   FIREBASE  —  paste the SAME config you used in Team.html
+   ===================================================================== */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {
+  getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import {
+  getFirestore, collection, doc, getDocs, setDoc, addDoc, updateDoc, deleteDoc, onSnapshot
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey:            "AIzaSyCnJUmg-0w-e7RUgY99k11X7JKGfvQc0cM",
+  authDomain:        "medway-invicta-fc---assists.firebaseapp.com",
+  projectId:         "medway-invicta-fc---assists",
+  storageBucket:     "medway-invicta-fc---assists.firebasestorage.app",
+  messagingSenderId: "332175149224",
+  appId:             "1:332175149224:web:035d21fc79afbbe8115a9d",
+  measurementId:     "G-XTRB0E23F7"
+};
+
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+
+const POSITIONS = ["Goalkeeper","Defender","Midfielder","Winger","Striker"];
+const STAT_FIELDS = [
+  ["apps","Apps"], ["goals","Goals"], ["assists","Assists"], ["motm","MOTM"],
+  ["cleansheets","Clean Sht"], ["yellows","Yellow"], ["reds","Red"], ["missedStreak","Missed"]
+];
+
+/* ---- AUTH ---- */
+const loginView  = document.getElementById("loginView");
+const editorView = document.getElementById("editorView");
+const logoutBtn  = document.getElementById("logoutBtn");
+const loginError = document.getElementById("loginError");
+
+document.getElementById("loginBtn").addEventListener("click", async () => {
+  loginError.classList.add("hidden");
+  try {
+    await signInWithEmailAndPassword(auth,
+      document.getElementById("email").value.trim(),
+      document.getElementById("password").value);
+  } catch (e) {
+    loginError.textContent = "Login failed — check your email and password.";
+    loginError.classList.remove("hidden");
+  }
+});
+document.getElementById("password").addEventListener("keydown", e => {
+  if (e.key === "Enter") document.getElementById("loginBtn").click();
+});
+logoutBtn.addEventListener("click", () => signOut(auth));
+
+onAuthStateChanged(auth, user => {
+  if (user){
+    loginView.classList.add("hidden");
+    editorView.classList.remove("hidden");
+    logoutBtn.classList.remove("hidden");
+    subscribeSquad();
+    loadManager();
+  } else {
+    editorView.classList.add("hidden");
+    logoutBtn.classList.add("hidden");
+    loginView.classList.remove("hidden");
+  }
+});
+
+/* ---- MANAGER ---- */
+async function loadManager(){
+  const ref = doc(db, "settings", "manager");
+  onSnapshot(ref, snap => {
+    const m = snap.exists() ? snap.data() : { name:"", img:"placeholder.jpg", record:{won:0,drawn:0,lost:0} };
+    const r = m.record || {};
+    document.getElementById("mgrName").value  = m.name || "";
+    document.getElementById("mgrImg").value   = m.img || "";
+    document.getElementById("mgrWon").value   = r.won || 0;
+    document.getElementById("mgrDrawn").value = r.drawn || 0;
+    document.getElementById("mgrLost").value  = r.lost || 0;
+  });
+}
+document.getElementById("mgrSave").addEventListener("click", async (e) => {
+  await setDoc(doc(db,"settings","manager"), {
+    name: document.getElementById("mgrName").value.trim(),
+    img:  document.getElementById("mgrImg").value.trim() || "placeholder.jpg",
+    record: {
+      won:   +document.getElementById("mgrWon").value   || 0,
+      drawn: +document.getElementById("mgrDrawn").value || 0,
+      lost:  +document.getElementById("mgrLost").value  || 0
+    }
+  });
+  flash(e.target.closest(".panel"));
+});
+
+/* ---- PLAYERS ---- */
+const listEl = document.getElementById("playerList");
+let players = [];
+
+function subscribeSquad(){
+  onSnapshot(collection(db,"players"), snap => {
+    players = snap.docs.map(d => ({ id:d.id, ...d.data() }));
+    players.sort((a,b) =>
+      POSITIONS.indexOf(a.pos) - POSITIONS.indexOf(b.pos) ||
+      (a.name||"").localeCompare(b.name||""));
+    renderList();
+  });
+}
+
+function renderList(){
+  listEl.innerHTML = "";
+  players.forEach(p => {
+    const s = p.stats || {};
+    const row = document.createElement("div");
+    row.className = "panel p-5";
+    row.dataset.id = p.id;
+    row.innerHTML = `
+      <div class="grid sm:grid-cols-2 gap-4 mb-4">
+        <div><label class="fld">Name</label><input class="f-name" value="${escapeHtml(p.name||"")}"></div>
+        <div class="grid grid-cols-2 gap-3">
+          <div><label class="fld">Position</label>
+            <select class="f-pos">${POSITIONS.map(pos=>`<option ${pos===p.pos?"selected":""}>${pos}</option>`).join("")}</select>
+          </div>
+          <div><label class="fld">Image filename</label><input class="f-img" value="${escapeHtml(p.img||"")}"></div>
+        </div>
+      </div>
+      <div class="grid grid-cols-4 sm:grid-cols-8 gap-3">
+        ${STAT_FIELDS.map(([k,lbl])=>`
+          <div class="stat-input"><label class="fld">${lbl}</label>
+            <input class="f-${k}" type="number" min="0" value="${s[k]||0}"></div>`).join("")}
+      </div>
+      <div class="flex gap-3 mt-5">
+        <button class="btn btn-red f-save">Save</button>
+        <button class="btn btn-danger f-del">Delete</button>
+      </div>
+    `;
+    listEl.appendChild(row);
+
+    row.querySelector(".f-save").addEventListener("click", async () => {
+      const stats = {};
+      STAT_FIELDS.forEach(([k]) => stats[k] = +row.querySelector(".f-"+k).value || 0);
+      await updateDoc(doc(db,"players",p.id), {
+        name: row.querySelector(".f-name").value.trim(),
+        pos:  row.querySelector(".f-pos").value,
+        img:  row.querySelector(".f-img").value.trim() || "placeholder.jpg",
+        stats
+      });
+      flash(row);
+    });
+
+    row.querySelector(".f-del").addEventListener("click", async () => {
+      if (confirm(`Delete ${p.name}? This can't be undone.`))
+        await deleteDoc(doc(db,"players",p.id));
+    });
+  });
+}
+
+document.getElementById("addBtn").addEventListener("click", async () => {
+  await addDoc(collection(db,"players"), {
+    name:"New Player", pos:"Midfielder", img:"placeholder.jpg",
+    stats:{ apps:0,goals:0,assists:0,motm:0,cleansheets:0,yellows:0,reds:0,missedStreak:0 }
+  });
+});
+
+/* ---- SEED (one-time import of your current roster) ---- */
+const SEED = [
+  {name:"Emmanuel Akinso",pos:"Defender",img:"MANNY.jpeg",stats:{apps:0,goals:0,assists:0,motm:0,cleansheets:0,yellows:0,reds:0}},
+  {name:"Adriano Anglin",pos:"Defender",img:"IMG_5047.jpeg",stats:{apps:1,goals:0,assists:0,motm:0,cleansheets:0,yellows:0,reds:0}},
+  {name:"Jordan Buckfield-Waller",pos:"Defender",img:"placeholder.jpg",stats:{apps:0,goals:0,assists:0,motm:0,cleansheets:0,yellows:0,reds:0}},
+  {name:"Shaun Keen",pos:"Defender",img:"placeholder.jpg",stats:{apps:0,goals:0,assists:0,motm:0,cleansheets:0,yellows:0,reds:0}},
+  {name:"Owen Longman",pos:"Defender",img:"OWEN.jpeg",stats:{apps:1,goals:0,assists:0,motm:0,cleansheets:0,yellows:0,reds:0}},
+  {name:"Adeboye Oloyede",pos:"Defender",img:"Boye signed.png",stats:{apps:1,goals:1,assists:0,motm:0,cleansheets:0,yellows:0,reds:0}},
+  {name:"James Rocha",pos:"Defender",img:"James.jpg",stats:{apps:1,goals:0,assists:0,motm:0,cleansheets:0,yellows:0,reds:0}},
+  {name:"Ben Van-de-Peer",pos:"Defender",img:"BEN.jpeg",stats:{apps:1,goals:0,assists:0,motm:0,cleansheets:0,yellows:0,reds:0}},
+  {name:"Jamie Blackham",pos:"Midfielder",img:"JAMIE.jpeg",stats:{apps:0,goals:0,assists:0,motm:0,cleansheets:0,yellows:0,reds:0}},
+  {name:"Tom Mercer",pos:"Midfielder",img:"MERCER.jpeg",stats:{apps:0,goals:0,assists:0,motm:0,cleansheets:0,yellows:0,reds:0}},
+  {name:"Connor Mudima",pos:"Midfielder",img:"CONNOR.jpeg",stats:{apps:0,goals:0,assists:0,motm:0,cleansheets:0,yellows:0,reds:0}},
+  {name:"William Sims",pos:"Midfielder",img:"placeholder.jpg",stats:{apps:0,goals:0,assists:0,motm:0,cleansheets:0,yellows:0,reds:0}},
+  {name:"Temi Ayetigbo",pos:"Winger",img:"Temi.jpg",stats:{apps:1,goals:1,assists:0,motm:1,cleansheets:0,yellows:0,reds:0}},
+  {name:"Victor Okunowo",pos:"Winger",img:"placeholder.jpg",stats:{apps:1,goals:0,assists:0,motm:0,cleansheets:0,yellows:0,reds:0}},
+  {name:"Michael Shobande",pos:"Winger",img:"IMG_5046.jpeg",stats:{apps:1,goals:1,assists:1,motm:0,cleansheets:0,yellows:0,reds:0}},
+  {name:"Samuel Shobande",pos:"Winger",img:"IMG_5044.jpeg",stats:{apps:1,goals:0,assists:1,motm:0,cleansheets:0,yellows:0,reds:0}},
+  {name:"Matthew Thomas",pos:"Winger",img:"NASH.jpeg",stats:{apps:1,goals:0,assists:0,motm:0,cleansheets:0,yellows:0,reds:0}},
+  {name:"Ayo Jimoh",pos:"Striker",img:"AJ.jpeg",stats:{apps:1,goals:0,assists:0,motm:0,cleansheets:0,yellows:0,reds:0}},
+  {name:"Thomas Ngegba",pos:"Striker",img:"placeholder.jpg",stats:{apps:0,goals:0,assists:0,motm:0,cleansheets:0,yellows:0,reds:0}},
+  {name:"Evan Longman",pos:"Goalkeeper",img:"EVAN.jpg",stats:{apps:1,goals:0,assists:0,motm:0,cleansheets:0,yellows:0,reds:0}},
+  {name:"Liam Riley",pos:"Goalkeeper",img:"placeholder.jpg",stats:{apps:0,goals:0,assists:0,motm:0,cleansheets:0,yellows:0,reds:0}},
+];
+
+document.getElementById("seedBtn").addEventListener("click", async () => {
+  const existing = await getDocs(collection(db,"players"));
+  if (!existing.empty && !confirm("Players already exist. Import the starting roster anyway? (This adds duplicates.)")) return;
+  for (const p of SEED) await addDoc(collection(db,"players"), p);
+  // seed manager too if missing
+  await setDoc(doc(db,"settings","manager"), {
+    name:"Toby Ogundemuren", img:"placeholder.jpg", record:{won:0,drawn:0,lost:0}
+  }, { merge:true });
+  alert("Roster imported.");
+});
+
+/* ---- helpers ---- */
+function flash(el){ el.classList.remove("saved-flash"); void el.offsetWidth; el.classList.add("saved-flash"); }
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+</script>
+</body>
+</html>
