@@ -281,11 +281,35 @@
       <!-- Left column: add form + standings + goal log -->
       <div class="lg:col-span-2">
 
-        <!-- Add a goal -->
-        <div class="bg-[#141216] border border-red-900/50 rounded-xl p-6 mb-12 relative overflow-hidden">
+     
+
+        <div id="loginCard" class="bg-[#141216] border border-red-900/50 rounded-xl p-6 mb-12 relative overflow-hidden" style="display:none;">
+  <div class="absolute left-0 top-0 bottom-0 w-1 bg-red-600"></div>
+  <p class="eyebrow mb-2">Admin</p>
+  <h2 class="display font-extrabold text-3xl mb-6">Sign In</h2>
+  <div class="grid sm:grid-cols-2 gap-4">
+    <div>
+      <label class="field-label" for="loginEmail">Email</label>
+      <input type="email" id="loginEmail" class="mi-input" autocomplete="username"/>
+    </div>
+    <div>
+      <label class="field-label" for="loginPassword">Password</label>
+      <input type="password" id="loginPassword" class="mi-input" autocomplete="current-password"/>
+    </div>
+  </div>
+  <div class="flex items-center gap-4 mt-6">
+    <button id="loginBtn" class="add-btn">Sign In</button>
+    <span id="loginHint" class="text-sm text-red-400"></span>
+  </div>
+</div>
+ <!-- Add a goal -->
+
+        <div id="goalFormCard" class="bg-[#141216] border border-red-900/50 rounded-xl p-6 mb-12 relative overflow-hidden" style="display:none;">
           <div class="absolute left-0 top-0 bottom-0 w-1 bg-red-600"></div>
           <p class="eyebrow mb-2">Match Day</p>
           <h2 class="display font-extrabold text-3xl mb-6">Log a Goal</h2>
+
+          
 
           <div class="grid sm:grid-cols-2 gap-4">
             <div>
@@ -382,6 +406,9 @@ import {
   addDoc, deleteDoc, doc, getDocs
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyCnJUmg-0w-e7RUgY99k11X7JKGfvQc0cM",
   authDomain: "medway-invicta-fc---assists.firebaseapp.com",
@@ -395,6 +422,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db  = getFirestore(app);
 const goalsCol = collection(db, "goals-26-27"); // one shared collection = one source of truth
+const auth = getAuth(app);
+let isAdmin = false;
 
 // ============================================================
 //  2) STATIC DATA (unchanged from your original)
@@ -516,6 +545,28 @@ goalLogEl.addEventListener("click", e => {
   if (btn) removeGoal(btn.getAttribute("data-id"));
 });
 
+const loginCard    = document.getElementById("loginCard");
+const goalFormCard = document.getElementById("goalFormCard");
+
+onAuthStateChanged(auth, user => {
+  isAdmin = !!user;
+  loginCard.style.display    = user ? "none" : "";
+  goalFormCard.style.display = user ? "" : "none";
+  render();
+  if (user) seedIfEmpty();
+});
+
+document.getElementById("loginBtn").addEventListener("click", async () => {
+  try {
+    await signInWithEmailAndPassword(
+      auth,
+      document.getElementById("loginEmail").value,
+      document.getElementById("loginPassword").value
+    );
+  } catch (err) {
+    document.getElementById("loginHint").textContent = "Sign-in failed: " + err.code;
+  }
+});
 // ============================================================
 //  6) RENDERERS (unchanged logic, driven by live goalLog)
 // ============================================================
@@ -548,7 +599,7 @@ function renderLog(){
         <div class="display font-bold text-lg leading-tight">${g.player}</div>
         <div class="text-sm text-gray-400">${g.opponent ? "vs " + g.opponent : "<span class='text-gray-600'>opponent not set</span>"} &nbsp;·&nbsp; ${posFor(g.player)}</div>
       </div>
-      <button class="del-btn" data-id="${g.id}" aria-label="Remove this goal" title="Remove">&times;</button>
+            ${isAdmin ? `<button class="del-btn" data-id="${g.id}" aria-label="Remove this goal" title="Remove">&times;</button>` : `<span></span>`}
     </div>
   `).join("");
 }
@@ -603,7 +654,7 @@ onSnapshot(goalsCol, (snap) => {
 });
 
 render();        // paint the empty shell immediately
-seedIfEmpty();   // then seed once if needed (listener will pick it up)
+
 </script>
 
 </body>
