@@ -422,6 +422,9 @@
     }
     from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+        import { getAuth, onAuthStateChanged, signInWithEmailAndPassword }
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
     /* FIREBASE CONFIG */
 
     const firebaseConfig = {
@@ -436,6 +439,8 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
+    const auth = getAuth(app);
+    let isAdmin = false;
 
     let assists = [];
     let assistChart;
@@ -469,6 +474,9 @@
       'Abdul-Raheem Sunmonu',
       'Matthew Thomas',
       'Ben Van-de-Peer',
+      'Ben Sheldon',
+      'Ben Murphy',
+      'Luke Armstrong',
       'Yeni Yusuph',
       'Yomi Yusuph'
     ];
@@ -570,6 +578,32 @@
         catch (error) {
           console.error(error);
           alert("Error saving assist.");
+        }
+      });
+
+            /* AUTH */
+      const loginCard = document.getElementById('loginCard');
+      const formCard = document.getElementById('formCard');
+      const loginForm = document.getElementById('loginForm');
+      const loginHint = document.getElementById('loginHint');
+
+      onAuthStateChanged(auth, user => {
+        isAdmin = !!user;
+        loginCard.style.display = user ? 'none' : '';
+        formCard.style.display = user ? '' : 'none';
+        renderTable();
+      });
+
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        try {
+          await signInWithEmailAndPassword(
+            auth,
+            document.getElementById('loginEmail').value,
+            document.getElementById('loginPassword').value
+          );
+        } catch (err) {
+          loginHint.textContent = 'Sign-in failed: ' + err.code;
         }
       });
 
@@ -733,8 +767,22 @@
 
     <div class="grid">
 
+      <!-- LOGIN -->
+      <div class="card" id="loginCard" style="display:none;">
+        <h2>Admin Sign In</h2>
+        <p class="card-sub">Sign in to add or delete records.</p>
+
+        <form id="loginForm">
+          <input type="email" id="loginEmail" placeholder="Email" autocomplete="username" required>
+          <input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password" required>
+          <button type="submit">Sign In</button>
+        </form>
+
+        <p id="loginHint" style="color:#f87171;font-size:0.875rem;margin-top:12px;"></p>
+      </div>
+
       <!-- FORM -->
-      <div class="card">
+         <div class="card" id="formCard" style="display:none;">
         <h2>Add Assist Record</h2>
         <p class="card-sub">Logged instantly for everyone viewing the page.</p>
 
